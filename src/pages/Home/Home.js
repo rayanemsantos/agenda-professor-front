@@ -37,6 +37,7 @@ function Home({history}) {
     return <Redirect to="/login" />;
   }
   return (
+      user &&
       <>
         <HeaderComponent user={user} history={history}/>
         <main>
