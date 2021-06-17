@@ -1,0 +1,104 @@
+body,
+html {
+	/* height: 100vh; */
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+main {
+	padding: 2rem;
+	position: relative;
+	width: fit-content;
+	margin: 3.5rem auto;
+}
+/* TITLES */
+main h3 {
+	font-size: 1.5rem;
+	font-weight: 400;
+}
+main h4 {
+	font-size: 1.25rem;
+	font-weight: 700;
+}
+
+/* HEADER */
+header {
+	justify-content: space-between;
+}
+/* MAIN */
+.content-header nav {
+	color: #005457;
+}
+.content-header {
+	margin-top: 1rem;
+	display: flex;
+	flex-direction: column;
+}
+.listas-turmas {
+	margin-top: 2.5rem;
+}
+.listas-turmas div {
+	display: flex;
+}
+.listas-turmas section {
+	margin-top: 2rem;
+	margin-left: 1rem;
+	position: relative;
+}
+.listas-turmas section + section {
+	margin-left: 2rem;
+}
+.turma {
+    background-color: #f9f9f9;
+    padding: 16px;
+    border-radius: 20px;
+}
+.turma a {
+	text-decoration: none;
+}
+ul {
+	list-style: none;
+}
+main .listas-turmas ul {
+	margin-top: 1.5rem;
+}
+.colegio {
+	font-size: 0.75rem;
+	color: rgba(0, 0, 0, 0.38);
+}
+main .listas-turmas li:nth-of-type(even) {
+	margin-bottom: 1.5rem;
+}
+
+/* FOOTER */
+footer nav {
+	background-color: white;
+	width: 100%;
+	padding: 1rem 0;
+	border-top: solid 0.125rem #019592;
+	position: fixed;
+	bottom: 0;
+}
+footer nav ul {
+	display: flex;
+	justify-content: space-around;
+}
+
+i {
+	font-size: 1.75rem;
+	color: #019592;
+}
+footer nav li a {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: space-between;
+	font-size: 0.75rem;
+	color: #005457;
+	height: 3.25rem;
+	width: 4rem;
+	text-decoration: none;
+}
+
+@media (min-width: 26rem) {
+}
