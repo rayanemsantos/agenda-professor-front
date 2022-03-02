@@ -1,23 +1,63 @@
-import '../App.css'
+import React, { useState } from 'react';
+import Box from '@mui/material/Box';
+import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 
-function TabsComponent({handleConfigTab, handleScheduleTab, handleFrequenceTab }) {
-  return (
-        <footer>
-			<nav>
-				<ul>
-					<li className="bottom-menu button" onClick={handleConfigTab}>
-						<a href="#"><i className="fa fa-cog"></i> ajustes</a>
-					</li>
-					<li className="bottom-menu button" onClick={handleScheduleTab}>
-						<a href="#"><i className="fa fa-book"></i> agenda</a>
-					</li>
-					<li className="bottom-menu button" onClick={handleFrequenceTab}>
-						<a href="frequencia.html"><i className="fa fa-tasks"></i> frequência</a>
-					</li>
-				</ul>
-			</nav>
-        </footer>        
-  );
+import {
+	HomeRounded,
+	CoPresentRounded,
+	StickyNote2Rounded,
+	HowToRegRounded,
+} from '@mui/icons-material';
+
+export default function TabsComponent() {
+	const [value, setValue] = useState(0);
+	const navBarItems = [
+		{
+			page: 'Início',
+			icon: HomeRounded,
+		},
+		{
+			page: 'Turmas',
+			icon: CoPresentRounded,
+		},
+		{
+			page: 'Frequência',
+			icon: HowToRegRounded,
+		},
+		{
+			page: 'Diário',
+			icon: StickyNote2Rounded,
+		},
+	];
+	return (
+		<Box
+			sx={{
+				position: 'fixed',
+				bottom: 0,
+				left: 0,
+				right: 0,
+				width: 'auto',
+				display: { xs: 'block', md: 'none' },
+			}}
+		>
+			<Paper elevation={3}>
+				<BottomNavigation
+					showLabels
+					value={value}
+					onChange={(event, newValue) => {
+						setValue(newValue);
+					}}
+				>
+					{navBarItems.map(item => (
+						<BottomNavigationAction
+							key={item.page}
+							label={item.page}
+							icon={<item.icon />}
+							onClick={item.onClick}
+						/>
+					))}
+				</BottomNavigation>
+			</Paper>
+		</Box>
+	);
 }
-
-export default TabsComponent;

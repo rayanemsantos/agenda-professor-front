@@ -1,9 +1,8 @@
-/* Normalizers */
 :root,
 * {
 	font-family: 'Roboto', sans-serif;
-	color: rgba(0, 0, 0, 0.6);
 	box-sizing: border-box;
+	margin: 0;
 }
 * {
 	text-rendering: optimizeLegibility;
@@ -11,9 +10,25 @@
 	box-sizing: inherit;
 	margin: 0;
 	padding: 0;
+	margin-block-start: 0;
+	margin-block-end: 0;
+	margin-inline-start: 0;
+	margin-inline-end: 0;
 }
 
-/* Estilos do Header */
+.MuiBottomNavigationAction-root .MuiSvgIcon-root {
+	box-sizing: content-box;
+	padding: 0.125rem 0.75rem;
+	border-radius: 1rem;
+}
+.MuiBottomNavigationAction-root.Mui-selected .MuiSvgIcon-root {
+	background-color: #f3e5f5;
+}
+.MuiBottomNavigationAction-label.Mui-selected {
+	font-size: 12px !important;
+	font-weight: 500;
+}
+/* 
 header {
 	width: 100vw;
 	height: 3.5rem;
@@ -41,7 +56,6 @@ h1 > a {
 	cursor: pointer;
 }
 
-/* General styles */
 main {
 	margin-top: 3.5rem;
 }
@@ -57,7 +71,6 @@ main > *:last-of-type {
 	outline-color: #00c4b4;
 }
 
-/* Botões e Âncoras*/
 .form button,
 .primary-button {
 	text-transform: lowercase;
@@ -83,7 +96,6 @@ main > *:last-of-type {
 	box-shadow: 0 0.125rem 0 rgba(0, 0, 0, 0.3);
 }
 
-/* Formulários e Entradas de dados */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 	-webkit-appearance: none;
@@ -195,7 +207,6 @@ select option[selected] {
 	background-color: rgba(0, 0, 0, 0.06);
 }
 
-/* Textos e Tipografias */
 h2,
 h3,
 h4,
@@ -241,8 +252,6 @@ h2 {
 	font-size: 0.875rem;
 }
 
-/* Media Queries & Responsividade pro Desktop */
-
 @media (min-width: 26rem) {
 	.form {
 		width: 23rem;
@@ -253,10 +262,6 @@ h2 {
 		margin-left: auto;
 	}
 }
-
-
-/* MENU */
-
 
 header nav {
 	display: flex;
@@ -309,7 +314,7 @@ header nav i {
 #menu-items li h3 {
 	font-size: 1.5rem;
 	font-weight: 400;
-	margin-bottom: .5rem;
+	margin-bottom: 0.5rem;
 	color: white;
 	text-indent: 1rem;
 }
@@ -322,8 +327,6 @@ header nav i {
 	opacity: 0.5;
 	text-indent: 1rem;
 }
-
-/* FOOTER */
 
 footer nav {
 	background-color: white;
@@ -358,26 +361,23 @@ footer nav li a i {
 @media (min-width: 26rem) {
 }
 
-
-/* MESSAGE */
-
-.message{
+.message {
 	display: flex;
-    align-items: center;
+	align-items: center;
 	justify-content: space-between;
-    margin-top: 16px;
-    padding: 8px 16px;
-    background-color: #e25f5f;
-    border-radius: 12px;
+	margin-top: 16px;
+	padding: 8px 16px;
+	background-color: #e25f5f;
+	border-radius: 12px;
 }
-.message .fa-warning{
+.message .fa-warning {
 	color: #fff;
 	font-size: 1.5rem;
 }
-.message .fa-close{
+.message .fa-close {
 	color: #fff;
 }
-.message p{
+.message p {
 	margin-top: 0 !important;
 	color: #fff;
-}
+} */

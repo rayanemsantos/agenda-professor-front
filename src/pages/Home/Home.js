@@ -1,95 +1,157 @@
-import React, {useEffect, useState} from "react";
-import './Home.css';
-import '../../App.css'
+import React, { useEffect, useState } from 'react';
+import { Link, Redirect } from 'react-router-dom';
+
 import TabsComponent from '../../components/TabsComponent';
 import HeaderComponent from '../../components/HeaderComponent';
 import * as services from '../../services/service';
+
+import moment from 'moment';
+import 'moment/locale/pt-br';
+
 import {
-    Redirect
-} from "react-router-dom";
-import moment from "moment";
+	Box,
+	Divider,
+	Grid,
+	List,
+	ListItem,
+	Stack,
+	Typography,
+} from '@mui/material';
 
-function Home({history}) {
-    const [turmas, setTurmas] = useState([]);
-    const [logged, setLogged] = useState(true);
-    const [user, setUser] = useState(null);
+function Home({ history }) {
+	const [turmas, setTurmas] = useState([]);
+	const [logged, setLogged] = useState(true);
+	const [user, setUser] = useState(null);
 
-    
-    const getUser = () => {
-        if(!localStorage.getItem("user")){
-            setLogged(false)
-        } else {
-            var data = JSON.parse(localStorage.getItem("user"))
-            setUser(data)
-            getTurmas(data.user)
-        }
-    }
-    const getTurmas = (user) => {
-        services.fetchTurmas(user).then((res) => {
-            setTurmas(res.data)
-        }).catch((err) => console.log(err))
-    }
-    useEffect(() => {
-        getUser()
-    }, []);
+	const getUser = () => {
+		if (!localStorage.getItem('user')) {
+			setLogged(false);
+		} else {
+			var data = JSON.parse(localStorage.getItem('user'));
+			setUser(data);
+			getTurmas(data.user);
+		}
+	};
+	const getTurmas = user => {
+		services
+			.fetchTurmas(user)
+			.then(res => {
+				setTurmas(res.data);
+			})
+			.catch(err => console.log(err));
+	};
+	useEffect(() => {
+		getUser();
+	}, []);
 
-  if (!logged) {
-    return <Redirect to="/login" />;
-  }
-  return (
-      user &&
-      <>
-        <HeaderComponent user={user} history={history}/>
-        <main>
-        <section className="content-header">
-            <h2>Bem vindo, {user.nomeCompleto}</h2>
-            <p className="subtitle hora">{moment().format('DD/MM/YY')}</p>
-        </section>
-        <section className="listas-turmas">
-            <h3>Turmas</h3>
-            <div>
-                <section className="turno-manha">
-                    <h4>Manhã</h4>
-                    <ul>
-                    {turmas.filter((item) => item.turno == 'Manhã').map((item) => {
-                         return <li className="turma">
-                            <a href="dashboard.html">
-                                <ul>
-                                    <li>
-                                        <span className="serie">{item.serie}</span>
-                                    </li>
-                                    <li><span className="colegio">{item.escolaName}</span></li>
-                                </ul>
-                            </a>
-                        </li>                        
-                    })}                    
-                    </ul>
-                    {!turmas.filter((item) => item.turno == 'Manhã').length && <span className="colegio">Sem turmas no momento</span>}
-                </section>
-                <section className="turno tarde">
-                    <h4>Tarde</h4>
-                    <ul>
-                        {turmas.filter((item) => item.turno == 'Tarde').map((item) => {
-                            return <li className="turma">
-                                <a href="dashboard.html">
-                                    <ul>
-                                        <li>
-                                            <span className="serie">{item.serie}</span>
-                                        </li>
-                                        <li><span className="colegio">{item.escolaName}</span></li>
-                                    </ul>
-                                </a>
-                            </li>                        
-                        })}                          
-                    </ul>
-                    {!turmas.filter((item) => item.turno == 'Tarde').length && <span className="colegio">Sem turmas no momento</span>}
-                </section>
-            </div>
-        </section>
-        </main>
-        {/* <TabsComponent/> */}
-    </>
-  );
+	if (!logged) {
+		return <Redirect to='/login' />;
+	}
+
+	return (
+		user && (
+			<>
+				<HeaderComponent user={user} history={history} />
+				<Grid container>
+					<Grid item xs={12} sx={{ mx: 'auto' }}>
+						<Stack sx={{ mx: 2 }}>
+							<Box className='content-header'>
+								<Typography variant='h4' sx={{ mt: 3 }}>
+									Bem vindo, {user.nomeCompleto.split(' ', 1)}
+								</Typography>
+								<Typography variant='overline' className='subtitle hora'>
+									{moment().format('dddd, DD MMM, LT')}
+								</Typography>
+							</Box>
+							<Box className='listas-turmas' sx={{ mt: 5 }}>
+								<Typography variant='h5'>Turmas</Typography>
+								<Box sx={{ display: 'flex', mt: 2, ml: 1 }}>
+									<Box className='turno-manha'>
+										<Typography variant='h6'>Manhã</Typography>
+										<List>
+											{turmas
+												.filter(item => item.turno === 'Manhã')
+												.map(item => {
+													return (
+														<ListItem className='turma'>
+															<Link href='dashboard.html'>
+																<List>
+																	<ListItem>
+																		<Typography
+																			variant='span'
+																			className='serie'
+																		>
+																			{item.serie}
+																		</Typography>
+																	</ListItem>
+																	<ListItem>
+																		<Typography
+																			variant='span'
+																			className='colegio'
+																		>
+																			{item.escolaName}
+																		</Typography>
+																	</ListItem>
+																</List>
+															</Link>
+														</ListItem>
+													);
+												})}
+										</List>
+										{!turmas.filter(item => item.turno === 'Manhã').length && (
+											<Typography variant='body2' className='colegio'>
+												Sem turmas no momento
+											</Typography>
+										)}
+									</Box>
+									<Divider orientation='vertical' flexItem sx={{ mx: 2 }} />
+									<Box className='turno tarde'>
+										<Typography variant='h6'>Tarde</Typography>
+										<List>
+											{turmas
+												.filter(item => item.turno === 'Tarde')
+												.map(item => {
+													return (
+														<ListItem className='turma'>
+															<Link href='dashboard.html'>
+																<List>
+																	<ListItem>
+																		<Typography
+																			variant='span'
+																			className='serie'
+																		>
+																			{item.serie}
+																		</Typography>
+																	</ListItem>
+																	<ListItem>
+																		<Typography
+																			variant='span'
+																			className='colegio'
+																		>
+																			{item.escolaName}
+																		</Typography>
+																	</ListItem>
+																</List>
+															</Link>
+														</ListItem>
+													);
+												})}
+										</List>
+										{!turmas.filter(item => item.turno === 'Tarde').length && (
+											<Typography variant='body2' className='colegio'>
+												Sem turmas no momento
+											</Typography>
+										)}
+									</Box>
+								</Box>
+							</Box>
+						</Stack>
+					</Grid>
+				</Grid>
+				<TabsComponent />
+			</>
+		)
+	);
 }
 
 export default Home;

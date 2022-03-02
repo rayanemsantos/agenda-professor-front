@@ -1,11 +1,9 @@
-import './App.css';
-import 'font-awesome/css/font-awesome.min.css';
-import Navigation from './Navigation';
+// import './App.css';
+// import 'font-awesome/css/font-awesome.min.css';
+import Theme from './Theme';
 
 function App() {
-  return (
-    <Navigation/>
-  );
+	return <Theme />;
 }
 
 export default App;
