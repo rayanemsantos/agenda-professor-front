@@ -34,8 +34,21 @@ let theme = createTheme({
 			styleOverrides: {
 				root: {
 					backgroundColor: 'white',
-					borderBottom: `solid 1px ${purple[900]}`,
+					borderBottom: `solid 2px ${purple[900]}`,
 					color: purple[900],
+					'&.secretaria': {
+						backgroundColor: 'white',
+						borderBottom: `solid 3px ${teal[300]}`,
+						color: `${teal[800]}`,
+					},
+				},
+			},
+		},
+		MuiDrawer: {
+			styleOverrides: {
+				paper: {
+					color: 'white',
+					backgroundColor: '#23036A',
 				},
 			},
 		},

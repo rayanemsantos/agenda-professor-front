@@ -48,10 +48,13 @@ function Home({ history }) {
 		return <Redirect to='/login' />;
 	}
 
+	// RAY: deixei 'pronto' pra receber os perfis 'professor' e 'secretaria'. Só dar um CTRL + SHIFT + F em 'usuario' e botar o obj
+	let usuario = 'professor';
+
 	return (
 		user && (
 			<>
-				<HeaderComponent user={user} history={history} />
+				<HeaderComponent user={user} usuario={usuario} history={history} />
 				<Grid container>
 					<Grid item xs={12} sx={{ mx: 'auto' }}>
 						<Stack sx={{ mx: 2 }}>
@@ -148,7 +151,7 @@ function Home({ history }) {
 						</Stack>
 					</Grid>
 				</Grid>
-				<TabsComponent />
+				<TabsComponent usuario={usuario} />
 			</>
 		)
 	);

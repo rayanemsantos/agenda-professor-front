@@ -9,7 +9,7 @@ import {
 	HowToRegRounded,
 } from '@mui/icons-material';
 
-export default function TabsComponent() {
+export default function TabsComponent({ usuario }) {
 	const [value, setValue] = useState(0);
 	const navBarItems = [
 		{
@@ -29,7 +29,7 @@ export default function TabsComponent() {
 			icon: StickyNote2Rounded,
 		},
 	];
-	return (
+	return usuario === 'professor' ? (
 		<Box
 			sx={{
 				position: 'fixed',
@@ -59,5 +59,7 @@ export default function TabsComponent() {
 				</BottomNavigation>
 			</Paper>
 		</Box>
+	) : (
+		''
 	);
 }
