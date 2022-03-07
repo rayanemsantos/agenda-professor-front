@@ -16,6 +16,7 @@ import {
 	ListItem,
 	Stack,
 	Typography,
+	Container
 } from '@mui/material';
 
 function Home({ history }) {
