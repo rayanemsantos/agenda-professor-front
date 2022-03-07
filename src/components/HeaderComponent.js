@@ -69,7 +69,7 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 		},
 	];
 
-	let menuItems;
+	let menuItems = []
 	if (usuario === 'professor') {
 		menuItems = professorMenuItems;
 	} else if (usuario === 'secretaria') {
@@ -84,6 +84,16 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 		{
 			page: 'Turmas',
 			icon: CoPresentOutlined,
+		},
+		{
+			page: 'Atividades',
+			icon: CoPresentOutlined,
+			onClick: () => history.push('/atividades'),
+		},
+		{
+			page: 'Calendário',
+			icon: CoPresentOutlined,
+			onClick: () => history.push('/calendario'),
 		},
 		{
 			page: 'Frequência',

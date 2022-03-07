@@ -5,9 +5,7 @@ import {
 } from "react-router-dom";
 import moment from "moment";
 
-import TabsComponent from '../../../../girafales-frontend/src/components/TabsComponent';
-import HeaderComponent from '../../../../girafales-frontend/src/components/HeaderComponent';
-import * as services from '../../../../girafales-frontend/src/services/service';
+import * as services from '../../services/service';
 
 import './Atividade.css';
 import '../../App.css'
