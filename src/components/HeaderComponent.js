@@ -25,7 +25,7 @@ import {
 	StickyNote2Outlined,
 } from '@mui/icons-material';
 
-const HeaderComponent = ({ history, user, hasMenu }) => {
+const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 	const anchor = 'right';
 	const [state, setState] = useState({
 		right: false,
@@ -38,7 +38,7 @@ const HeaderComponent = ({ history, user, hasMenu }) => {
 		setState({ ...state, [anchor]: open });
 	};
 
-	const menuItems = [
+	const professorMenuItems = [
 		{
 			page: 'Frequência',
 		},
@@ -53,7 +53,30 @@ const HeaderComponent = ({ history, user, hasMenu }) => {
 			onClick: () => signout(),
 		},
 	];
-	const sideBarItems = [
+	const secretariaMenuItems = [
+		{
+			page: 'Cadastrar Aluno',
+		},
+		{
+			page: 'Cadastrar Professor',
+		},
+		{
+			page: 'Turmas',
+		},
+		{
+			page: 'Sair',
+			onClick: () => signout(),
+		},
+	];
+
+	let menuItems;
+	if (usuario === 'professor') {
+		menuItems = professorMenuItems;
+	} else if (usuario === 'secretaria') {
+		menuItems = secretariaMenuItems;
+	}
+
+	const professorSideBarItems = [
 		{
 			page: 'Início',
 			icon: HomeOutlined,
@@ -80,12 +103,14 @@ const HeaderComponent = ({ history, user, hasMenu }) => {
 			onClick: () => signout(),
 		},
 	];
+
 	return (
 		<AppBar
 			position='static'
 			color='white'
 			elevation={0}
 			sx={{ height: '64px' }}
+			className={usuario}
 		>
 			<Container maxWidth='xl'>
 				<Toolbar disableGutters>
@@ -99,29 +124,39 @@ const HeaderComponent = ({ history, user, hasMenu }) => {
 							flexGrow: 1,
 							textDecoration: 'none',
 							display: { xs: 'flex', md: 'none' },
+							color: 'inherit',
 						}}
 					>
-						Canal do{' '}
-						<Box component='span' fontWeight='fontWeightBold' sx={{ ml: 1 }}>
-							Professor
+						Canal d{usuario === 'professor' ? 'o' : 'a'}
+						<Box
+							component='span'
+							fontWeight='fontWeightBold'
+							sx={{ ml: 1, textTransform: 'capitalize' }}
+						>
+							{usuario}
 						</Box>
 					</Typography>
+
 					{/* Texto do Header (> md) */}
 					<Typography
 						variant='h5'
 						noWrap
 						component='a'
 						href='/'
-						color='primary'
 						sx={{
 							mr: 2,
 							textDecoration: 'none',
 							display: { xs: 'none', md: 'flex' },
+							color: 'inherit',
 						}}
 					>
-						Canal do{' '}
-						<Box component='span' fontWeight='fontWeightBold' sx={{ ml: 1 }}>
-							Professor
+						Canal d{usuario === 'professor' ? 'o' : 'a'}
+						<Box
+							component='span'
+							fontWeight='fontWeightBold'
+							sx={{ ml: 1, textTransform: 'capitalize' }}
+						>
+							{usuario}
 						</Box>
 					</Typography>
 
@@ -144,9 +179,10 @@ const HeaderComponent = ({ history, user, hasMenu }) => {
 									open={state[anchor]}
 									onClose={toggleDrawer('right', false)}
 									onOpen={toggleDrawer('right', true)}
+									className={usuario}
 								>
-									<List>
-										{sideBarItems.map(item => (
+									<List className={usuario}>
+										{professorSideBarItems.map(item => (
 											<ListItem>
 												<ListItemButton onClick={item.onClick}>
 													<ListItemIcon>
@@ -178,8 +214,8 @@ const HeaderComponent = ({ history, user, hasMenu }) => {
 								<Button
 									key={item.page}
 									variant='text'
-									color='primary'
-									sx={{ mx: 1, my: 2, color: 'white', display: 'block' }}
+									color='inherit'
+									sx={{ mx: 1, my: 2 }}
 									onClick={item.onClick}
 								>
 									{item.page}

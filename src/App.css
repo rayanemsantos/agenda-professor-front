@@ -28,6 +28,17 @@
 	font-size: 12px !important;
 	font-weight: 500;
 }
+.MuiDrawer-root .MuiPaper-root svg {
+	color: white;
+}
+.MuiDrawer-root.secretaria .MuiPaper-root {
+	background-color: #00695c;
+}
+
+/* .secretaria {
+	color: #4db6ac;
+	border-bottom: solid 3px #4db6ac;
+} */
 /* 
 header {
 	width: 100vw;
