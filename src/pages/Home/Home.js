@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 
 import TabsComponent from '../../components/TabsComponent';
 import HeaderComponent from '../../components/HeaderComponent';
@@ -16,7 +17,6 @@ import {
 	ListItem,
 	Stack,
 	Typography,
-	Container
 } from '@mui/material';
 
 function Home({ history }) {
@@ -38,13 +38,13 @@ function Home({ history }) {
 			.fetchTurmas(user)
 			.then(res => {
 				setTurmas(res.data);
+				console.log(turmas);
 			})
 			.catch(err => console.log(err));
 	};
 	useEffect(() => {
 		getUser();
 	}, []);
-
 	if (!logged) {
 		return <Redirect to='/login' />;
 	}
@@ -73,11 +73,12 @@ function Home({ history }) {
 									<Box className='turno-manha'>
 										<Typography variant='h6'>Manhã</Typography>
 										<List>
+											{/* RAY: Fiz algumas turmas pra mim mas não tão retornando. Depois da uma olhada se fiz besteira? */}
 											{turmas
 												.filter(item => item.turno === 'Manhã')
 												.map(item => {
 													return (
-														<ListItem className='turma'>
+														<ListItem key={uuid()} className='turma'>
 															<Link href='dashboard.html'>
 																<List>
 																	<ListItem>
@@ -116,7 +117,7 @@ function Home({ history }) {
 												.filter(item => item.turno === 'Tarde')
 												.map(item => {
 													return (
-														<ListItem className='turma'>
+														<ListItem key={uuid()} className='turma'>
 															<Link href='dashboard.html'>
 																<List>
 																	<ListItem>

@@ -47,8 +47,8 @@ function Login({ history }) {
 			>
 				<Grid item sx={{ width: 424, padding: 2 }}>
 					<Paper sx={{ backgroundColor: '#f5f5f5', padding: 3 }}>
-						<Box className='form' component='form'>
-							<Stack className='login'>
+						<Box className='form'>
+							<Stack className='login' component='form'>
 								<Box className='text wrapper'>
 									<Typography variant='h2'>Login</Typography>
 									<Typography variant='body2'>
@@ -79,6 +79,7 @@ function Login({ history }) {
 										required
 									/>
 								</Stack>
+
 								<Button
 									className={'primary-button'}
 									style={{
@@ -86,10 +87,10 @@ function Login({ history }) {
 											form.email === '' && form.password === '' ? 0.5 : 1,
 									}}
 									disabled={form.email === '' && form.password === ''}
-									onClick={() => checkEmail()}
 									color='primary'
 									size='large'
 									sx={{ mt: 2, mb: 4 }}
+									onClick={() => checkEmail()}
 								>
 									login
 								</Button>
@@ -105,7 +106,6 @@ function Login({ history }) {
 								<Button
 									id='google-btn'
 									className='primary-button'
-									type='submit'
 									onClick={() => history.push('/cadastro')}
 									color='primary'
 									variant='text'

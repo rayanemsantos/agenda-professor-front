@@ -77,6 +77,17 @@ let theme = createTheme({
 				color: 'secondary',
 			},
 		},
+		MuiInputBase: {
+			defaultProps: {
+				variant: 'filled',
+				color: 'secondary',
+			},
+		},
+		MuiSelect: {
+			defaultProps: {
+				textTransform: 'capitalize',
+			},
+		},
 	},
 });
 theme = responsiveFontSizes(theme);
