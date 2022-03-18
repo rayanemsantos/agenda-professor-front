@@ -29,7 +29,7 @@ export default function TabsComponent({ usuario }) {
 			icon: StickyNote2Rounded,
 		},
 	];
-	return usuario === 'professor' ? (
+	return usuario === '' || 'professor' ? (
 		<Box
 			sx={{
 				position: 'fixed',

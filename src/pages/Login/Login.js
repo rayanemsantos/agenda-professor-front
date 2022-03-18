@@ -55,8 +55,8 @@ function Login({ history }) {
 			>
 				<Grid item sx={{ width: 424, padding: 2 }}>
 					<Paper sx={{ backgroundColor: '#f5f5f5', padding: 3 }}>
-						<Box className='form' component='form'>
-							<Stack className='login'>
+						<Box className='form'>
+							<Stack className='login' component='form'>
 								<Box className='text wrapper'>
 									<Typography variant='h2'>Login</Typography>
 									<Typography variant='body2'>
@@ -96,6 +96,7 @@ function Login({ history }) {
 										required
 									/>
 								</Stack>
+
 								<Button
 									className={'primary-button'}
 									style={{

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { Link, Redirect } from 'react-router-dom';
+import { v4 as uuid } from 'uuid';
 
 import TabsComponent from '../../components/TabsComponent';
 import HeaderComponent from '../../components/HeaderComponent';
@@ -17,7 +18,6 @@ import {
 	ListItem,
 	Stack,
 	Typography,
-	Container
 } from '@mui/material';
 
 function Home({ history }) {
@@ -32,13 +32,13 @@ function Home({ history }) {
 			.fetchTurmas()
 			.then(res => {
 				setTurmas(res.data);
+				console.log(turmas);
 			})
 			.catch(err => console.log(err));
 	};
 	useEffect(() => {
 		getTurmas();
 	}, []);
-
 	if (!logged) {
 		return <Redirect to='/login' />;
 	}
@@ -83,6 +83,7 @@ function Home({ history }) {
 									<Box className='turno-manha'>
 										<Typography variant='h6'>Manhã</Typography>
 										<List>
+											{/* RAY: Fiz algumas turmas pra mim mas não tão retornando. Depois da uma olhada se fiz besteira? */}
 											{turmas
 											.filter(item => item.shift === 'MANHÃ')
 											.map(item => {

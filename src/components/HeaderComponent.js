@@ -14,16 +14,20 @@ import {
 	Toolbar,
 	Typography,
 } from '@mui/material';
-
 import {
-	CoPresentOutlined,
-	HomeOutlined,
-	HowToRegOutlined,
-	LogoutOutlined,
+	CoPresentRounded,
+	EventRounded,
+	GroupAddRounded,
+	HomeRounded,
+	HowToRegRounded,
+	LogoutRounded,
 	Menu,
-	SchoolOutlined,
-	StickyNote2Outlined,
+	PersonAddAltRounded,
+	SchoolRounded,
+	StickyNote2Rounded,
+	TaskRounded,
 } from '@mui/icons-material';
+import { v4 as uuid } from 'uuid';
 
 const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 	const anchor = 'right';
@@ -38,7 +42,7 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 		setState({ ...state, [anchor]: open });
 	};
 
-	const professorMenuItems = [
+	const professorFixedMenu = [
 		{
 			page: 'Frequência',
 		},
@@ -48,12 +52,8 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 		{
 			page: 'Notas',
 		},
-		{
-			page: 'Sair',
-			onClick: () => signout(),
-		},
 	];
-	const secretariaMenuItems = [
+	const secretariaFixedMenu = [
 		{
 			page: 'Cadastrar Aluno',
 		},
@@ -63,56 +63,95 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 		{
 			page: 'Turmas',
 		},
-		{
-			page: 'Sair',
-			onClick: () => signout(),
-		},
 	];
-
-	let menuItems = []
-	if (usuario === 'professor') {
-		menuItems = professorMenuItems;
-	} else if (usuario === 'secretaria') {
-		menuItems = secretariaMenuItems;
-	}
-
-	const professorSideBarItems = [
+	const professorSidebar = [
 		{
 			page: 'Início',
-			icon: HomeOutlined,
+			icon: HomeRounded,
+			onClick: () => history.push('/'),
 		},
 		{
 			page: 'Turmas',
-			icon: CoPresentOutlined,
+			icon: CoPresentRounded,
 		},
 		{
 			page: 'Atividades',
-			icon: CoPresentOutlined,
+			icon: TaskRounded,
 			onClick: () => history.push('/atividades'),
 		},
 		{
 			page: 'Calendário',
-			icon: CoPresentOutlined,
+			icon: EventRounded,
 			onClick: () => history.push('/calendario'),
 		},
 		{
 			page: 'Frequência',
-			icon: HowToRegOutlined,
+			icon: HowToRegRounded,
 		},
 		{
 			page: 'Diário de Classe',
-			icon: StickyNote2Outlined,
+			icon: StickyNote2Rounded,
 		},
 		{
 			page: 'Notas',
-			icon: SchoolOutlined,
+			icon: SchoolRounded,
 		},
 		{
 			page: 'Sair',
-			icon: LogoutOutlined,
+			icon: LogoutRounded,
 			onClick: () => signout(),
 		},
 	];
+
+	const secretariaSidebar = [
+		{
+			page: 'Início',
+			icon: HomeRounded,
+			onClick: () => history.push('/'),
+		},
+		{
+			page: 'Turmas',
+			icon: CoPresentRounded,
+		},
+		{
+			page: 'Atividades',
+			icon: TaskRounded,
+			onClick: () => history.push('/atividades'),
+		},
+		{
+			page: 'Calendário',
+			icon: EventRounded,
+			onClick: () => history.push('/calendario'),
+		},
+		{
+			page: 'Cadastrar Aluno',
+			icon: GroupAddRounded,
+			onClick: () => history.push('/cadastrar-aluno'),
+		},
+		{
+			page: 'Cadastrar Professor',
+			icon: PersonAddAltRounded,
+			onClick: () => history.push('/cadastrar-professor'),
+		},
+		{
+			page: 'Sair',
+			icon: LogoutRounded,
+			onClick: () => signout(),
+		},
+	];
+
+	let menuItems = [];
+	if (usuario === 'professor') {
+		menuItems = professorFixedMenu;
+	} else if (usuario === 'secretaria') {
+		menuItems = secretariaFixedMenu;
+	}
+	let sidebarItems = [];
+	if (usuario === 'professor') {
+		sidebarItems = professorSidebar;
+	} else if (usuario === 'secretaria') {
+		sidebarItems = secretariaSidebar;
+	}
 
 	return (
 		<AppBar
@@ -124,7 +163,6 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 		>
 			<Container maxWidth='xl'>
 				<Toolbar disableGutters>
-					{/* Texto do Header (== sm) */}
 					<Typography
 						href='/'
 						variant='h5'
@@ -147,7 +185,6 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 						</Box>
 					</Typography>
 
-					{/* Texto do Header (> md) */}
 					<Typography
 						variant='h5'
 						noWrap
@@ -160,17 +197,21 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 							color: 'inherit',
 						}}
 					>
-						Canal d{usuario === 'professor' ? 'o' : 'a'}
+						Canal d
+						{usuario === 'professor'
+							? 'o'
+							: usuario === 'secretaria'
+							? 'a'
+							: 'a'}
 						<Box
 							component='span'
 							fontWeight='fontWeightBold'
 							sx={{ ml: 1, textTransform: 'capitalize' }}
 						>
-							{usuario}
+							{usuario ? usuario : 'escola'}
 						</Box>
 					</Typography>
 
-					{/* Menu (== sm)*/}
 					{hasMenu !== false ? (
 						<Box sx={{ flexGrow: 0 }}>
 							<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
@@ -192,8 +233,8 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 									className={usuario}
 								>
 									<List className={usuario}>
-										{professorSideBarItems.map(item => (
-											<ListItem>
+										{sidebarItems.map(item => (
+											<ListItem key={uuid()}>
 												<ListItemButton onClick={item.onClick}>
 													<ListItemIcon>
 														<item.icon />
@@ -212,7 +253,6 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 						''
 					)}
 
-					{/* Menu (> md)*/}
 					{hasMenu !== false ? (
 						<Box
 							sx={{
@@ -231,6 +271,21 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 									{item.page}
 								</Button>
 							))}
+							<IconButton
+								size='large'
+								aria-label='account of current user'
+								aria-controls='menu-appbar'
+								aria-haspopup='true'
+								onClick={toggleDrawer(anchor, true)}
+								color='inherit'
+								sx={{
+									height: 'fit-content',
+									my: 'auto',
+									display: { xs: 'none', md: 'flex' },
+								}}
+							>
+								<Menu />
+							</IconButton>
 						</Box>
 					) : (
 						''
@@ -241,42 +296,3 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 	);
 };
 export default HeaderComponent;
-
-// {
-// 	 <Menu
-// 								id='menu-appbar'
-// 								anchorEl={anchorElNav}
-// 								anchorOrigin={{
-// 									vertical: 'bottom',
-// 									horizontal: 'left',
-// 								}}
-// 								keepMounted
-// 								transformOrigin={{
-// 									vertical: 'top',
-// 									horizontal: 'left',
-// 								}}
-// 								open={Boolean(anchorElNav)}
-// 								onClose={handleCloseNavMenu}
-// 								sx={{
-// 									display: { xs: 'block', md: 'none' },
-// 								}}
-// 							>
-// }
-// {
-// 	 {pages.map(page => (
-// 								<MenuItem key={page} onClick={handleCloseNavMenu}>
-// 									<Typography textAlign='center'>{page}</Typography>
-// 								</MenuItem>
-// 							))}
-// }
-// {
-// 	 </Menu>
-// }
-// {
-// 	 <h3>{user.nomeCompleto}</h3>
-// 							<h5>{user.formacao}</h5>
-// 							Turmas
-// 							Atividades
-// 							Calendário
-// 							Sair
-// }

@@ -25,4 +25,3 @@ export function fetchEvents(data){
 export function newCalendarItem(data){
   return axios.post(`${config.URL_BASE}/calendario`, data)
 }
-

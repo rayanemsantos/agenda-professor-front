@@ -34,6 +34,9 @@
 .MuiDrawer-root.secretaria .MuiPaper-root {
 	background-color: #00695c;
 }
+.MuiTabScrollButton-root.MuiTabScrollButton-horizontal.Mui-disabled {
+	opacity: 0.2;
+}
 
 /* .secretaria {
 	color: #4db6ac;
