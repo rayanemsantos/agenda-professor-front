@@ -17,14 +17,15 @@ import 'moment/locale/pt-br';
 import HeaderComponent from './../../components/HeaderComponent';
 // import * as services from '../../services/service';
 
-export default function Aluno({history}) {
+export default function Aluno({ history }) {
 	const [form, setForm] = useState({
 		nomeCompleto: '',
 		email: '',
 		serie: '',
 		ensino: '',
-		dataNascimento: '1990-01-01',
+		dataNascimento: '2000-01-01',
 		nomeResponsavel: '',
+		parentesco: '',
 		telefoneResponsavel: '',
 		emailResponsavel: '',
 		cpf: '',
@@ -35,14 +36,14 @@ export default function Aluno({history}) {
 
 	return (
 		<>
-			<HeaderComponent hasMenu history={history}/>
+			<HeaderComponent hasMenu history={history} />
 			<Grid
 				container
 				alignItems='center'
 				justifyContent='center'
 				sx={{ my: 3 }}
 			>
-				<Grid item sx={{ width: '80%', padding: 2 }}>
+				<Grid item xs={12} md={8} lg={6} sx={{ padding: 2 }}>
 					<Box className='content-header' sx={{ mb: 2 }}>
 						<Typography variant='h4' sx={{ mt: 3 }}>
 							Cadastro
@@ -64,7 +65,7 @@ export default function Aluno({history}) {
 									<Stack
 										component='form'
 										className='input wrapper'
-										spacing={2}
+										spacing={4}
 										sx={{ mt: 2 }}
 									>
 										<Stack className='dados-pessoais' spacing={2}>
@@ -94,6 +95,7 @@ export default function Aluno({history}) {
 													setForm({ ...form, dataNascimento: e.target.value })
 												}
 												required
+												inputFormat='dd/MM/yyyy'
 												// helperText={errorMessage !== '' && message(errorMessage)}
 												renderInput={params => (
 													<TextField variant='outlined' {...params} />
@@ -120,11 +122,12 @@ export default function Aluno({history}) {
 												onChange={e =>
 													setForm({ ...form, endereco: e.target.value })
 												}
+												required
 											/>
 										</Stack>
 										<Stack className='endereco' spacing={2}>
 											<Typography variant='button' sx={{ mb: '-.5rem' }}>
-												Dados do Responsável
+												Família
 											</Typography>
 											<TextField
 												label='Nome do Responsável'
@@ -135,6 +138,18 @@ export default function Aluno({history}) {
 												value={form.nomeResponsavel}
 												onChange={e =>
 													setForm({ ...form, nomeResponsavel: e.target.value })
+												}
+												required
+											/>
+											<TextField
+												label='Parentesco'
+												variant='outlined'
+												type='text'
+												name='parentesco'
+												id='cadastro-parentesco'
+												value={form.parentesco}
+												onChange={e =>
+													setForm({ ...form, parentesco: e.target.value })
 												}
 												required
 											/>
@@ -171,6 +186,7 @@ export default function Aluno({history}) {
 												onChange={e =>
 													setForm({ ...form, emailResponsavel: e.target.value })
 												}
+												required
 											/>
 										</Stack>
 										<Stack className='documentacao' spacing={2}>
@@ -178,7 +194,7 @@ export default function Aluno({history}) {
 												Documentação
 											</Typography>
 											<InputMask
-												mask='999 999 999-99'
+												mask='999.999.999-99'
 												value={form.cpf}
 												disabled={false}
 												maskChar=' '

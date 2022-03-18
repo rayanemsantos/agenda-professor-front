@@ -14,23 +14,21 @@ function Navigation() {
 	return (
 		<div className='App'>
 		<Router>
-			{
-				user ? (
-					<Switch>
-						<Route path='/home' exact component={Home} />
-						<Route path="/atividades" exact component={Atividade} />
-						<Route path="/calendario" exact component={Calendario} />
-						<Route path='/cadastrar-professor' exact component={Professor}/>
-						<Route path='/cadastrar-aluno' exact component={Aluno}/>
-						<Route path='/' exact component={Home} />
-					</Switch>
-				) : (
-					<Switch>
-						<Route path='/' exact component={Login} />
-						<Route path='/login' exact component={Login} />
-					</Switch>
-				)
-			}
+			{user ? (
+				<Switch>
+					<Route path='/home' exact component={Home} />
+					<Route path='/atividades' exact component={Atividade} />
+					<Route path='/calendario' exact component={Calendario} />
+					<Route path='/cadastrar-professor' exact component={Professor} />
+					<Route path='/cadastrar-aluno' exact component={Aluno} />
+					<Route path='/' exact component={Home} />
+				</Switch>
+			) : (
+				<Switch>
+					<Route path='/' exact component={Login} />
+					<Route path='/login' exact component={Login} />
+				</Switch>
+			)}
 		</Router>
 		</div>
 	);

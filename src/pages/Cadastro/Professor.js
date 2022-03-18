@@ -17,10 +17,10 @@ import 'moment/locale/pt-br';
 import HeaderComponent from './../../components/HeaderComponent';
 // import * as services from '../../services/service';
 
-export default function Professor({history}) {
+export default function Professor({ history }) {
 	const [form, setForm] = useState({
 		nomeCompleto: '',
-		dataNascimento: '1',
+		dataNascimento: '1990-01-01',
 		email: '',
 		telefone: '',
 		escolaridade: '',
@@ -34,14 +34,14 @@ export default function Professor({history}) {
 
 	return (
 		<>
-			<HeaderComponent hasMenu history={history}/>
+			<HeaderComponent hasMenu history={history} />
 			<Grid
 				container
 				alignItems='center'
 				justifyContent='center'
 				sx={{ my: 3 }}
 			>
-				<Grid item sx={{ width: '80%', padding: 2 }}>
+				<Grid item xs={12} md={8} lg={6} sx={{ padding: 2 }}>
 					<Box className='content-header' sx={{ mb: 2 }}>
 						<Typography variant='h4' sx={{ mt: 3 }}>
 							Cadastro
@@ -63,7 +63,7 @@ export default function Professor({history}) {
 									<Stack
 										component='form'
 										className='input wrapper'
-										spacing={2}
+										spacing={4}
 										sx={{ mt: 2 }}
 									>
 										<Stack className='dados-pessoais' spacing={2}>
@@ -92,6 +92,7 @@ export default function Professor({history}) {
 												onChange={e =>
 													setForm({ ...form, dataNascimento: e.target.value })
 												}
+												inputFormat='dd/MM/yyyy'
 												required
 												// helperText={errorMessage !== '' && message(errorMessage)}
 												renderInput={params => (
@@ -147,7 +148,7 @@ export default function Professor({history}) {
 										</Stack>
 										<Stack className='endereco' spacing={2}>
 											<Typography variant='button' sx={{ mb: '-.5rem' }}>
-												Endereco
+												Endereço
 											</Typography>
 											<TextField
 												label='Endereço'
@@ -188,7 +189,7 @@ export default function Professor({history}) {
 												Documentação
 											</Typography>
 											<InputMask
-												mask='999 999 999-99'
+												mask='999.999.999-99'
 												value={form.cpf}
 												disabled={false}
 												maskChar=' '

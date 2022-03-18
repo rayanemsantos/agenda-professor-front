@@ -42,45 +42,45 @@ function Calendario({ history }) {
 	}, []);
 
 	return (
-			<>
-				<HeaderComponent
-					history={history}
-					handleClick={page => history.push(page)}
-				/>
-				<Box type='main'>
-					<Box type='section'>
-						<Box className='content-header'>
-							<Typography variant='h4' sx={{ mt: 3 }}>
-								Calendário
-							</Typography>
-							<Typography variant='overline' className='subtitle hora'>
-								{moment().format('dddd, DD MMM, LT')}
-							</Typography>
-						</Box>
+		<>
+			<HeaderComponent
+				history={history}
+				handleClick={page => history.push(page)}
+			/>
+			<Box component='main'>
+				<Box component='section'>
+					<Box className='content-header'>
+						<Typography variant='h4' sx={{ mt: 3 }}>
+							Calendário
+						</Typography>
+						<Typography variant='overline' className='subtitle hora'>
+							{moment().format('dddd, DD MMM, LT')}
+						</Typography>
+					</Box>
 
-						{/* <NewCalendario onCreateEvent={() => getEvents()} /> */}
+					{/* <NewCalendario onCreateEvent={() => getEvents()} /> */}
 
-						<Box className='task-content'>
-							<NewCalendario
-								open={open}
-								close={handleClose}
-								startDateTime={startDateTime}
-								endDateTime={endDateTime}
-							/>
-							<FullCalendar
-								plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-								select={handleOpen}
-								initialView='timeGridWeek'
-								selectable
-								selectMirror
-								nowIndicator
-								slotDuration='00:10:00'
-								slotLabelInterval='01:00:00'
-								eventTimeFormat={false}
-								locales='allLocales'
-								locale='pt-br'
-							/>
-							{/* {events.map(item => {
+					<Box className='task-content'>
+						<NewCalendario
+							open={open}
+							close={handleClose}
+							startDateTime={startDateTime}
+							endDateTime={endDateTime}
+						/>
+						<FullCalendar
+							plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+							select={handleOpen}
+							initialView='timeGridWeek'
+							selectable
+							selectMirror
+							nowIndicator
+							slotDuration='00:10:00'
+							slotLabelInterval='01:00:00'
+							eventTimeFormat={false}
+							locales='allLocales'
+							locale='pt-br'
+						/>
+						{/* {events.map(item => {
 								return (
 									<div className='atividade'>
 										<ul>
@@ -94,11 +94,11 @@ function Calendario({ history }) {
 									</div>
 								);
 							})} */}
-						</Box>
 					</Box>
 				</Box>
-				<TabsComponent />
-			</>
+			</Box>
+			<TabsComponent />
+		</>
 	);
 }
 

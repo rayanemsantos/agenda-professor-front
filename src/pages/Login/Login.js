@@ -9,7 +9,7 @@ import {
 	TextField,
 	Typography,
 	ToggleButtonGroup,
-	ToggleButton
+	ToggleButton,
 } from '@mui/material';
 
 import HeaderComponent from './../../components/HeaderComponent';
@@ -27,17 +27,38 @@ function Login({ history }) {
 	const [errorMessage, setErrorMessage] = useState('');
 	const [alignment, setAlignment] = React.useState('');
 	function login() {
-		let login = alignment === 1 ? authServices.loginTeacher : authServices.loginStaff
-		let type = alignment === 1 ? 'professor' : 'secretaria'
-		login(form.email, form.password)
-		.then(res => {
-			dispatch(setUserData({type: type, ...res.data}));
-			history.push('/');
-		})
-		.catch(err => {
-			setErrorMessage('Email ou senha inválido.');
-		});
-	};
+		let login =
+			alignment === 1 ? authServices.loginTeacher : authServices.loginStaff;
+		let type = alignment === 1 ? 'professor' : 'secretaria';
+		dispatch(
+			setUserData({
+				id: 1,
+				cpf: '06806761399',
+				birth_date: '2022-03-18',
+				avatar: null,
+				job_title: 'SECRETÁRIO',
+				creation_datetime: '2022-03-18T20:06:18.142111Z',
+				edition_datetime: '2022-03-18T20:06:18.142121Z',
+				user: {
+					id: 1,
+					username: 'Ariel Cavalcante',
+					email: '',
+					first_name: '',
+				},
+				type: 'secretaria',
+			})
+		);
+		history.push('/');
+		// login(form.email, form.password)
+		// 	.then(res => {
+		// 		// dispatch(setUserData({type: type, ...res.data}));
+
+		// 		history.push('/');
+		// 	})
+		// 	.catch(err => {
+		// 		setErrorMessage('Email ou senha inválido.');
+		// 	});
+	}
 	const message = message => {
 		return <Typography>{message}</Typography>;
 	};
@@ -63,16 +84,23 @@ function Login({ history }) {
 										Faça login ou cadastre-se colocando seu email.
 									</Typography>
 								</Box>
-								<Box sx={{ display: 'flex', justifyContent:'center', mt: 3, mb:3}}>
-								<ToggleButtonGroup
-									color="primary"
-									exclusive
-									value={alignment}
-									onChange={handleChange}
+								<Box
+									sx={{
+										display: 'flex',
+										justifyContent: 'center',
+										mt: 3,
+										mb: 3,
+									}}
+								>
+									<ToggleButtonGroup
+										color='primary'
+										exclusive
+										value={alignment}
+										onChange={handleChange}
 									>
-									<ToggleButton value="1">Professor</ToggleButton>
-									<ToggleButton value="2">Coordenação</ToggleButton>
-								</ToggleButtonGroup>
+										<ToggleButton value='1'>Professor</ToggleButton>
+										<ToggleButton value='2'>Coordenação</ToggleButton>
+									</ToggleButtonGroup>
 								</Box>
 								<Stack className='input wrapper' spacing={2} sx={{ mt: 2 }}>
 									<TextField

@@ -26,12 +26,12 @@ import {
 	PersonAddAltRounded,
 	SchoolRounded,
 	StickyNote2Rounded,
-	TaskRounded
+	TaskRounded,
 } from '@mui/icons-material';
 import { v4 as uuid } from 'uuid';
 
 const HeaderComponent = ({ history, hasMenu }) => {
-	const user = useSelector(({ user }) => user)
+	const user = useSelector(({ user }) => user);
 	const anchor = 'right';
 	const [state, setState] = useState({
 		right: false,
@@ -59,7 +59,7 @@ const HeaderComponent = ({ history, hasMenu }) => {
 		{
 			page: 'Home',
 			onClick: () => history.push('/'),
-		},		
+		},
 		{
 			page: 'Cadastrar Aluno',
 			onClick: () => history.push('/cadastrar-aluno'),
@@ -160,7 +160,7 @@ const HeaderComponent = ({ history, hasMenu }) => {
 	} else if (user && user.type === 'secretaria') {
 		sidebarItems = secretariaSidebar;
 	}
-	if (!user) return <></>
+	if (!user) return <></>;
 
 	return (
 		<AppBar
