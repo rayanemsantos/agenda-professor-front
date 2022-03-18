@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import Login from './pages/Login/Login';
@@ -8,15 +9,24 @@ import Atividade from './pages/Atividades/Atividade';
 import Calendario from './pages/Calendario/Calendario';
 
 function Navigation() {
+	const user = useSelector(({ user }) => user);
 	return (
 		<Router>
-			<Switch>
-			<Route path="/atividades" component={Atividade} />
-        	<Route path="/calendario" component={Calendario} />
-				<Route path='/login' component={Login} />
-				<Route path='/cadastro' component={Cadastro} />
-				<Route path='/' component={Home} />
-			</Switch>
+			{
+				user ? (
+					<Switch>
+						<Route path='/' component={Home} />
+						<Route path="/atividades" component={Atividade} />
+						<Route path="/calendario" component={Calendario} />
+					</Switch>
+				) : (
+					<Switch>
+						<Route path='/' component={Login} />
+						<Route path='/login' component={Login} />
+						<Route path='/cadastro' component={Cadastro} />
+					</Switch>
+				)
+			}
 		</Router>
 	);
 }
