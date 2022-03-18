@@ -17,16 +17,13 @@ import 'moment/locale/pt-br';
 import HeaderComponent from './../../components/HeaderComponent';
 // import * as services from '../../services/service';
 
-export default function Professor() {
-	console.log('oi')
+export default function Professor({history}) {
 	const [form, setForm] = useState({
 		nomeCompleto: '',
 		dataNascimento: '1',
 		email: '',
 		telefone: '',
 		escolaridade: '',
-		// estado: '',
-		// cidade: '',
 		endereco: '',
 		cpf: '',
 		rg: '',
@@ -37,7 +34,7 @@ export default function Professor() {
 
 	return (
 		<>
-			<HeaderComponent hasMenu />
+			<HeaderComponent hasMenu history={history}/>
 			<Grid
 				container
 				alignItems='center'
@@ -274,7 +271,7 @@ export default function Professor() {
 									size='large'
 									sx={{ mt: 2, mb: 4 }}
 								>
-									Cadastrar Aluno
+									Cadastrar
 								</Button>
 							</Stack>
 						</Box>

@@ -25,20 +25,9 @@ const defaultState = {
 
 function NewAtividade({ onCreateAtividade }) {
 	const [atividades, setAtividade] = useState([]);
-	const [logged, setLogged] = useState(true);
-	const [user, setUser] = useState(null);
 	const [form, setForm] = useState(defaultState);
 
-	const getUser = () => {
-		if (!localStorage.getItem('user')) {
-			setLogged(false);
-		} else {
-			var data = JSON.parse(localStorage.getItem('user'));
-			setUser(data);
-			getAtividades(data.user);
-		}
-	};
-	const getAtividades = user => {
+	const getAtividades = () => {
 		services
 			.fetchAtividades()
 			.then(res => {
@@ -56,14 +45,10 @@ function NewAtividade({ onCreateAtividade }) {
 			.catch(err => console.log(err));
 	};
 	useEffect(() => {
-		getUser();
+		getAtividades();
 	}, []);
 
-	if (!logged) {
-		return <Redirect to='/login' />;
-	}
 	return (
-		user && (
 			<>
 				<Box component='section' className='form'>
 					<Paper
@@ -152,7 +137,6 @@ function NewAtividade({ onCreateAtividade }) {
 					</Paper>
 				</Box>
 			</>
-		)
 	);
 }
 

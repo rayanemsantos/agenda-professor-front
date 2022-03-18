@@ -12,6 +12,7 @@ import Calendario from './pages/Calendario/Calendario';
 function Navigation() {
 	const user = useSelector(({ user }) => user);
 	return (
+		<div className='App'>
 		<Router>
 			{
 				user ? (
@@ -31,6 +32,7 @@ function Navigation() {
 				)
 			}
 		</Router>
+		</div>
 	);
 }
 

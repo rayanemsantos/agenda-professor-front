@@ -6,7 +6,6 @@ import { v4 as uuid } from 'uuid';
 import * as services from '../services/service';
 
 export default function ClassSelector() {
-	const [logged, setLogged] = useState(true);
 	const [user, setUser] = useState(null);
 
 	const [serie, setSerie] = useState([]);
@@ -25,18 +24,6 @@ export default function ClassSelector() {
 	const handleTurno = event => {
 		setTurno(event.target.value);
 	};
-
-	const getUser = () => {
-		if (!localStorage.getItem('user')) {
-			setLogged(false);
-		} else {
-			var data = JSON.parse(localStorage.getItem('user'));
-			setUser(data);
-		}
-	};
-	useEffect(() => {
-		getUser();
-	}, []);
 
 	const arrSerie = ['1', '2', '3'];
 	const arrSala = ['a', 'b', 'c', 'd'];

@@ -23,25 +23,19 @@ import {
 function Home({ history }) {
 	const user = useSelector(({ user }) => user);
 	let usuario = user.type;
-	console.log(user)
 	const [turmas, setTurmas] = useState([]);
-	const [logged, setLogged] = useState(true);
 	
 	const getTurmas = () => {
 		services
 			.fetchTurmas()
 			.then(res => {
 				setTurmas(res.data);
-				console.log(turmas);
 			})
 			.catch(err => console.log(err));
 	};
 	useEffect(() => {
 		getTurmas();
 	}, []);
-	if (!logged) {
-		return <Redirect to='/login' />;
-	}
 	
 	function schoolClassItem(item){
 		return (

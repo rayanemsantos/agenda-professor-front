@@ -40,7 +40,7 @@ function Cadastro({ history }) {
 	};
 	return (
 		<>
-			<HeaderComponent hasMenu={false} />
+			<HeaderComponent hasMenu={false} history={history}/>
 			<Grid
 				container
 				alignItems='center'

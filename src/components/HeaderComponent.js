@@ -57,10 +57,16 @@ const HeaderComponent = ({ history, hasMenu }) => {
 	];
 	const secretariaFixedMenu = [
 		{
+			page: 'Home',
+			onClick: () => history.push('/'),
+		},		
+		{
 			page: 'Cadastrar Aluno',
+			onClick: () => history.push('/cadastrar-aluno'),
 		},
 		{
 			page: 'Cadastrar Professor',
+			onClick: () => history.push('/cadastrar-professor'),
 		},
 		{
 			page: 'Turmas',
@@ -237,7 +243,6 @@ const HeaderComponent = ({ history, hasMenu }) => {
 								>
 									<List className={user.type}>
 										{sidebarItems.map(item => (
-											console.log(item),
 											<ListItem key={uuid()}>
 												<ListItemButton onClick={item.onClick}>
 													<ListItemIcon>

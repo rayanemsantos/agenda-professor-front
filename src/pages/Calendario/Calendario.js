@@ -16,9 +16,6 @@ import * as services from '../../services/service';
 
 function Calendario({ history }) {
 	const [events, setEvents] = useState([]);
-	const [logged, setLogged] = useState(true);
-	const [user, setUser] = useState(null);
-
 	const [startDateTime, setStartDateTime] = useState();
 	const [endDateTime, setEndDateTime] = useState();
 	const [open, setOpen] = useState(false);
@@ -32,16 +29,6 @@ function Calendario({ history }) {
 		return setOpen(false);
 	};
 
-	const getUser = () => {
-		if (!localStorage.getItem('user')) {
-			setLogged(false);
-		} else {
-			var data = JSON.parse(localStorage.getItem('user'));
-			setUser(data);
-			getEvents();
-		}
-	};
-
 	const getEvents = () => {
 		services
 			.fetchEvents()
@@ -51,18 +38,12 @@ function Calendario({ history }) {
 			.catch(err => console.log(err));
 	};
 	useEffect(() => {
-		getUser();
+		getEvents();
 	}, []);
 
-	if (!logged) {
-		return <Redirect to='/login' />;
-	}
-
 	return (
-		user && (
 			<>
 				<HeaderComponent
-					user={user}
 					history={history}
 					handleClick={page => history.push(page)}
 				/>
@@ -118,7 +99,6 @@ function Calendario({ history }) {
 				</Box>
 				<TabsComponent />
 			</>
-		)
 	);
 }
 

@@ -17,7 +17,7 @@ import 'moment/locale/pt-br';
 import HeaderComponent from './../../components/HeaderComponent';
 // import * as services from '../../services/service';
 
-export default function Aluno({ history, logged, user, usuario }) {
+export default function Aluno({history}) {
 	const [form, setForm] = useState({
 		nomeCompleto: '',
 		email: '',
@@ -35,7 +35,7 @@ export default function Aluno({ history, logged, user, usuario }) {
 
 	return (
 		<>
-			<HeaderComponent usuario={usuario} hasMenu />
+			<HeaderComponent hasMenu history={history}/>
 			<Grid
 				container
 				alignItems='center'
@@ -215,7 +215,7 @@ export default function Aluno({ history, logged, user, usuario }) {
 									size='large'
 									sx={{ mt: 2, mb: 4 }}
 								>
-									Cadastrar Aluno
+									Cadastrar
 								</Button>
 							</Stack>
 						</Box>
