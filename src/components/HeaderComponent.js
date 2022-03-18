@@ -57,10 +57,6 @@ const HeaderComponent = ({ history, hasMenu }) => {
 	];
 	const secretariaFixedMenu = [
 		{
-			page: 'Home',
-			onClick: () => history.push('/'),
-		},
-		{
 			page: 'Cadastrar Aluno',
 			onClick: () => history.push('/cadastrar-aluno'),
 		},
