@@ -15,7 +15,6 @@ function Navigation() {
 	return (
 		<Router>
 			<Switch>
-				{/* <Layout> */}
 				<Route path='/atividades'>
 					<Atividade usuario={usuario} />
 				</Route>
@@ -34,7 +33,6 @@ function Navigation() {
 				<Route path='/'>
 					<Home usuario={usuario} />
 				</Route>
-				{/* </Layout> */}
 			</Switch>
 		</Router>
 	);
