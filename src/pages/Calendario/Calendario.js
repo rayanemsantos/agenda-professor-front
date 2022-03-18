@@ -14,7 +14,7 @@ import NewCalendario from './NewCalendario';
 
 import * as services from '../../services/service';
 
-function Calendario({ history }) {
+function Calendario({ history, usuario }) {
 	const [events, setEvents] = useState([]);
 	const [logged, setLogged] = useState(true);
 	const [user, setUser] = useState(null);
@@ -31,9 +31,6 @@ function Calendario({ history }) {
 	const handleClose = e => {
 		return setOpen(false);
 	};
-
-	// RAY: Tipo de usuário mocado
-	const usuario = 'professor';
 
 	const getUser = () => {
 		if (!localStorage.getItem('user')) {
@@ -66,6 +63,7 @@ function Calendario({ history }) {
 			<>
 				<HeaderComponent
 					user={user}
+					usuario={usuario}
 					history={history}
 					handleClick={page => history.push(page)}
 				/>

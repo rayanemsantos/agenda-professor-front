@@ -15,19 +15,21 @@ import {
 	Typography,
 } from '@mui/material';
 import {
-	CoPresentOutlined,
-	EventOutlined,
-	HomeOutlined,
-	HowToRegOutlined,
-	LogoutOutlined,
+	CoPresentRounded,
+	EventRounded,
+	GroupAddRounded,
+	HomeRounded,
+	HowToRegRounded,
+	LogoutRounded,
 	Menu,
-	SchoolOutlined,
-	StickyNote2Outlined,
-	TaskOutlined,
+	PersonAddAltRounded,
+	SchoolRounded,
+	StickyNote2Rounded,
+	TaskRounded,
 } from '@mui/icons-material';
 import { v4 as uuid } from 'uuid';
 
-const HeaderComponent = ({ history, user, hasMenu, usuario = 'professor' }) => {
+const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 	const anchor = 'right';
 	const [state, setState] = useState({
 		right: false,
@@ -51,45 +53,7 @@ const HeaderComponent = ({ history, user, hasMenu, usuario = 'professor' }) => {
 			page: 'Notas',
 		},
 	];
-	const professorSidebar = [
-		{
-			page: 'Início',
-			icon: HomeOutlined,
-		},
-		{
-			page: 'Turmas',
-			icon: CoPresentOutlined,
-		},
-		{
-			page: 'Atividades',
-			icon: TaskOutlined,
-			onClick: () => history.push('/atividades'),
-		},
-		{
-			page: 'Calendário',
-			icon: EventOutlined,
-			onClick: () => history.push('/calendario'),
-		},
-		{
-			page: 'Frequência',
-			icon: HowToRegOutlined,
-		},
-		{
-			page: 'Diário de Classe',
-			icon: StickyNote2Outlined,
-		},
-		{
-			page: 'Notas',
-			icon: SchoolOutlined,
-		},
-		{
-			page: 'Sair',
-			icon: LogoutOutlined,
-			onClick: () => signout(),
-		},
-	];
-
-	const secretariaSidebar = [
+	const secretariaFixedMenu = [
 		{
 			page: 'Cadastrar Aluno',
 		},
@@ -99,8 +63,79 @@ const HeaderComponent = ({ history, user, hasMenu, usuario = 'professor' }) => {
 		{
 			page: 'Turmas',
 		},
+	];
+	const professorSidebar = [
+		{
+			page: 'Início',
+			icon: HomeRounded,
+			onClick: () => history.push('/'),
+		},
+		{
+			page: 'Turmas',
+			icon: CoPresentRounded,
+		},
+		{
+			page: 'Atividades',
+			icon: TaskRounded,
+			onClick: () => history.push('/atividades'),
+		},
+		{
+			page: 'Calendário',
+			icon: EventRounded,
+			onClick: () => history.push('/calendario'),
+		},
+		{
+			page: 'Frequência',
+			icon: HowToRegRounded,
+		},
+		{
+			page: 'Diário de Classe',
+			icon: StickyNote2Rounded,
+		},
+		{
+			page: 'Notas',
+			icon: SchoolRounded,
+		},
 		{
 			page: 'Sair',
+			icon: LogoutRounded,
+			onClick: () => signout(),
+		},
+	];
+
+	const secretariaSidebar = [
+		{
+			page: 'Início',
+			icon: HomeRounded,
+			onClick: () => history.push('/'),
+		},
+		{
+			page: 'Turmas',
+			icon: CoPresentRounded,
+		},
+		{
+			page: 'Atividades',
+			icon: TaskRounded,
+			onClick: () => history.push('/atividades'),
+		},
+		{
+			page: 'Calendário',
+			icon: EventRounded,
+			onClick: () => history.push('/calendario'),
+		},
+		{
+			page: 'Cadastrar Aluno',
+			icon: GroupAddRounded,
+			onClick: () => history.push('/cadastrar-aluno'),
+		},
+		{
+			page: 'Cadastrar Professor',
+			icon: PersonAddAltRounded,
+			onClick: () => history.push('/cadastrar-professor'),
+		},
+		{
+			page: 'Sair',
+			icon: LogoutRounded,
 			onClick: () => signout(),
 		},
 	];
@@ -109,7 +144,13 @@ const HeaderComponent = ({ history, user, hasMenu, usuario = 'professor' }) => {
 	if (usuario === 'professor') {
 		menuItems = professorFixedMenu;
 	} else if (usuario === 'secretaria') {
-		menuItems = secretariaSidebar;
+		menuItems = secretariaFixedMenu;
+	}
+	let sidebarItems = [];
+	if (usuario === 'professor') {
+		sidebarItems = professorSidebar;
+	} else if (usuario === 'secretaria') {
+		sidebarItems = secretariaSidebar;
 	}
 
 	return (
@@ -156,13 +197,18 @@ const HeaderComponent = ({ history, user, hasMenu, usuario = 'professor' }) => {
 							color: 'inherit',
 						}}
 					>
-						Canal d{usuario === 'professor' ? 'o' : 'a'}
+						Canal d
+						{usuario === 'professor'
+							? 'o'
+							: usuario === 'secretaria'
+							? 'a'
+							: 'a'}
 						<Box
 							component='span'
 							fontWeight='fontWeightBold'
 							sx={{ ml: 1, textTransform: 'capitalize' }}
 						>
-							{usuario}
+							{usuario ? usuario : 'escola'}
 						</Box>
 					</Typography>
 
@@ -187,7 +233,7 @@ const HeaderComponent = ({ history, user, hasMenu, usuario = 'professor' }) => {
 									className={usuario}
 								>
 									<List className={usuario}>
-										{professorSidebar.map(item => (
+										{sidebarItems.map(item => (
 											<ListItem key={uuid()}>
 												<ListItemButton onClick={item.onClick}>
 													<ListItemIcon>

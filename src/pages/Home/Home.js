@@ -19,7 +19,7 @@ import {
 	Typography,
 } from '@mui/material';
 
-function Home({ history }) {
+function Home({ history, usuario }) {
 	const [turmas, setTurmas] = useState([]);
 	const [logged, setLogged] = useState(true);
 	const [user, setUser] = useState(null);
@@ -48,9 +48,6 @@ function Home({ history }) {
 	if (!logged) {
 		return <Redirect to='/login' />;
 	}
-
-	// RAY: deixei 'pronto' pra receber os perfis 'professor' e 'secretaria'. Só dar um CTRL + SHIFT + F em 'usuario' e botar o obj
-	let usuario = 'professor';
 
 	return (
 		user && (
