@@ -26,19 +26,15 @@ import { v4 as uuid } from 'uuid';
 
 const defaultState = { evento: '', data: '', errorMessage: '' };
 
-function Drag(props) {
-	return (
-		<Draggable
-			handle='#draggable-dialog-title'
-			cancel={'[class*="MuiDialogContent-root"]'}
-		>
-			<Paper sx={{ width: '70vw' }} {...props} />
-		</Draggable>
-	);
-}
-
 const arr = ['Diário', 'Semanal', 'Quinzenal', 'Mensal'];
-function NewCalendario({ onCreateEvent, open, close, usuario }) {
+function NewCalendario({
+	onCreateEvent,
+	open,
+	close,
+	usuario,
+	startDateTime,
+	endDateTime,
+}) {
 	// RAY: Não tenho ctz de como adicionar mais de uma aula no mesmo dia, mas ta aí
 	const [initialTime, setInitialTime] = useState(null);
 	const [endTime, setEndTime] = useState(null);
@@ -69,43 +65,61 @@ function NewCalendario({ onCreateEvent, open, close, usuario }) {
 
 	// RAY: O chip qd clica ta marcando tudo. Help.
 	// RAY: No momento o botão de salvar só ta fechando o modal
-
+	// TODO: Responsividade
+	const nodeRef = React.useRef(null);
 	return (
-		<Dialog open={open} onClose={close} PaperComponent={Drag} usuario={usuario}>
-			<DialogTitle
-				sx={{
-					display: 'flex',
-					justifyContent: 'space-between',
-					cursor: 'move',
-				}}
-				aria-labelledby='draggable-dialog-title'
-				id='draggable-dialog-title'
+		<Draggable
+			handle='#draggable-dialog-title'
+			cancel={'[class*="MuiDialogContent-root"]'}
+			nodeRef={nodeRef}
+		>
+			<Dialog
+				ref={nodeRef}
+				open={open}
+				onClose={close}
+				usuario={usuario}
+				maxWidth='lg'
+				fullWidth
 			>
-				<DragHandleRounded />
-				<CloseRounded onClick={close} sx={{ cursor: 'pointer' }} />
-			</DialogTitle>
-			<DialogContent sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
-				<TextField
-					placeholder='Adicionar título'
-					fullWidth
-					variant='standard'
-					margin='normal'
-				/>
-				{usuario === 'secretaria' ? (
-					<Tabs value={value} onChange={handleChange}>
-						<Tab label='Aula' index={0} variant='text' />
-						<Tab label='Prova' index={1} variant='text' />
-						<Tab label='Evento' index={2} variant='text' />
-						<Tab label='Entrega de Atividade' index={3} />
-					</Tabs>
-				) : (
-					<Tabs value={value} onChange={handleChange}>
-						<Tab label='Prova' index={0} />
-						<Tab label='Evento' index={1} />
-						<Tab label='Entrega de Atividade' index={2} />
-					</Tabs>
-				)}
-				{usuario === 'secretaria' ? (
+				<DialogTitle
+					sx={{
+						display: 'flex',
+						justifyContent: 'space-between',
+					}}
+					aria-labelledby='draggable-dialog-title'
+				>
+					<DragHandleRounded
+						id='draggable-dialog-title'
+						sx={{
+							cursor: 'move',
+						}}
+					/>
+					<CloseRounded onClick={close} sx={{ cursor: 'pointer' }} />
+				</DialogTitle>
+				<DialogContent
+					sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
+				>
+					<TextField
+						placeholder='Adicionar título'
+						fullWidth
+						variant='standard'
+						margin='normal'
+					/>
+					{usuario === 'secretaria' ? (
+						<Tabs value={value} onChange={handleChange}>
+							<Tab label='Prova' index={0} variant='text' />
+							<Tab label='Entrega de Atividade' index={1} variant='text' />
+							<Tab label='Feriado' index={2} variant='text' />
+							<Tab label='Outros' index={3} />
+						</Tabs>
+					) : (
+						<Tabs value={value} onChange={handleChange}>
+							<Tab label='Prova' index={0} />
+							<Tab label='Entrega de Atividade' index={1} />
+							<Tab label='Lembrete' index={2} />
+						</Tabs>
+					)}
+					{/* {usuario === 'secretaria' ? (
 					<Stack my={2} sx={{ gap: 0.5 }}>
 						<Typography variant='body2' fontWeight='medium'>
 							Repetir:
@@ -143,44 +157,45 @@ function NewCalendario({ onCreateEvent, open, close, usuario }) {
 					</Stack>
 				) : (
 					''
-				)}
-				<Stack>
-					<Typography variant='h6'>Seg</Typography>
-					<LocalizationProvider dateAdapter={AdapterDateFns}>
-						<Box sx={{ display: 'flex', gap: 2 }}>
-							<TimePicker
-								value={initialTime}
-								onChange={newTime => {
-									setInitialTime(newTime);
-								}}
-								inputFormat='hh:mm'
-								renderInput={params => (
-									<TextField variant='outlined' {...params} />
-								)}
-								required
-							/>
-							<TimePicker
-								value={endTime}
-								onChange={newTime => {
-									setEndTime(newTime);
-								}}
-								inputFormat='hh:mm'
-								renderInput={params => (
-									<TextField variant='outlined' {...params} />
-								)}
-								required
-							/>
-						</Box>
-					</LocalizationProvider>
-				</Stack>
-			</DialogContent>
-			<DialogActions>
-				<Button variant='text' onClick={close}>
-					Cancelar
-				</Button>
-				<Button onClick={close}>Salvar</Button>
-			</DialogActions>
-		</Dialog>
+				)} */}
+					<Stack>
+						<Typography variant='h6'>Seg</Typography>
+						<LocalizationProvider dateAdapter={AdapterDateFns}>
+							<Stack sx={{ display: 'flex', gap: 2, width: 160 }}>
+								<TimePicker
+									onChange={newTime => {
+										setInitialTime(newTime);
+									}}
+									value={startDateTime}
+									renderInput={params => (
+										<TextField variant='outlined' {...params} />
+									)}
+									required
+									ampm={false}
+								/>
+								<TimePicker
+									value={endDateTime}
+									onChange={newTime => {
+										setEndTime(newTime);
+									}}
+									renderInput={params => (
+										<TextField variant='outlined' {...params} />
+									)}
+									required
+									ampm={false}
+								/>
+							</Stack>
+						</LocalizationProvider>
+					</Stack>
+				</DialogContent>
+				<DialogActions>
+					<Button variant='text' onClick={close}>
+						Cancelar
+					</Button>
+					<Button onClick={close}>Salvar</Button>
+				</DialogActions>
+			</Dialog>
+		</Draggable>
 	);
 }
 

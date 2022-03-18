@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Redirect, Link } from 'react-router-dom';
 import moment from 'moment';
+import { Box, Stack, Typography } from '@mui/material';
 import FullCalendar from '@fullcalendar/react';
 import dayGridPlugin from '@fullcalendar/daygrid';
+import timeGridPlugin from '@fullcalendar/timegrid';
 import interactionPlugin from '@fullcalendar/interaction';
-import { Box, Stack, Typography } from '@mui/material';
+import allLocales from '@fullcalendar/core/locales-all';
 
 import TabsComponent from '../../components/TabsComponent';
 import HeaderComponent from '../../components/HeaderComponent';
@@ -17,12 +19,21 @@ function Calendario({ history }) {
 	const [logged, setLogged] = useState(true);
 	const [user, setUser] = useState(null);
 
-	const [open, setOpen] = React.useState(false);
-	const handleOpen = () => setOpen(true);
-	const handleClose = () => setOpen(false);
+	const [startDateTime, setStartDateTime] = useState();
+	const [endDateTime, setEndDateTime] = useState();
+	const [open, setOpen] = useState(false);
+	const handleOpen = e => {
+		setStartDateTime(e.start);
+		setEndDateTime(e.end);
+
+		return setOpen(true);
+	};
+	const handleClose = e => {
+		return setOpen(false);
+	};
 
 	// RAY: Tipo de usuário mocado
-	const usuario = 'secretaria';
+	const usuario = 'professor';
 
 	const getUser = () => {
 		if (!localStorage.getItem('user')) {
@@ -76,11 +87,21 @@ function Calendario({ history }) {
 								open={open}
 								close={handleClose}
 								usuario={usuario}
+								startDateTime={startDateTime}
+								endDateTime={endDateTime}
 							/>
 							<FullCalendar
-								plugins={[dayGridPlugin, interactionPlugin]}
-								dateClick={handleOpen}
-								initialView='dayGridMonth'
+								plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+								select={handleOpen}
+								initialView='timeGridWeek'
+								selectable
+								selectMirror
+								nowIndicator
+								slotDuration='00:10:00'
+								slotLabelInterval='01:00:00'
+								eventTimeFormat={false}
+								locales='allLocales'
+								locale='pt-br'
 							/>
 							{/* {events.map(item => {
 								return (
