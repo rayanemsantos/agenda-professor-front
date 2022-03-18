@@ -65,7 +65,7 @@ function Home({ history }) {
 	return (
 		user && (
 			<>
-				<HeaderComponent user={user} usuario={usuario} history={history} />
+				<HeaderComponent user={user} history={history} />
 				<Grid container>
 					<Grid item xs={12} sx={{ mx: 'auto' }}>
 						<Stack sx={{ mx: 2 }}>

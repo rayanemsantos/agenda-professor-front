@@ -14,7 +14,7 @@ import NewCalendario from './NewCalendario';
 
 import * as services from '../../services/service';
 
-function Calendario({ history, usuario }) {
+function Calendario({ history }) {
 	const [events, setEvents] = useState([]);
 	const [logged, setLogged] = useState(true);
 	const [user, setUser] = useState(null);
@@ -63,7 +63,6 @@ function Calendario({ history, usuario }) {
 			<>
 				<HeaderComponent
 					user={user}
-					usuario={usuario}
 					history={history}
 					handleClick={page => history.push(page)}
 				/>
@@ -84,7 +83,6 @@ function Calendario({ history, usuario }) {
 							<NewCalendario
 								open={open}
 								close={handleClose}
-								usuario={usuario}
 								startDateTime={startDateTime}
 								endDateTime={endDateTime}
 							/>

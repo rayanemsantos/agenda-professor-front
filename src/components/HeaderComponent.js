@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 import {
 	AppBar,
 	Box,
@@ -25,11 +26,12 @@ import {
 	PersonAddAltRounded,
 	SchoolRounded,
 	StickyNote2Rounded,
-	TaskRounded,
+	TaskRounded
 } from '@mui/icons-material';
 import { v4 as uuid } from 'uuid';
 
-const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
+const HeaderComponent = ({ history, hasMenu }) => {
+	const user = useSelector(({ user }) => user)
 	const anchor = 'right';
 	const [state, setState] = useState({
 		right: false,
@@ -141,17 +143,18 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 	];
 
 	let menuItems = [];
-	if (usuario === 'professor') {
+	if (user && user.type === 'professor') {
 		menuItems = professorFixedMenu;
-	} else if (usuario === 'secretaria') {
+	} else if (user && user.type === 'secretaria') {
 		menuItems = secretariaFixedMenu;
 	}
 	let sidebarItems = [];
-	if (usuario === 'professor') {
+	if (user && user.type === 'professor') {
 		sidebarItems = professorSidebar;
-	} else if (usuario === 'secretaria') {
+	} else if (user && user.type === 'secretaria') {
 		sidebarItems = secretariaSidebar;
 	}
+	if (!user) return <></>
 
 	return (
 		<AppBar
@@ -159,7 +162,7 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 			color='white'
 			elevation={0}
 			sx={{ height: '64px' }}
-			className={usuario}
+			className={user.type}
 		>
 			<Container maxWidth='xl'>
 				<Toolbar disableGutters>
@@ -175,13 +178,13 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 							color: 'inherit',
 						}}
 					>
-						Canal d{usuario === 'professor' ? 'o' : 'a'}
+						Canal d{user.type === 'professor' ? 'o' : 'a'}
 						<Box
 							component='span'
 							fontWeight='fontWeightBold'
 							sx={{ ml: 1, textTransform: 'capitalize' }}
 						>
-							{usuario}
+							{user.type}
 						</Box>
 					</Typography>
 
@@ -198,9 +201,9 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 						}}
 					>
 						Canal d
-						{usuario === 'professor'
+						{user.type === 'professor'
 							? 'o'
-							: usuario === 'secretaria'
+							: user.type === 'secretaria'
 							? 'a'
 							: 'a'}
 						<Box
@@ -208,7 +211,7 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 							fontWeight='fontWeightBold'
 							sx={{ ml: 1, textTransform: 'capitalize' }}
 						>
-							{usuario ? usuario : 'escola'}
+							{user.type ? user.type : 'escola'}
 						</Box>
 					</Typography>
 
@@ -230,10 +233,11 @@ const HeaderComponent = ({ history, user, hasMenu, usuario }) => {
 									open={state[anchor]}
 									onClose={toggleDrawer('right', false)}
 									onOpen={toggleDrawer('right', true)}
-									className={usuario}
+									className={user.type}
 								>
-									<List className={usuario}>
+									<List className={user.type}>
 										{sidebarItems.map(item => (
+											console.log(item),
 											<ListItem key={uuid()}>
 												<ListItemButton onClick={item.onClick}>
 													<ListItemIcon>

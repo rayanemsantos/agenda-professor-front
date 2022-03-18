@@ -11,6 +11,7 @@ import {
 } from '@mui/material';
 import { v4 as uuid } from 'uuid';
 import moment from 'moment';
+import { useSelector } from 'react-redux';
 
 import TabsComponent from '../../components/TabsComponent';
 import HeaderComponent from '../../components/HeaderComponent';
@@ -20,33 +21,20 @@ import * as services from '../../services/service';
 
 function Atividades({ history }) {
 	const [atividades, setAtividade] = useState([]);
-	const [logged, setLogged] = useState(true);
-	const [user, setUser] = useState(null);
+	const user = useSelector(({ user }) => user)
 
-	const getUser = () => {
-		if (!localStorage.getItem('user')) {
-			setLogged(false);
-		} else {
-			var data = JSON.parse(localStorage.getItem('user'));
-			setUser(data);
-			getAtividades(data.user);
-		}
-	};
-	const getAtividades = () => {
-		services
-			.fetchAtividades()
-			.then(res => {
-				setAtividade(res.data);
-			})
-			.catch(err => console.log(err));
-	};
-	useEffect(() => {
-		getUser();
-	}, []);
+	// const getAtividades = () => {
+	// 	services
+	// 		.fetchAtividades()
+	// 		.then(res => {
+	// 			setAtividade(res.data);
+	// 		})
+	// 		.catch(err => console.log(err));
+	// };
+	// useEffect(() => {
+	// 	getAtividades();
+	// }, []);
 
-	if (!logged) {
-		return <Redirect to='/login' />;
-	}
 	return (
 		user && (
 			<>
@@ -68,7 +56,7 @@ function Atividades({ history }) {
 						</Box>
 						<Grid container spacing={2}>
 							<Grid item xs={12} md={6} mb={3}>
-								<NewAtividade onCreateAtividade={() => getAtividades()} />
+								<NewAtividade onCreateAtividade={null} />
 							</Grid>
 							<Grid
 								item

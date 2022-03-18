@@ -17,7 +17,8 @@ import 'moment/locale/pt-br';
 import HeaderComponent from './../../components/HeaderComponent';
 // import * as services from '../../services/service';
 
-export default function Aluno({ history, logged, user, usuario }) {
+export default function Professor() {
+	console.log('oi')
 	const [form, setForm] = useState({
 		nomeCompleto: '',
 		dataNascimento: '1',
@@ -36,7 +37,7 @@ export default function Aluno({ history, logged, user, usuario }) {
 
 	return (
 		<>
-			<HeaderComponent usuario={usuario} hasMenu />
+			<HeaderComponent hasMenu />
 			<Grid
 				container
 				alignItems='center'
