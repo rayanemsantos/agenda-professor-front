@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
-import { useSelector } from 'react-redux';
 import {
 	AppBar,
 	Box,
 	Button,
-	Container,
+	Grid,
 	IconButton,
 	List,
 	ListItem,
@@ -30,14 +29,13 @@ import {
 } from '@mui/icons-material';
 import { v4 as uuid } from 'uuid';
 
-const HeaderComponent = ({ history, hasMenu }) => {
-	const user = useSelector(({ user }) => user);
+const HeaderComponent = ({ alignment, history, hasMenu, user }) => {
 	const anchor = 'right';
 	const [state, setState] = useState({
 		right: false,
 	});
 	const signout = () => {
-		localStorage.removeItem('user');
+		localStorage.removeItem('persist:user');
 		history.push('/login');
 	};
 	const toggleDrawer = (anchor, open) => event => {
@@ -106,12 +104,21 @@ const HeaderComponent = ({ history, hasMenu }) => {
 			onClick: () => signout(),
 		},
 	];
-
 	const secretariaSidebar = [
 		{
 			page: 'Início',
 			icon: HomeRounded,
 			onClick: () => history.push('/'),
+		},
+		{
+			page: 'Cadastrar Aluno',
+			icon: GroupAddRounded,
+			onClick: () => history.push('/cadastrar-aluno'),
+		},
+		{
+			page: 'Cadastrar Professor',
+			icon: PersonAddAltRounded,
+			onClick: () => history.push('/cadastrar-professor'),
 		},
 		{
 			page: 'Turmas',
@@ -128,16 +135,6 @@ const HeaderComponent = ({ history, hasMenu }) => {
 			onClick: () => history.push('/calendario'),
 		},
 		{
-			page: 'Cadastrar Aluno',
-			icon: GroupAddRounded,
-			onClick: () => history.push('/cadastrar-aluno'),
-		},
-		{
-			page: 'Cadastrar Professor',
-			icon: PersonAddAltRounded,
-			onClick: () => history.push('/cadastrar-professor'),
-		},
-		{
 			page: 'Sair',
 			icon: LogoutRounded,
 			onClick: () => signout(),
@@ -147,122 +144,122 @@ const HeaderComponent = ({ history, hasMenu }) => {
 	let menuItems = [];
 	if (user && user.type === 'professor') {
 		menuItems = professorFixedMenu;
-	} else if (user && user.type === 'secretaria') {
+	} else {
 		menuItems = secretariaFixedMenu;
 	}
 	let sidebarItems = [];
 	if (user && user.type === 'professor') {
 		sidebarItems = professorSidebar;
-	} else if (user && user.type === 'secretaria') {
+	} else {
 		sidebarItems = secretariaSidebar;
 	}
-	if (!user) return <></>;
 
 	return (
 		<AppBar
 			position='static'
 			color='white'
 			elevation={0}
-			sx={{ height: '64px' }}
-			className={user.type}
+			className={user ? user.type : 'escola'}
+			sx={{
+				height: '64px',
+				position: 'fixed',
+				top: 0,
+				left: 0,
+				right: 0,
+				width: 'auto',
+			}}
 		>
-			<Container maxWidth='xl'>
-				<Toolbar disableGutters>
-					<Typography
-						href='/'
-						variant='h5'
-						noWrap
-						component='a'
-						sx={{
-							flexGrow: 1,
-							textDecoration: 'none',
-							display: { xs: 'flex', md: 'none' },
-							color: 'inherit',
-						}}
-					>
-						Canal d{user.type === 'professor' ? 'o' : 'a'}
-						<Box
-							component='span'
-							fontWeight='fontWeightBold'
-							sx={{ ml: 1, textTransform: 'capitalize' }}
+			<Grid
+				container
+				maxWidth='xl'
+				sx={{ my: 'auto', justifyContent: 'center' }}
+			>
+				<Grid item xs={12} md={8}>
+					<Toolbar>
+						<Typography
+							href='/'
+							variant='h5'
+							noWrap
+							component='a'
+							sx={{
+								flexGrow: 1,
+								textDecoration: 'none',
+								display: { xs: 'flex', lg: 'none' },
+								color: 'inherit',
+							}}
 						>
-							{user.type}
-						</Box>
-					</Typography>
-
-					<Typography
-						variant='h5'
-						noWrap
-						component='a'
-						href='/'
-						sx={{
-							mr: 2,
-							textDecoration: 'none',
-							display: { xs: 'none', md: 'flex' },
-							color: 'inherit',
-						}}
-					>
-						Canal d
-						{user.type === 'professor'
-							? 'o'
-							: user.type === 'secretaria'
-							? 'a'
-							: 'a'}
-						<Box
-							component='span'
-							fontWeight='fontWeightBold'
-							sx={{ ml: 1, textTransform: 'capitalize' }}
-						>
-							{user.type ? user.type : 'escola'}
-						</Box>
-					</Typography>
-
-					{hasMenu !== false ? (
-						<Box sx={{ flexGrow: 0 }}>
-							<Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
-								<IconButton
-									size='large'
-									aria-label='account of current user'
-									aria-controls='menu-appbar'
-									aria-haspopup='true'
-									onClick={toggleDrawer(anchor, true)}
-									color='inherit'
-								>
-									<Menu />
-								</IconButton>
-								<SwipeableDrawer
-									anchor={'right'}
-									open={state[anchor]}
-									onClose={toggleDrawer('right', false)}
-									onOpen={toggleDrawer('right', true)}
-									className={user.type}
-								>
-									<List className={user.type}>
-										{sidebarItems.map(item => (
-											<ListItem key={uuid()}>
-												<ListItemButton onClick={item.onClick}>
-													<ListItemIcon>
-														<item.icon />
-													</ListItemIcon>
-													<ListItemText key={item.page} primary={item.page}>
-														{item.page}
-													</ListItemText>
-												</ListItemButton>
-											</ListItem>
-										))}
-									</List>
-								</SwipeableDrawer>
+							Agenda d{user && user.type === 'professor' ? 'o' : 'a'}
+							<Box
+								component='span'
+								fontWeight='fontWeightBold'
+								sx={{ ml: 1, textTransform: 'capitalize' }}
+							>
+								{user ? user.type : 'escola'}
 							</Box>
-						</Box>
-					) : (
-						''
-					)}
-
-					{hasMenu !== false ? (
+						</Typography>
+						<Typography
+							variant='h5'
+							noWrap
+							component='a'
+							href='/'
+							sx={{
+								mr: 2,
+								textDecoration: 'none',
+								display: { xs: 'none', lg: 'flex' },
+								color: 'inherit',
+							}}
+						>
+							Agenda d{user && user.type === 'professor' ? 'o' : 'a'}
+							<Box
+								component='span'
+								fontWeight='fontWeightBold'
+								sx={{ ml: 1, textTransform: 'capitalize' }}
+							>
+								{user ? user.type : 'escola'}
+							</Box>
+						</Typography>
+						{user && (
+							<Box sx={{ flexGrow: 0 }}>
+								<Box sx={{ flexGrow: 1, display: { xs: 'flex', lg: 'none' } }}>
+									<IconButton
+										size='large'
+										aria-label='account of current user'
+										aria-controls='menu-appbar'
+										aria-haspopup='true'
+										onClick={toggleDrawer(anchor, true)}
+										color='inherit'
+									>
+										<Menu />
+									</IconButton>
+									<SwipeableDrawer
+										anchor={'right'}
+										open={state[anchor]}
+										onClose={toggleDrawer('right', false)}
+										onOpen={toggleDrawer('right', true)}
+										className={user ? user.type : 'escola'}
+									>
+										<List className={user ? user.type : 'escola'}>
+											{sidebarItems.map(item => (
+												<ListItem key={uuid()}>
+													<ListItemButton onClick={item.onClick}>
+														<ListItemIcon>
+															<item.icon />
+														</ListItemIcon>
+														<ListItemText key={item.page} primary={item.page}>
+															{item.page}
+														</ListItemText>
+													</ListItemButton>
+												</ListItem>
+											))}
+										</List>
+									</SwipeableDrawer>
+								</Box>
+							</Box>
+						)}
 						<Box
 							sx={{
 								ml: 'auto',
-								display: { xs: 'none', md: 'flex' },
+								display: { xs: 'none', lg: 'flex' },
 							}}
 						>
 							{menuItems.map(item => (
@@ -286,17 +283,15 @@ const HeaderComponent = ({ history, hasMenu }) => {
 								sx={{
 									height: 'fit-content',
 									my: 'auto',
-									display: { xs: 'none', md: 'flex' },
+									display: { xs: 'none', lg: 'flex' },
 								}}
 							>
 								<Menu />
 							</IconButton>
 						</Box>
-					) : (
-						''
-					)}
-				</Toolbar>
-			</Container>
+					</Toolbar>
+				</Grid>
+			</Grid>
 		</AppBar>
 	);
 };
