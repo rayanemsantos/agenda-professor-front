@@ -171,10 +171,10 @@ const HeaderComponent = ({ alignment, history, hasMenu, user }) => {
 		>
 			<Grid
 				container
-				maxWidth='xl'
+				// maxWidth='xl'
 				sx={{ my: 'auto', justifyContent: 'center' }}
 			>
-				<Grid item xs={12} md={8}>
+				<Grid item xs={12} md={8} xl={7}>
 					<Toolbar>
 						<Typography
 							href='/'

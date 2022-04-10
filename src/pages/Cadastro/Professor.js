@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import InputMask from 'react-input-mask';
 import { LocalizationProvider, DatePicker } from '@mui/lab';
+import { grey } from '@mui/material/colors';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 import Layout from './../../Layout';
@@ -37,11 +38,11 @@ export default function Professor({ history }) {
 	return (
 		<Layout user={user} history={history} title='Professor'>
 			{/* TODO: Add avatar/photo upload */}
-			<Paper sx={{ padding: 3 }}>
-				<Typography variant='h5' sx={{ mt: 3 }}>
+			<Paper sx={{ padding: 4 }}>
+				<Typography variant='h5' sx={{ mt: 1 }}>
 					Cadastrar
 				</Typography>
-				<Typography variant='body2'>
+				<Typography variant='body2' color={grey[600]}>
 					Insira os dados de um novo professor para cadastrá-lo.
 				</Typography>
 				<Box className='form' component='form'>
@@ -133,6 +134,7 @@ export default function Professor({ history }) {
 									<Typography variant='button' sx={{ mb: '-.5rem' }}>
 										Endereço
 									</Typography>
+									{/* TODO: Adicionar listas de Estado e Cidades */}
 									<TextField
 										label='Endereço'
 										variant='outlined'
@@ -253,7 +255,7 @@ export default function Professor({ history }) {
 							// RAY: metodo de criar o aluno aqui
 							color='primary'
 							size='large'
-							sx={{ mt: 2, mb: 4 }}
+							sx={{ my: 2 }}
 						>
 							Cadastrar
 						</Button>

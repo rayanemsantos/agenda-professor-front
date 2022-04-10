@@ -9,10 +9,10 @@ import 'moment/locale/pt-br';
 import { Box, Grid, Typography } from '@mui/material';
 
 export default function Layout({
-	alignment,
+	// alignment,
 	children,
 	hasMenu,
-	hasTabs,
+	// hasTabs,
 	history,
 	title,
 	user,
@@ -36,7 +36,7 @@ export default function Layout({
 					overflowY: 'auto',
 				}}
 			>
-				<Grid item xs={12} md={8} sx={{ px: 2, mb: '2rem' }}>
+				<Grid item xs={12} md={8} xl={7} sx={{ px: 2, mb: '2rem' }}>
 					{title && (
 						<Box className='content-header'>
 							<Typography variant='h4' sx={{ mt: 3 }}>
