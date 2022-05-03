@@ -76,6 +76,8 @@ function Login({ history }) {
 									Faça login ou cadastre-se colocando seu email.
 								</Typography>
 							</Box>
+							{/* 
+							Seletor de professor e coordenação
 							<Box
 								sx={{
 									display: 'flex',
@@ -93,7 +95,7 @@ function Login({ history }) {
 									<ToggleButton value={'1'}>Professor</ToggleButton>
 									<ToggleButton value={'2'}>Coordenação</ToggleButton>
 								</ToggleButtonGroup>
-							</Box>
+							</Box> */}
 							<Stack className='input wrapper' spacing={2} sx={{ mt: 2 }}>
 								<TextField
 									label='username'
