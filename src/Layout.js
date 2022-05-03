@@ -11,15 +11,15 @@ import { Box, Grid, Typography } from '@mui/material';
 export default function Layout({
 	// alignment,
 	children,
-	hasMenu,
-	// hasTabs,
+	hasMenu = true,
+	hasTabs,
 	history,
 	title,
 	user,
 }) {
 	return (
 		<>
-			<HeaderComponent hasMenu={hasMenu} user={user} history={history} />
+			<HeaderComponent hasMenu user={user} history={history} />
 			<Grid
 				container
 				justifyContent='center'

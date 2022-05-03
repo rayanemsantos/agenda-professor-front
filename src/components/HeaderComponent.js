@@ -256,39 +256,41 @@ const HeaderComponent = ({ alignment, history, hasMenu, user }) => {
 								</Box>
 							</Box>
 						)}
-						<Box
-							sx={{
-								ml: 'auto',
-								display: { xs: 'none', lg: 'flex' },
-							}}
-						>
-							{menuItems.map(item => (
-								<Button
-									key={item.page}
-									variant='text'
-									color='inherit'
-									sx={{ mx: 1, my: 2 }}
-									onClick={item.onClick}
-								>
-									{item.page}
-								</Button>
-							))}
-							<IconButton
-								size='large'
-								aria-label='account of current user'
-								aria-controls='menu-appbar'
-								aria-haspopup='true'
-								onClick={toggleDrawer(anchor, true)}
-								color='inherit'
+						{user && (
+							<Box
 								sx={{
-									height: 'fit-content',
-									my: 'auto',
+									ml: 'auto',
 									display: { xs: 'none', lg: 'flex' },
 								}}
 							>
-								<Menu />
-							</IconButton>
-						</Box>
+								{menuItems.map(item => (
+									<Button
+										key={item.page}
+										variant='text'
+										color='inherit'
+										sx={{ mx: 1, my: 2 }}
+										onClick={item.onClick}
+									>
+										{item.page}
+									</Button>
+								))}
+								<IconButton
+									size='large'
+									aria-label='account of current user'
+									aria-controls='menu-appbar'
+									aria-haspopup='true'
+									onClick={toggleDrawer(anchor, true)}
+									color='inherit'
+									sx={{
+										height: 'fit-content',
+										my: 'auto',
+										display: { xs: 'none', lg: 'flex' },
+									}}
+								>
+									<Menu />
+								</IconButton>
+							</Box>
+						)}
 					</Toolbar>
 				</Grid>
 			</Grid>

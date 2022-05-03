@@ -65,7 +65,7 @@ function Login({ history }) {
 		setAlignment(newAlignment);
 	};
 	return (
-		<Layout history={history} hasTabs={false}>
+		<Layout history={history} hasTabs={false} user={false}>
 			<Grid item sx={{ width: 424, padding: 2, mx: 'auto' }}>
 				<Paper sx={{ backgroundColor: '#f5f5f5', padding: 3 }}>
 					<Box className='form'>
