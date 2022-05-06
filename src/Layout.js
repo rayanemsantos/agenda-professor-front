@@ -1,56 +1,94 @@
 import React from 'react';
 
+import clsx from 'clsx';
+
+import { makeStyles } from '@mui/styles';
+import {renderRoutes} from 'react-router-config';
+import {withRouter} from 'react-router-dom';
+import { useSelector } from 'react-redux';
+
+import AppContext from './AppContext';
 import TabsComponent from './components/TabsComponent';
-import HeaderComponent from './components/HeaderComponent';
+import NavbarWrapper from './components/NavbarWrapper';
 
-import moment from 'moment';
-import 'moment/locale/pt-br';
+const useStyles = makeStyles(theme => ({
+    root          : {
+        position     : 'relative',
+        display      : 'flex',
+        flexDirection: 'row',
+        width        : '100%',
+        height       : '100%',
+        overflow     : 'hidden',
+        background   : '#f9f9f9',
+        '&.boxed'    : {
+            maxWidth : 1280,
+            margin   : '0 auto',
+            // boxShadow: theme.shadows[3]
+        },
+        '&.container': {
+            '& .container' : {
+                maxWidth: 1120,
+                width   : '100%',
+                margin  : '0 auto'
+            },
+            '& .navigation': {}
+        }
+    },
+    content       : {
+		marginTop					: '10em',
+        display                     : 'flex',
+        overflow                    : 'auto',
+        flex                        : '1 1 auto',
+        flexDirection               : 'column',
+        width                       : '100%',
+        '-webkit-overflow-scrolling': 'touch',
+        zIndex                      : 4
+    },
+    toolbarWrapper: {
+        display : 'flex',
+        position: 'relative',
+        zIndex  : 5
+    },
+    toolbar       : {
+        display: 'flex',
+        flex   : '1 0 auto'
+    },
+    footerWrapper : {
+        position: 'relative',
+        zIndex  : 5
+    },
+    footer        : {
+        display: 'flex',
+        flex   : '1 0 auto'
+    }
+}));
 
-import { Box, Grid, Typography } from '@mui/material';
+function Layout(props) {
+	const {
+		children,
+		history,
+	} = props;
 
-export default function Layout({
-	// alignment,
-	children,
-	hasMenu,
-	// hasTabs,
-	history,
-	title,
-	user,
-}) {
+	const classes = useStyles(props);
+    const user = useSelector(({ user }) => user);
+
 	return (
 		<>
-			<HeaderComponent hasMenu={hasMenu} user={user} history={history} />
-			<Grid
-				container
-				justifyContent='center'
-				sx={{
-					backgroundColor: '#fdfdfd',
-					position: 'fixed',
-					top: '4rem',
-					left: 0,
-					height: [
-						'calc(100vh - 7.5rem)',
-						'calc(100vh - 7.5rem)',
-						'calc(100vh - 4rem)',
-					],
-					overflowY: 'auto',
-				}}
-			>
-				<Grid item xs={12} md={8} xl={7} sx={{ px: 2, mb: '2rem' }}>
-					{title && (
-						<Box className='content-header'>
-							<Typography variant='h4' sx={{ mt: 3 }}>
-								{title}
-							</Typography>
-							<Typography variant='overline' className='subtitle hora'>
-								{moment().format('dddd, DD MMM, LT')}
-							</Typography>
-						</Box>
-					)}
-					{children}
-				</Grid>
-			</Grid>
-			<TabsComponent hasTabs user={user} history={history} />
+			<AppContext.Consumer>
+				{({routes}) => (		
+				<>
+				<div className={clsx(classes.root)}>
+					{user && <NavbarWrapper history={history}/>}
+                    <div className={clsx(classes.content)}>
+                        {renderRoutes(routes)}
+                        {children}
+                    </div>
+					<TabsComponent/>
+				</div>
+				</>
+				)}
+			</AppContext.Consumer>
 		</>
 	);
 }
+export default withRouter(Layout);

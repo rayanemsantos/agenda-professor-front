@@ -8,27 +8,27 @@ import { grey } from '@mui/material/colors';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 import Layout from './../../Layout';
-// import * as services from '../../services/service';
+import * as services from '../../services/service';
 
 export default function Aluno({ history }) {
 	const user = useSelector(({ user }) => user);
 
-	// const createStudent = () => {
-	// 	services
-	// 		.newStudent(form)
-	// 		.then(res => {
-	// 			history.push('/login');
-	// 		})
-	// 		.catch(err => {
-	// 			console.log(err);
-	// 		});
-	// };
+	const add = () => {
+		services
+			.newStudent(form)
+			.then(res => {
+				history.push('/');
+			})
+			.catch(err => {
+				console.log(err);
+			});
+	};
 
 	const [form, setForm] = useState({
-		nomeCompleto: '',
-		email: '',
-		serie: '',
-		ensino: '',
+		full_name: '',
+		// email: '',
+		// serie: '',
+		// ensino: '',
 		dataNascimento: null,
 		nomeResponsavel: '',
 		parentesco: '',
@@ -65,11 +65,11 @@ export default function Aluno({ history }) {
 								label='Nome Completo'
 								variant='outlined'
 								type='text'
-								name='nomeCompleto'
-								id='cadastro-nomeCompleto'
-								value={form.nomeCompleto}
+								name='full_name'
+								id='cadastro-full_name'
+								value={form.full_name}
 								onChange={e =>
-									setForm({ ...form, nomeCompleto: e.target.value })
+									setForm({ ...form, full_name: e.target.value })
 								}
 								required
 							/>
@@ -88,7 +88,7 @@ export default function Aluno({ history }) {
 								)}
 								required
 							/>
-							<TextField
+ 							{/* <TextField
 								label='Email'
 								variant='outlined'
 								type='email'
@@ -97,7 +97,7 @@ export default function Aluno({ history }) {
 								value={form.email}
 								onChange={e => setForm({ ...form, email: e.target.value })}
 								required
-							/>
+							/> */}
 							{/* TODO: Adicionar listas de Estado e Cidades */}
 							<TextField
 								label='Endereço'
@@ -112,7 +112,7 @@ export default function Aluno({ history }) {
 						</Stack>
 						<Stack className='endereco' spacing={2}>
 							<Typography variant='button' sx={{ mb: '-.5rem' }}>
-								Família
+								Responsável
 							</Typography>
 							<TextField
 								label='Nome do Responsável'
@@ -126,7 +126,7 @@ export default function Aluno({ history }) {
 								}
 								required
 							/>
-							<TextField
+							{/* <TextField
 								label='Parentesco'
 								variant='outlined'
 								type='text'
@@ -135,7 +135,7 @@ export default function Aluno({ history }) {
 								value={form.parentesco}
 								onChange={e => setForm({ ...form, parentesco: e.target.value })}
 								required
-							/>
+							/> */}
 							<InputMask
 								mask='(85) \9 9999 9999'
 								value={form.telefoneResponsavel}
@@ -159,7 +159,7 @@ export default function Aluno({ history }) {
 									/>
 								)}
 							</InputMask>
-							<TextField
+							{/* <TextField
 								label='Email do Responsável'
 								variant='outlined'
 								type='email'
@@ -170,7 +170,7 @@ export default function Aluno({ history }) {
 									setForm({ ...form, emailResponsavel: e.target.value })
 								}
 								required
-							/>
+							/> */}
 						</Stack>
 						<Stack className='documentacao' spacing={2}>
 							<Typography variant='button' sx={{ mb: '-.5rem' }}>
@@ -206,8 +206,7 @@ export default function Aluno({ history }) {
 								opacity: form.email === '' ? 0.5 : 1,
 							}}
 							disabled={form.email === ''}
-							// onClick={() => checkEmail()}
-							// RAY: metodo de criar o aluno aqui
+							onClick={() => add()}
 							color='primary'
 							size='large'
 							sx={{ width: 'fit-content', my: 2 }}

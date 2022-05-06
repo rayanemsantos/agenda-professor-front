@@ -92,10 +92,10 @@ let theme = createTheme({
 });
 theme = responsiveFontSizes(theme);
 
-export default function Theme() {
+export default function Theme({children}) {
 	return (
 		<ThemeProvider theme={theme}>
-			<Navigation />
+			{children}
 		</ThemeProvider>
 	);
 }

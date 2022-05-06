@@ -8,6 +8,7 @@ import Professor from './pages/Cadastro/Professor';
 import Aluno from './pages/Cadastro/Aluno';
 import Atividade from './pages/Atividades/Atividade';
 import Calendario from './pages/Calendario/Calendario';
+import AlunoList from './pages/aluno/AlunoList';
 
 function Navigation() {
 	const user = useSelector(({ user }) => user);
@@ -21,6 +22,7 @@ function Navigation() {
 					<Route path='/calendario' exact component={Calendario} />
 					<Route path='/cadastrar-professor' exact component={Professor} />
 					<Route path='/cadastrar-aluno' exact component={Aluno} />
+					<Route path='/alunos' exact component={AlunoList} />
 					<Route path='/' exact component={Home} />
 				</Switch>
 			) : (

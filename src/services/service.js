@@ -29,9 +29,17 @@ export function newCalendarItem(data) {
 	return axios.post(`${config.URL_BASE}/calendario`, data);
 }
 
-export function fetchStudent() {
+export function fetchStudents() {
 	return axios.get(`${config.URL_BASE}/student/`);
 }
-export function newStudent() {
-	return axios.post(`${config.URL_BASE}/student/`);
+
+export function fetchStudent(id) {
+	return axios.get(`${config.URL_BASE}/student/${id}`);
+}
+
+export function newStudent(data) {
+	return axios.post(`${config.URL_BASE}/student/`, data);
+}
+export function editStudent(id, data) {
+	return axios.put(`${config.URL_BASE}/student/${id}/`, data);
 }
