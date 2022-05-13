@@ -1,10 +1,6 @@
 import axios from 'axios';
 import * as config from './config';
 
-export function fetchTurmas() {
-	return axios.get(`${config.URL_BASE}/school_class/`);
-}
-
 export function fetchAtividades(user) {
 	return axios.get(`${config.URL_BASE}/atividade/`);
 }
@@ -42,4 +38,14 @@ export function newStudent(data) {
 }
 export function editStudent(id, data) {
 	return axios.put(`${config.URL_BASE}/student/${id}/`, data);
+}
+
+export function fetchTurmas() {
+	return axios.get(`${config.URL_BASE}/school_class/`);
+}
+export function newTurmas(data) {
+	return axios.post(`${config.URL_BASE}/school_class/`, data);
+}
+export function editTurmas(id, data) {
+	return axios.put(`${config.URL_BASE}/school_class/${id}/`, data);
 }

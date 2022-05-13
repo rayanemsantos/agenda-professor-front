@@ -13,6 +13,8 @@ import AppContext from './AppContext';
 import Login from './pages/Login/Login';
 import AlunoList from './pages/aluno/AlunoList';
 import AlunoNew from './pages/aluno/AlunoNew';
+import TurmaList from './pages/turma/TurmaList';
+import TurmaNew from './pages/turma/TurmaNew';
 import Home from './pages/Home/Home';
 
 import { store } from './store';
@@ -21,43 +23,53 @@ const hist = history.createBrowserHistory();
 
 const routes = [
 	{
-		path: "/",
+		path: '/',
 		exact: true,
-		component: Home
+		component: Home,
 	},
 	{
-		path: "/login",
+		path: '/login',
 		exact: true,
-		component: Login
+		component: Login,
 	},
 	{
-		path: "/alunos",
+		path: '/alunos',
 		exact: true,
-		component: AlunoList
+		component: AlunoList,
 	},
 	{
-		path: "/aluno/:id",
+		path: '/aluno/:id',
 		exact: true,
-		component: AlunoNew
-	}
+		component: AlunoNew,
+	},
+	{
+		path: '/turmas',
+		exact: true,
+		component: TurmaList,
+	},
+	{
+		path: '/turma/:id',
+		exact: true,
+		component: TurmaNew,
+	},
 ];
 
 export default function App() {
 	return (
-	<AppContext.Provider
-		value={{
-			routes
-		}}
-	>
-		<Provider store={store}>
-			<Router history={hist}>
-				<Authorization history={hist}>
-					<Theme>
-						<Layout/>					
-					</Theme>
-				</Authorization>
-			</Router>
-		</Provider>
-	</AppContext.Provider>		
+		<AppContext.Provider
+			value={{
+				routes,
+			}}
+		>
+			<Provider store={store}>
+				<Router history={hist}>
+					<Authorization history={hist}>
+						<Theme>
+							<Layout />
+						</Theme>
+					</Authorization>
+				</Router>
+			</Provider>
+		</AppContext.Provider>
 	);
 }

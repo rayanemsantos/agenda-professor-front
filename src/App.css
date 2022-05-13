@@ -37,7 +37,9 @@
 .MuiTabScrollButton-root.MuiTabScrollButton-horizontal.Mui-disabled {
 	opacity: 0.2;
 }
-
+.MuiPagination-ul {
+	justify-content: flex-end;
+}
 /* .secretaria {
 	color: #4db6ac;
 	border-bottom: solid 3px #4db6ac;

@@ -83,19 +83,10 @@ let theme = createTheme({
 				color: 'secondary',
 			},
 		},
-		MuiSelect: {
-			defaultProps: {
-				textTransform: 'capitalize',
-			},
-		},
 	},
 });
 theme = responsiveFontSizes(theme);
 
-export default function Theme({children}) {
-	return (
-		<ThemeProvider theme={theme}>
-			{children}
-		</ThemeProvider>
-	);
+export default function Theme({ children }) {
+	return <ThemeProvider theme={theme}>{children}</ThemeProvider>;
 }

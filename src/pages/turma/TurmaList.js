@@ -3,30 +3,29 @@ import _ from 'lodash';
 import Container from '@mui/material/Container';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
-import Avatar from '@mui/material/Avatar';
-import PersonIcon from '@mui/icons-material/Person';
 import {
-	Pagination,
+	Box,
+	Button,
 	Card,
 	CardContent,
-	Typography,
-	Toolbar,
-	TextField,
-	Button,
 	Grid,
+	Pagination,
+	TextField,
+	Toolbar,
+	Typography,
 } from '@mui/material';
 import EditIcon from '@mui/icons-material/Edit';
 
 import * as service from '../../services/service';
 
-export default function AlunoList(props) {
+export default function TurmaList(props) {
 	const { history } = props;
 	const [data, setData] = useState([]);
 	const [items, setItems] = useState([]);
 	const [searchText, setSearchText] = useState('');
 
 	useEffect(() => {
-		service.fetchStudents().then(res => {
+		service.fetchTurmas().then(res => {
 			setData(res.data);
 			setItems(res.data);
 		});
@@ -43,27 +42,32 @@ export default function AlunoList(props) {
 	}, [items, searchText]);
 
 	function handleNew() {
-		history.push('/aluno/new');
+		history.push('/turma/new');
 	}
 	function handleEdit(id) {
-		history.push('/aluno/' + id);
+		history.push('/turma/' + id);
 	}
+
 	const item = _item => {
 		return (
 			<ListItem>
 				<Card className='w-full'>
 					<CardContent>
-						<div className='flex justify-between items-center'>
-							<div className='flex'>
-								<Avatar>
-									<PersonIcon />
-								</Avatar>
-								<div className='pl-5'>
-									<h3>{_item.full_name}</h3>
-									<h5>{_item.registration_id}</h5>
-									<span>{_item.school_class}</span>
-								</div>
-							</div>
+						<Box className='flex justify-between items-center'>
+							<Box className='flex'>
+								<Box className='pl-5 inline'>
+									<Typography variant='h6'>
+										{_item.serie.slice(0, 1)}ª série {_item.identification}
+									</Typography>
+									<Typography
+										variant='body2'
+										sx={{ textTransform: 'capitalize' }}
+									>
+										{_item.shift.toLowerCase()}
+									</Typography>
+								</Box>
+							</Box>
+
 							<Button
 								endIcon={<EditIcon />}
 								variant='outlined'
@@ -72,7 +76,7 @@ export default function AlunoList(props) {
 							>
 								Editar
 							</Button>
-						</div>
+						</Box>
 					</CardContent>
 				</Card>
 			</ListItem>
@@ -84,8 +88,13 @@ export default function AlunoList(props) {
 			<Container>
 				<Card style={{ width: '100%' }}>
 					<CardContent>
-						<Typography sx={{ fontSize: 25 }} color='text.primary' gutterBottom>
-							Alunos
+						<Typography
+							sx={{ fontSize: 25 }}
+							color='text.primary'
+							px='.25rem'
+							gutterBottom
+						>
+							Turmas
 						</Typography>
 						<Toolbar>
 							<Grid container justifyContent='between' spacing={3}>
@@ -101,7 +110,7 @@ export default function AlunoList(props) {
 									/>
 								</Grid>
 								<Grid item md={2}>
-									<Button onClick={() => handleNew()}>Adicionar novo</Button>
+									<Button onClick={() => handleNew()}>Adicionar nova</Button>
 								</Grid>
 							</Grid>
 						</Toolbar>
@@ -112,16 +121,20 @@ export default function AlunoList(props) {
 							{!items.length ? (
 								<ListItem>
 									<Typography
-										sx={{ fontSize: 18 }}
+										sx={{ fontSize: 14 }}
 										color='text.primary'
 										gutterBottom
 									>
-										Nenhum encontrado
+										Nenhuma turma encontrada
 									</Typography>
 								</ListItem>
 							) : null}
 						</List>
-						<Pagination count={1} color='primary' />
+						<Pagination
+							count={1}
+							color='primary'
+							sx={{ justifyContent: 'flex-end' }}
+						/>
 					</CardContent>
 				</Card>
 			</Container>
