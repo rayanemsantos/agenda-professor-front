@@ -39,13 +39,13 @@ function PaperComponent(props) {
 	);
 }
 
-function NewCalendario({
+function EventNewDialog({
 	onCreateEvent,
 	open,
 	close,
 	usuario,
-	startDateTime,
-	endDateTime,
+	startDateTime = new Date(),
+	endDateTime = new Date(),
 }) {
 	// RAY: Não tenho ctz de como adicionar mais de uma aula no mesmo dia, mas ta aí
 	const [startTime, setStartTime] = useState(null);
@@ -88,7 +88,7 @@ function NewCalendario({
 						open={open}
 						onClose={close}
 						usuario={usuario}
-						maxWidth='lg'
+						maxWidth='sm'
 						fullWidth
 						PaperComponent={PaperComponent}
 						aria-labelledby='draggable-dialog-title'
@@ -243,4 +243,4 @@ function NewCalendario({
 	);
 }
 
-export default NewCalendario;
+export default EventNewDialog;

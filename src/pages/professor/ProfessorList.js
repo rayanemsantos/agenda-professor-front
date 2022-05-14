@@ -19,16 +19,14 @@ import EditIcon from '@mui/icons-material/Edit';
 
 import * as service from '../../services/service';
 
-export default function AlunoList(props) {
+export default function ProfessorList(props) {
 	const { history } = props;
 	const [data, setData] = useState([]);
 	const [items, setItems] = useState([]);
 	const [searchText, setSearchText] = useState('');
-	const [page, setPage] = useState(0);
-	const rowsPerPage = 10;
 
 	useEffect(() => {
-		service.fetchStudents().then(res => {
+		service.fetchProfessores().then(res => {
 			setData(res.data);
 			setItems(res.data);
 		});
@@ -39,20 +37,16 @@ export default function AlunoList(props) {
 			searchText.length === 0
 				? data
 				: _.filter(data, item =>
-						item.full_name && item.full_name.toLowerCase().includes(searchText.toLowerCase())
+						item.full_name.toLowerCase().includes(searchText.toLowerCase())
 				  )
 		);
 	}, [items, searchText]);
 
 	function handleNew() {
-		history.push('/aluno/new');
+		history.push('/professores/new');
 	}
 	function handleEdit(id) {
-		history.push('/aluno/' + id);
-	}
-	function paginate(event, page){
-		console.log(page)
-		setPage(page-1);
+		history.push('/professores/' + id);
 	}
 	const item = _item => {
 		return (
@@ -91,7 +85,7 @@ export default function AlunoList(props) {
 				<Card style={{ width: '100%' }}>
 					<CardContent>
 						<Typography sx={{ fontSize: 25 }} color='text.primary' gutterBottom>
-							Alunos
+							Professores
 						</Typography>
 						<Toolbar>
 							<Grid container justifyContent='between' spacing={3}>
@@ -112,9 +106,7 @@ export default function AlunoList(props) {
 							</Grid>
 						</Toolbar>
 						<List>
-							{items
-							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							.map(_item => {
+							{items.map(_item => {
 								return <>{item(_item)}</>;
 							})}
 							{!items.length ? (
@@ -129,7 +121,7 @@ export default function AlunoList(props) {
 								</ListItem>
 							) : null}
 						</List>
-						<Pagination onChange={paginate} page={page+1} count={parseInt(items.length/10)} color='primary' />
+						<Pagination count={1} color='primary' />
 					</CardContent>
 				</Card>
 			</Container>

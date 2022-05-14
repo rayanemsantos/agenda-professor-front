@@ -49,3 +49,16 @@ export function newTurmas(data) {
 export function editTurmas(id, data) {
 	return axios.put(`${config.URL_BASE}/school_class/${id}/`, data);
 }
+
+export function fetchProfessores() {
+	return axios.get(`${config.URL_BASE}/teacher/`);
+}
+export function fetchProfessor(id) {
+	return axios.get(`${config.URL_BASE}/teacher/${id}`);
+}
+export function newProfessor(data) {
+	return axios.post(`${config.URL_BASE}/user/teacher/registration/`, data);
+}
+export function editProfessor(id, data) {
+	return axios.put(`${config.URL_BASE}/teacher/${id}/`, data);
+}

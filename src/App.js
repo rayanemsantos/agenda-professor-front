@@ -15,9 +15,12 @@ import AlunoList from './pages/aluno/AlunoList';
 import AlunoNew from './pages/aluno/AlunoNew';
 import TurmaList from './pages/turma/TurmaList';
 import TurmaNew from './pages/turma/TurmaNew';
+import ProfessorList from './pages/professor/ProfessorList';
+import ProfessorNew from './pages/professor/ProfessorNew';
 import Home from './pages/Home/Home';
 
 import { store } from './store';
+
 
 const hist = history.createBrowserHistory();
 
@@ -51,6 +54,16 @@ const routes = [
 		path: '/turma/:id',
 		exact: true,
 		component: TurmaNew,
+	},
+	{
+		path: '/professores',
+		exact: true,
+		component: ProfessorList,
+	},
+	{
+		path: '/professores/:id',
+		exact: true,
+		component: ProfessorNew,
 	},
 ];
 

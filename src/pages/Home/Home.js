@@ -1,95 +1,68 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { v4 as uuid } from 'uuid';
 
 import * as services from '../../services/service';
 
 import {
 	Container,
-	Box,
-	Divider,
-	List,
-	ListItem,
-	Stack,
 	Typography,
+	Grid,
+	Paper,
 } from '@mui/material';
 
-function Home({ history }) {
-	const [turmas, setTurmas] = useState([]);
+import Calendar from '../../components/Calendar/Calendar';
 
-	const getTurmas = () => {
-		services
-			.fetchTurmas()
-			.then(res => {
-				setTurmas(res.data);
-			})
-			.catch(err => console.log(err));
-	};
-	useEffect(() => {
-		getTurmas();
-	}, []);
-
-	function schoolClassItem(item) {
-		return (
-			<ListItem className='turma'>
-				<Link href='dashboard.html'>
-					<List>
-						<ListItem>
-							<Typography variant='span' className='serie'>
-								{item.serie} {item.identification}
-							</Typography>
-						</ListItem>
-					</List>
-				</Link>
-			</ListItem>
-		);
-	}
-
+function DashboardCard(title, count=0) {
 	return (
-		<Container>
-			<Stack>
-				<Box className='listas-turmas' sx={{ mt: 5 }}>
-					<Typography variant='h5'>Turmas</Typography>
-					<Box sx={{ display: 'flex', mt: 2, ml: 1 }}>
-						<Box className='turno manha'>
-							<Typography variant='h6'>Manhã</Typography>
-							<List>
-								{turmas
-									.filter(item => item.shift === 'MANHÃ')
-									.map(item => {
-										return (
-											<ListItem key={uuid()}>{schoolClassItem(item)}</ListItem>
-										);
-									})}
-							</List>
-							{!turmas.filter(item => item.shift === 'MANHÃ').length && (
-								<Typography variant='body2' className='colegio'>
-									Sem turmas no momento
-								</Typography>
-							)}
-						</Box>
-						<Divider orientation='vertical' flexItem sx={{ mx: 2 }} />
-						<Box className='turno tarde'>
-							<Typography variant='h6'>Tarde</Typography>
-							<List>
-								{turmas
-									.filter(item => item.shift === 'TARDE')
-									.map(item => {
-										return (
-											<ListItem key={uuid()}>{schoolClassItem(item)}</ListItem>
-										);
-									})}
-							</List>
-							{!turmas.filter(item => item.shift === 'TARDE').length && (
-								<Typography variant='body2' className='colegio'>
-									Sem turmas no momento
-								</Typography>
-							)}
-						</Box>
-					</Box>
-				</Box>
-			</Stack>
-		</Container>
+		<Paper
+			sx={{
+				p: 2,
+				display: 'flex',
+				flexDirection: 'column',
+				height: 240,
+			}}
+		>
+			<Typography component="h2" variant="h6" color="primary" gutterBottom>
+				{title}
+			</Typography>
+			<Typography component="p" variant="h4">
+			{count}
+			</Typography>
+			<div>
+			<Link color="primary" href="#">
+				Ver todos
+			</Link>
+			</div>
+	  </Paper>
+	);
+}
+
+function Home({ history }) {
+	return (
+		<Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
+			{/* TODO Em breve rota com os números */}
+			<Grid container spacing={3}>
+				<Grid item xs={12} md={4} lg={3}>
+					{DashboardCard('Alunos', 12)}
+				</Grid>
+				<Grid item xs={12} md={4} lg={3}>
+					{DashboardCard('Professores', 12)}
+				</Grid>
+				<Grid item xs={12} md={4} lg={3}>
+					{DashboardCard('Turmas', 12)}
+				</Grid>
+				<Grid item xs={12} md={4} lg={3}>
+					{DashboardCard('Eventos', 12)}
+				</Grid>								
+			</Grid>
+			<Grid container spacing={3} marginTop={5}>
+				<Grid item md={12}>
+					{/* obs: coloquei como componente ao inves de pagina */}
+					{/* obs: tem um fab button pra abrir o dialog além do click na data */}
+					<Calendar/>
+				</Grid>
+			</Grid>
+		</Container>		
 	);
 }
 
