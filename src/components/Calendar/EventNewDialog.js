@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import Draggable from 'react-draggable';
 import {
 	Box,
 	Button,
@@ -10,7 +9,7 @@ import {
 	DialogTitle,
 	Grid,
 	// MenuItem,
-	Paper,
+	// Paper,
 	Stack,
 	Tab,
 	Tabs,
@@ -19,25 +18,7 @@ import {
 } from '@mui/material';
 import { LocalizationProvider, TimePicker, DatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
-import moment from 'moment';
 import { DragHandleRounded, CloseRounded } from '@mui/icons-material';
-import { v4 as uuid } from 'uuid';
-
-// import * as services from '../../services/service';
-
-// const defaultState = { evento: '', data: '', errorMessage: '' };
-
-const arr = ['Diário', 'Semanal', 'Quinzenal', 'Mensal'];
-function PaperComponent(props) {
-	return (
-		<Draggable
-			handle='#draggable-dialog-title'
-			cancel={'[class*="MuiDialogContent-root"]'}
-		>
-			<Paper {...props} />
-		</Draggable>
-	);
-}
 
 function EventNewDialog({
 	onCreateEvent,
@@ -47,7 +28,6 @@ function EventNewDialog({
 	startDateTime = new Date(),
 	endDateTime = new Date(),
 }) {
-	// RAY: Não tenho ctz de como adicionar mais de uma aula no mesmo dia, mas ta aí
 	const [startTime, setStartTime] = useState(null);
 	const [endTime, setEndTime] = useState(null);
 	const [value, setValue] = useState(0);
@@ -90,7 +70,6 @@ function EventNewDialog({
 						usuario={usuario}
 						maxWidth='sm'
 						fullWidth
-						PaperComponent={PaperComponent}
 						aria-labelledby='draggable-dialog-title'
 					>
 						<DialogTitle
@@ -99,12 +78,7 @@ function EventNewDialog({
 								justifyContent: 'space-between',
 							}}
 						>
-							<DragHandleRounded
-								id='draggable-dialog-title'
-								sx={{
-									cursor: 'move',
-								}}
-							/>
+							<DragHandleRounded color='white' />
 							<CloseRounded onClick={close} sx={{ cursor: 'pointer' }} />
 						</DialogTitle>
 						<DialogContent
@@ -116,20 +90,20 @@ function EventNewDialog({
 								variant='standard'
 								margin='normal'
 							/>
-							{usuario === 'secretaria' ? (
-								<Tabs value={value} onChange={handleChange} sx={{ mb: 2 }}>
-									<Tab label='Prova' index={0} variant='text' />
-									<Tab label='Entrega de Atividade' index={1} variant='text' />
-									<Tab label='Feriado' index={2} variant='text' />
-									<Tab label='Outros' index={3} />
-								</Tabs>
-							) : (
+							{/* {usuario === 'secretaria' ? ( */}
+							<Tabs value={value} onChange={handleChange} sx={{ mb: 2 }}>
+								<Tab label='Evento' index={0} variant='text' />
+								<Tab label='Entrega de Atividade' index={1} variant='text' />
+								<Tab label='Feriado' index={2} variant='text' />
+								<Tab label='Outros' index={3} />
+							</Tabs>
+							{/* ) : (
 								<Tabs value={value} onChange={handleChange} sx={{ mb: 2 }}>
 									<Tab label='Prova' index={0} />
 									<Tab label='Entrega de Atividade' index={1} />
 									<Tab label='Lembrete' index={2} />
 								</Tabs>
-							)}
+							)} */}
 							{/* {usuario === 'secretaria' ? (
 					<Stack my={2} sx={{ gap: 0.5 }}>
 						<Typography variant='body2' fontWeight='medium'>
@@ -230,7 +204,7 @@ function EventNewDialog({
 								</LocalizationProvider>
 							</Stack>
 						</DialogContent>
-						<DialogActions>
+						<DialogActions mt={3}>
 							<Button variant='text' onClick={close}>
 								Cancelar
 							</Button>

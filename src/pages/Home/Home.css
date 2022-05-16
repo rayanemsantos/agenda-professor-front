@@ -49,9 +49,9 @@ header {
 	margin-left: 2rem;
 }
 .turma {
-    background-color: #f9f9f9;
-    padding: 16px;
-    border-radius: 20px;
+	background-color: #f9f9f9;
+	padding: 16px;
+	border-radius: 20px;
 }
 .turma a {
 	text-decoration: none;
@@ -62,10 +62,7 @@ ul {
 main .listas-turmas ul {
 	margin-top: 1.5rem;
 }
-.colegio {
-	font-size: 0.75rem;
-	color: rgba(0, 0, 0, 0.38);
-}
+
 main .listas-turmas li:nth-of-type(even) {
 	margin-bottom: 1.5rem;
 }

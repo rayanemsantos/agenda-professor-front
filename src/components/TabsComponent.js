@@ -5,32 +5,30 @@ import { BottomNavigation, BottomNavigationAction, Paper } from '@mui/material';
 import {
 	HomeRounded,
 	CoPresentRounded,
-	StickyNote2Rounded,
-	HowToRegRounded,
 	GroupAddRounded,
 	PersonAddAltRounded,
 } from '@mui/icons-material';
 
 export default function TabsComponent({ hasTabs, history, user }) {
 	const [value, setValue] = useState(0);
-	const navBarProfessor = [
-		{
-			page: 'Início',
-			icon: HomeRounded,
-		},
-		{
-			page: 'Turmas',
-			icon: CoPresentRounded,
-		},
-		{
-			page: 'Frequência',
-			icon: HowToRegRounded,
-		},
-		{
-			page: 'Diário',
-			icon: StickyNote2Rounded,
-		},
-	];
+	// const navBarProfessor = [
+	// 	{
+	// 		page: 'Início',
+	// 		icon: HomeRounded,
+	// 	},
+	// 	{
+	// 		page: 'Turmas',
+	// 		icon: CoPresentRounded,
+	// 	},
+	// 	{
+	// 		page: 'Frequência',
+	// 		icon: HowToRegRounded,
+	// 	},
+	// 	{
+	// 		page: 'Diário',
+	// 		icon: StickyNote2Rounded,
+	// 	},
+	// ];
 	const navBarSecretaria = [
 		{
 			page: 'Início',
@@ -52,12 +50,12 @@ export default function TabsComponent({ hasTabs, history, user }) {
 			onClick: () => history.push('/cadastrar-professor'),
 		},
 	];
-	let navBar = [];
-	if (user && user.type === 'professor') {
-		navBar = navBarProfessor;
-	} else if (user && user.type === 'secretaria') {
-		navBar = navBarSecretaria;
-	}
+	// let navBar = [];
+	// if (user && user.type === 'professor') {
+	// 	navBar = navBarProfessor;
+	// } else if (user && user.type === 'secretaria') {
+	// 	navBar = navBarSecretaria;
+	// }
 
 	return (
 		<Box
@@ -68,9 +66,10 @@ export default function TabsComponent({ hasTabs, history, user }) {
 				right: 0,
 				width: 'auto',
 				display: { xs: 'block', md: 'none' },
+				zIndex: 1400,
 			}}
 		>
-			<Paper elevation={3}>
+			<Paper elevation={1}>
 				<BottomNavigation
 					showLabels
 					value={value}
