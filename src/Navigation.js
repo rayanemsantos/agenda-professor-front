@@ -7,7 +7,6 @@ import Home from './pages/Home/Home';
 import Professor from './pages/Cadastro/Professor';
 import Aluno from './pages/Cadastro/Aluno';
 import Atividade from './pages/Atividades/Atividade';
-import Calendario from './pages/Calendario/Calendario';
 import AlunoList from './pages/aluno/AlunoList';
 
 function Navigation() {
@@ -19,7 +18,6 @@ function Navigation() {
 				<Switch>
 					<Route path='/home' exact component={Home} />
 					<Route path='/atividades' exact component={Atividade} />
-					<Route path='/calendario' exact component={Calendario} />
 					<Route path='/cadastrar-professor' exact component={Professor} />
 					<Route path='/cadastrar-aluno' exact component={Aluno} />
 					<Route path='/alunos' exact component={AlunoList} />
