@@ -38,8 +38,11 @@ export default function AlunoList(props) {
 		setItems(
 			searchText.length === 0
 				? data
-				: _.filter(data, item =>
-						item.full_name && item.full_name.toLowerCase().includes(searchText.toLowerCase())
+				: _.filter(
+						data,
+						item =>
+							item.full_name &&
+							item.full_name.toLowerCase().includes(searchText.toLowerCase())
 				  )
 		);
 	}, [items, searchText]);
@@ -50,11 +53,12 @@ export default function AlunoList(props) {
 	function handleEdit(id) {
 		history.push('/aluno/' + id);
 	}
-	function paginate(event, page){
-		console.log(page)
-		setPage(page-1);
+	function paginate(event, page) {
+		console.log(page);
+		setPage(page - 1);
 	}
-	const item = _item => {
+
+	const studentList = _item => {
 		return (
 			<ListItem>
 				<Card className='w-full'>
@@ -70,6 +74,7 @@ export default function AlunoList(props) {
 									<span>{_item.school_class}</span>
 								</div>
 							</div>
+
 							<Button
 								endIcon={<EditIcon />}
 								variant='outlined'
@@ -84,7 +89,6 @@ export default function AlunoList(props) {
 			</ListItem>
 		);
 	};
-
 	return (
 		<>
 			<Container>
@@ -113,10 +117,10 @@ export default function AlunoList(props) {
 						</Toolbar>
 						<List>
 							{items
-							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-							.map(_item => {
-								return <>{item(_item)}</>;
-							})}
+								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+								.map(_item => {
+									return <>{studentList(_item)}</>;
+								})}
 							{!items.length ? (
 								<ListItem>
 									<Typography
@@ -129,7 +133,12 @@ export default function AlunoList(props) {
 								</ListItem>
 							) : null}
 						</List>
-						<Pagination onChange={paginate} page={page+1} count={parseInt(items.length/10)} color='primary' />
+						<Pagination
+							onChange={paginate}
+							page={page + 1}
+							count={parseInt(items.length / 10)}
+							color='primary'
+						/>
 					</CardContent>
 				</Card>
 			</Container>

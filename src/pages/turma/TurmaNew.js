@@ -27,27 +27,27 @@ import SecondPage from './SecondPage';
 export default function TurmaNew(props) {
 	const { history } = props;
 
-	const add = () => {
-		service
-			.newTurmas(form)
-			.then(res => {
-				history.push('/turmas');
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
+	// const add = () => {
+	// 	service
+	// 		.newTurmas(form)
+	// 		.then(res => {
+	// 			history.push('/turmas');
+	// 		})
+	// 		.catch(err => {
+	// 			console.log(err);
+	// 		});
+	// };
 
-	const edit = () => {
-		service
-			.editTurmas(form.id, form)
-			.then(res => {
-				history.push('/turmas');
-			})
-			.catch(err => {
-				console.log(err);
-			});
-	};
+	// const edit = () => {
+	// 	service
+	// 		.editTurmas(form.id, form)
+	// 		.then(res => {
+	// 			history.push('/turmas');
+	// 		})
+	// 		.catch(err => {
+	// 			console.log(err);
+	// 		});
+	// };
 
 	const [form, setForm] = useState({
 		id: '',
@@ -55,23 +55,7 @@ export default function TurmaNew(props) {
 		identification: '',
 		shift: '',
 	});
-	const [currentPage, setCurrentPage] = useState(0);
-
-	useEffect(() => {
-		async function updateState() {
-			const params = props.match.params;
-			const { id } = params;
-
-			if (id === 'new') {
-			} else {
-				service.fetchTurmas(id).then(res => {
-					setForm(res.data);
-				});
-			}
-		}
-
-		updateState();
-	}, [props.match.params]);
+	let [currentPage, setCurrentPage] = useState(0);
 
 	const pages = [
 		'Criar Turma',
@@ -103,7 +87,7 @@ export default function TurmaNew(props) {
 					{pages[currentPage]}
 				</Typography>
 				<Typography variant='body2' color={grey[600]}>
-					Inicialize uma turma
+					Crie uma turma e adicione estudantes, matérias e professores
 				</Typography>
 				<LocalizationProvider dateAdapter={AdapterDateFns}>
 					<Stack
@@ -119,8 +103,8 @@ export default function TurmaNew(props) {
 								</Step>
 							))}
 						</Stepper>
-						{currentPage === 0 && <FirstPage props={props} />}
-						{currentPage === 1 && <SecondPage props={props} />}
+						{currentPage === 0 && <FirstPage />}
+						{currentPage === 1 && <SecondPage />}
 						{/* {currentPage === 2 && <ThirdPage />}
 					{currentPage === 3 && <FourthPage />} */}
 					</Stack>
@@ -136,7 +120,9 @@ export default function TurmaNew(props) {
 						<Button
 							className={'secondary-button'}
 							onClick={() => {
-								currentPage === 0 ? history.push('/turmas') : setCurrentPage(0);
+								currentPage === 0
+									? history.push('/turmas')
+									: setCurrentPage(currentPage--);
 							}}
 							color='secondary'
 							variant='outlined'
@@ -147,7 +133,7 @@ export default function TurmaNew(props) {
 						</Button>
 						<Button
 							className={'primary-button'}
-							onClick={() => setCurrentPage(1)}
+							onClick={() => setCurrentPage(currentPage++)}
 							color='primary'
 							size='large'
 							sx={{ width: 'fit-content', my: 2 }}
