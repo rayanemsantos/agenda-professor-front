@@ -8,7 +8,6 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
-import InputMask from 'react-input-mask';
 import { LocalizationProvider } from '@mui/lab';
 import { grey } from '@mui/material/colors';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';

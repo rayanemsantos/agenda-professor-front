@@ -1,8 +1,6 @@
 import { createTheme, ThemeProvider, responsiveFontSizes } from '@mui/material';
 import { grey, purple, teal } from '@mui/material/colors';
 
-import Navigation from './Navigation';
-
 import './App.css';
 
 let theme = createTheme({
@@ -12,6 +10,7 @@ let theme = createTheme({
 		},
 		secondary: {
 			main: teal[400],
+			accent: teal.a400,
 		},
 		disabled: {
 			main: grey[100],
@@ -52,8 +51,30 @@ let theme = createTheme({
 				},
 			},
 		},
+		MuiDialog: {
+			styleOverrides: {
+				paper: {
+					padding: '1rem',
+				},
+			},
+		},
+		MuiDialogContent: {
+			styleOverrides: {
+				root: {
+					padding: 0,
+				},
+			},
+		},
+		MuiDialogActions: {
+			styleOverrides: {
+				root: {
+					padding: 0,
+					marginTop: '1.5rem',
+				},
+			},
+		},
 		MuiButton: {
-			defaultProps: {
+		defaultProps: {
 				variant: 'contained',
 			},
 			styleOverrides: {

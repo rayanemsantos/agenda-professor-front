@@ -1,68 +1,56 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
-import * as services from '../../services/service';
-
-import {
-	Container,
-	Typography,
-	Grid,
-	Paper,
-} from '@mui/material';
+import { Container, Typography, Grid, Paper } from '@mui/material';
 
 import Calendar from '../../components/Calendar/Calendar';
 
-function DashboardCard(title, count=0) {
+function DashboardCard(title, count = 0) {
 	return (
-		<Paper
-			sx={{
-				p: 2,
-				display: 'flex',
-				flexDirection: 'column',
-				height: 240,
-			}}
-		>
-			<Typography component="h2" variant="h6" color="primary" gutterBottom>
-				{title}
-			</Typography>
-			<Typography component="p" variant="h4">
-			{count}
-			</Typography>
-			<div>
-			<Link color="primary" href="#">
-				Ver todos
-			</Link>
-			</div>
-	  </Paper>
+		<Link to={`/${title.toLowerCase()}`} style={{ textDecoration: 'none' }}>
+			<Paper
+				sx={{
+					p: 2,
+					display: 'flex',
+					flexDirection: 'column',
+					height: '10rem',
+				}}
+			>
+				<Typography component='h2' variant='h6' color='primary' gutterBottom>
+					{title}
+				</Typography>
+				<Typography component='p' variant='h4'>
+					{count}
+				</Typography>
+			</Paper>
+		</Link>
 	);
 }
 
-function Home({ history }) {
+function Home() {
 	return (
-		<Container maxWidth="lg" sx={{ mt: 2, mb: 2 }}>
+		<Container maxWidth='lg' sx={{ mt: 2, mb: 2 }}>
 			{/* TODO Em breve rota com os números */}
 			<Grid container spacing={3}>
-				<Grid item xs={12} md={4} lg={3}>
-					{DashboardCard('Alunos', 12)}
+				<Grid item xs={6} md={3}>
+					{DashboardCard('Alunos', 523)}
 				</Grid>
-				<Grid item xs={12} md={4} lg={3}>
-					{DashboardCard('Professores', 12)}
+				<Grid item xs={6} md={3}>
+					{DashboardCard('Professores', 16)}
 				</Grid>
-				<Grid item xs={12} md={4} lg={3}>
-					{DashboardCard('Turmas', 12)}
+				<Grid item xs={6} md={3}>
+					{DashboardCard('Turmas', 18)}
 				</Grid>
-				<Grid item xs={12} md={4} lg={3}>
-					{DashboardCard('Eventos', 12)}
-				</Grid>								
-			</Grid>
-			<Grid container spacing={3} marginTop={5}>
-				<Grid item md={12}>
-					{/* obs: coloquei como componente ao inves de pagina */}
-					{/* obs: tem um fab button pra abrir o dialog além do click na data */}
-					<Calendar/>
+				<Grid item xs={6} md={3}>
+					{DashboardCard('Eventos', 4)}
 				</Grid>
 			</Grid>
-		</Container>		
+			<Grid container spacing={3} marginTop={0}>
+				<Grid item xs={12}>
+					<Calendar />
+				</Grid>
+			</Grid>
+		</Container>
 	);
 }
 
