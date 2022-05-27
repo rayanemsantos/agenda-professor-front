@@ -94,7 +94,7 @@ export default function TurmaNew(props) {
 						component='form'
 						className='Cadastro'
 						spacing={4}
-						sx={{ mt: 2 }}
+						sx={{ my: 2 }}
 					>
 						<Stepper activeStep={currentPage} alternativeLabel>
 							{pages.map(label => (
@@ -119,11 +119,7 @@ export default function TurmaNew(props) {
 					>
 						<Button
 							className={'secondary-button'}
-							onClick={() => {
-								currentPage === 0
-									? history.push('/turmas')
-									: setCurrentPage(currentPage--);
-							}}
+							onClick={() => setCurrentPage(currentPage--)}
 							color='secondary'
 							variant='outlined'
 							size='large'
