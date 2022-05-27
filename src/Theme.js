@@ -74,7 +74,7 @@ let theme = createTheme({
 			},
 		},
 		MuiButton: {
-			defaultProps: {
+		defaultProps: {
 				variant: 'contained',
 			},
 			styleOverrides: {

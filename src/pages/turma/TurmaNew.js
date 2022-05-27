@@ -10,6 +10,9 @@ import {
 	Select,
 	Stack,
 	OutlinedInput,
+	Step,
+	Stepper,
+	StepLabel,
 	Typography,
 } from '@mui/material';
 import { LocalizationProvider } from '@mui/lab';
@@ -17,6 +20,9 @@ import { grey } from '@mui/material/colors';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 
 import * as service from '../../services/service';
+
+import FirstPage from './FirstPage';
+import SecondPage from './SecondPage';
 
 export default function TurmaNew(props) {
 	const { history } = props;
@@ -49,6 +55,7 @@ export default function TurmaNew(props) {
 		identification: '',
 		shift: '',
 	});
+	const [currentPage, setCurrentPage] = useState(0);
 
 	useEffect(() => {
 		async function updateState() {
@@ -65,9 +72,13 @@ export default function TurmaNew(props) {
 
 		updateState();
 	}, [props.match.params]);
-	const series = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-	const salas = ['A', 'B', 'C', 'D'];
-	const turnos = ['Manhã', 'Tarde', 'Noite'];
+
+	const pages = [
+		'Criar Turma',
+		'Adicionar Alunos',
+		'Adicionar Matérias',
+		'Adicionar Professores',
+	];
 
 	useEffect(() => {
 		async function updateState() {
@@ -89,10 +100,10 @@ export default function TurmaNew(props) {
 		<Container>
 			<Paper sx={{ padding: 4 }}>
 				<Typography variant='h5' sx={{ mt: 1 }}>
-					{form.id ? 'Editar Turma' : 'Criar Turma'}
+					{pages[currentPage]}
 				</Typography>
 				<Typography variant='body2' color={grey[600]}>
-					Inicialize uma turma e adicione alunos
+					Inicialize uma turma
 				</Typography>
 				<LocalizationProvider dateAdapter={AdapterDateFns}>
 					<Stack
@@ -101,113 +112,49 @@ export default function TurmaNew(props) {
 						spacing={4}
 						sx={{ mt: 2 }}
 					>
-						<Stack className='turma' spacing={2}>
-							{/* <FormControl>
-								<InputLabel id='cadastro-id'>Id da Turma</InputLabel>
-								<Select
-									label='Identificador da Turma'
-									variant='outlined'
-									type='number'
-									name='id'
-									id='cadastro-id'
-									value={form.id}
-									disabled
-									required
-								/>
-							</FormControl> */}
-							<FormControl>
-								<InputLabel id='cadastro-serie'>Série</InputLabel>
-								<Select
-									label='Série'
-									variant='outlined'
-									type='text'
-									name='serie'
-									id='cadastro-serie'
-									value={form.serie}
-									onChange={e => setForm({ ...form, serie: e.target.value })}
-									input={<OutlinedInput label='Série' />}
-									required
-								>
-									{series.map(serie => (
-										<MenuItem key={serie} value={serie}>
-											{serie}ª série
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-							<FormControl>
-								<InputLabel id='cadastro-identification'>Sala</InputLabel>
-								<Select
-									label='Sala'
-									variant='outlined'
-									type='text'
-									name='identification'
-									id='cadastro-identification'
-									value={form.identification}
-									onChange={e =>
-										setForm({ ...form, identification: e.target.value })
-									}
-									input={<OutlinedInput label='Sala' />}
-									required
-								>
-									{salas.map(sala => (
-										<MenuItem key={sala} value={sala}>
-											{sala}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-							<FormControl>
-								<InputLabel id='cadastro-shift'>Turno</InputLabel>
-								<Select
-									label='Turno'
-									variant='outlined'
-									type='text'
-									name='shift'
-									id='cadastro-shift'
-									value={form.shift}
-									onChange={e => setForm({ ...form, shift: e.target.value })}
-									input={<OutlinedInput label='Turno' />}
-									required
-								>
-									{turnos.map(turno => (
-										<MenuItem key={turno} value={turno.toUpperCase()}>
-											{turno}
-										</MenuItem>
-									))}
-								</Select>
-							</FormControl>
-						</Stack>
-						<Container
-							px='0'
-							sx={{
-								display: 'flex',
-								gap: '0.5rem',
-								alignItems: 'center',
-								justifyContent: 'flex-end',
-							}}
-						>
-							<Button
-								className={'secondary-button'}
-								onClick={() => history.push('/turmas')}
-								color='secondary'
-								variant='outlined'
-								size='large'
-								sx={{ width: 'fit-content', my: 2 }}
-							>
-								Cancelar
-							</Button>
-							<Button
-								className={'primary-button'}
-								onClick={() => (form.id ? edit() : add())}
-								color='primary'
-								size='large'
-								sx={{ width: 'fit-content', my: 2 }}
-							>
-								Salvar
-							</Button>
-						</Container>
+						<Stepper activeStep={currentPage} alternativeLabel>
+							{pages.map(label => (
+								<Step key={label}>
+									<StepLabel>{label}</StepLabel>
+								</Step>
+							))}
+						</Stepper>
+						{currentPage === 0 && <FirstPage props={props} />}
+						{currentPage === 1 && <SecondPage props={props} />}
+						{/* {currentPage === 2 && <ThirdPage />}
+					{currentPage === 3 && <FourthPage />} */}
 					</Stack>
+					<Container
+						px='0'
+						sx={{
+							display: 'flex',
+							gap: '0.5rem',
+							alignItems: 'center',
+							justifyContent: 'flex-end',
+						}}
+					>
+						<Button
+							className={'secondary-button'}
+							onClick={() => {
+								currentPage === 0 ? history.push('/turmas') : setCurrentPage(0);
+							}}
+							color='secondary'
+							variant='outlined'
+							size='large'
+							sx={{ width: 'fit-content', my: 2 }}
+						>
+							Voltar
+						</Button>
+						<Button
+							className={'primary-button'}
+							onClick={() => setCurrentPage(1)}
+							color='primary'
+							size='large'
+							sx={{ width: 'fit-content', my: 2 }}
+						>
+							Próximo
+						</Button>
+					</Container>
 				</LocalizationProvider>
 			</Paper>
 		</Container>
