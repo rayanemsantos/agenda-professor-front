@@ -22,11 +22,14 @@ export default function Calendar() {
 	const handleOpen = e => {
 		setStartDateTime(e.start);
 		setEndDateTime(e.end);
-		setOpen(true);
+
+		return setOpen(true);
 	};
-	const handleClose = e => {
+	const handleClose = () => {
 		setOpen(false);
 	};
+	
+
 
 	return (
 		<>
@@ -50,7 +53,7 @@ export default function Calendar() {
 				</Typography>
 				<FullCalendar
 					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
-					dateClick={handleOpen()}
+					select={handleOpen}
 					initialView='timeGridWeek'
 					selectable
 					selectMirror
