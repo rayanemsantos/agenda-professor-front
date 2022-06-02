@@ -23,6 +23,7 @@ import * as service from '../../services/service';
 
 import FirstPage from './FirstPage';
 import SecondPage from './SecondPage';
+import ThirdPage from './ThirdPage';
 
 export default function TurmaNew(props) {
 	const { history } = props;
@@ -105,8 +106,8 @@ export default function TurmaNew(props) {
 						</Stepper>
 						{currentPage === 0 && <FirstPage />}
 						{currentPage === 1 && <SecondPage />}
-						{/* {currentPage === 2 && <ThirdPage />}
-					{currentPage === 3 && <FourthPage />} */}
+						{currentPage === 2 && <ThirdPage />}
+						{/* {currentPage === 3 && <FourthPage />} */}
 					</Stack>
 					<Container
 						px='0'
