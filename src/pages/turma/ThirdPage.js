@@ -26,7 +26,7 @@ function union(a, b) {
 	return [...a, ...not(b, a)];
 }
 
-export default function TransferList() {
+export default function ThirdPage() {
 	const [checked, setChecked] = useState([]);
 	const [left, setLeft] = useState([
 		'Artes',
