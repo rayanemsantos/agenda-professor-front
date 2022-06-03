@@ -3,13 +3,8 @@ import React, { useState, useEffect } from 'react';
 import {
 	Button,
 	Container,
-	FormControl,
-	InputLabel,
-	MenuItem,
 	Paper,
-	Select,
 	Stack,
-	OutlinedInput,
 	Step,
 	Stepper,
 	StepLabel,
@@ -27,30 +22,6 @@ import ThirdPage from './ThirdPage';
 import FourthPage from './FourthPage';
 
 export default function TurmaNew(props) {
-	const { history } = props;
-
-	// const add = () => {
-	// 	service
-	// 		.newTurmas(form)
-	// 		.then(res => {
-	// 			history.push('/turmas');
-	// 		})
-	// 		.catch(err => {
-	// 			console.log(err);
-	// 		});
-	// };
-
-	// const edit = () => {
-	// 	service
-	// 		.editTurmas(form.id, form)
-	// 		.then(res => {
-	// 			history.push('/turmas');
-	// 		})
-	// 		.catch(err => {
-	// 			console.log(err);
-	// 		});
-	// };
-
 	const [form, setForm] = useState({
 		id: '',
 		serie: '',
@@ -81,6 +52,18 @@ export default function TurmaNew(props) {
 
 		updateState();
 	}, [props.match.params]);
+
+	useEffect(() => {
+		console.log('currentPage', currentPage);
+	}, [currentPage]);
+
+	const handleNext = () => {
+		setCurrentPage(prev => prev + 1);
+	};
+
+	const handlePrev = () => {
+		setCurrentPage(prev => prev - 1);
+	};
 
 	return (
 		<Container>
@@ -119,27 +102,21 @@ export default function TurmaNew(props) {
 							justifyContent: 'flex-end',
 						}}
 					>
-						<Button
-							className={'secondary-button'}
-							onClick={() =>
-								currentPage > 0
-									? setCurrentPage(currentPage--)
-									: history.push('/turmas')
-							}
-							color='secondary'
-							variant='outlined'
-							size='large'
-							sx={{ width: 'fit-content', my: 2 }}
-						>
-							Voltar
-						</Button>
+						{currentPage === 0 ? null : (
+							<Button
+								className={'secondary-button'}
+								onClick={handlePrev}
+								color='secondary'
+								variant='outlined'
+								size='large'
+								sx={{ width: 'fit-content', my: 2 }}
+							>
+								Voltar
+							</Button>
+						)}
 						<Button
 							className={'primary-button'}
-							onClick={() =>
-								currentPage !== 3
-									? setCurrentPage(currentPage++)
-									: console.log(`deu bom, página ${currentPage + 1}`)
-							}
+							onClick={handleNext}
 							color='primary'
 							size='large'
 							sx={{ width: 'fit-content', my: 2 }}

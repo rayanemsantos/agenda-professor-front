@@ -30,6 +30,8 @@ function Login({ history }) {
 		authServices.loginStaff(form.email, form.password)
 			.then(res => {
 				dispatch(setUserData({type: '2', ...res.data}));
+				window.localStorage.setItem('access', res.data.access);
+				window.localStorage.setItem('refresh', res.data.refresh);
 				history.push('/');
 			})
 			.catch(err => {
@@ -97,7 +99,7 @@ function Login({ history }) {
 							style={{
 								opacity: form.email === '' && form.password === '' ? 0.5 : 1,
 							}}
-							disabled={form.email === '' && form.password === ''}
+							disabled={form.email === '' || form.password === ''}
 							onClick={() => login()}
 							color='primary'
 							size='large'

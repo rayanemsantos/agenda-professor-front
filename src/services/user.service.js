@@ -1,9 +1,8 @@
-import axios from 'axios';
-import * as config from './config';
+import api from './api';
 
 export function loginStaff(email, password){
-    return axios.post(`${config.URL_BASE}/user/staff/authentication/`, {email:email, password:password})
+    return api.post(`/user/staff/authentication/`, {email:email, password:password})
 }
 export function loginTeacher(email, password){
-    return axios.post(`${config.URL_BASE}/user/teacher/authentication/`, {email:email, password:password})
+    return api.post(`/user/teacher/authentication/`, {email:email, password:password})
 }

@@ -1,13 +1,15 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import { Link } from 'react-router-dom';
 
 import { Container, Typography, Grid, Paper } from '@mui/material';
 
 import Calendar from '../../components/Calendar/Calendar';
 
-function DashboardCard(title, count = 0) {
+import * as service from '../../services/service';
+
+function DashboardCard(path, title, count = 0) {
 	return (
-		<Link to={`/${title.toLowerCase()}`} style={{ textDecoration: 'none' }}>
+		<Link to={`/${path}`} style={{ textDecoration: 'none' }}>
 			<Paper
 				sx={{
 					p: 2,
@@ -28,22 +30,26 @@ function DashboardCard(title, count = 0) {
 }
 
 function Home() {
+	const [data, setData] = useState([]);
+
+	useEffect(() => {
+		service.fetchDashboard().then(res => {
+			setData(res.data.data);
+		});
+	}, []);
+
+	
 	return (
 		<Container maxWidth='lg' sx={{ mt: 2, mb: 2 }}>
 			{/* TODO Em breve rota com os números */}
 			<Grid container spacing={3}>
-				<Grid item xs={6} md={3}>
-					{DashboardCard('Alunos', 523)}
-				</Grid>
-				<Grid item xs={6} md={3}>
-					{DashboardCard('Professores', 16)}
-				</Grid>
-				<Grid item xs={6} md={3}>
-					{DashboardCard('Turmas', 18)}
-				</Grid>
-				<Grid item xs={6} md={3}>
-					{DashboardCard('Eventos', 4)}
-				</Grid>
+				{
+					data.map((_data) => {
+						return <Grid item xs={6} md={3}>
+							{DashboardCard(_data.path, _data.field, _data.count)}
+						</Grid>
+					})
+				}
 			</Grid>
 			<Grid container spacing={3} marginTop={0}>
 				<Grid item xs={12}>
