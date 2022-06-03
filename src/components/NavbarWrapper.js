@@ -181,7 +181,7 @@ const NavbarWrapper = ({ history }) => {
 					>
 						Agenda do professor
 					</Typography>	
-					</Toolbar>
+				</Toolbar>
         	</AppBar>		
 			<Drawer
 				open={open}

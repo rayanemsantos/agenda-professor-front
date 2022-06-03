@@ -133,18 +133,6 @@ export default function AlunoNew(props) {
                     /> */}
 							{/* TODO: Adicionar listas de Estado e Cidades */}
 							<TextField
-								label='Bairro'
-								variant='outlined'
-								type='text'
-								name='address_district'
-								id='cadastro-address_district'
-								value={form.address_district}
-								onChange={e =>
-									setForm({ ...form, address_district: e.target.value })
-								}
-								required
-							/>
-							<TextField
 								label='Rua'
 								variant='outlined'
 								type='text'
@@ -165,6 +153,18 @@ export default function AlunoNew(props) {
 								value={form.address_number}
 								onChange={e =>
 									setForm({ ...form, address_number: e.target.value })
+								}
+								required
+							/>
+							<TextField
+								label='Bairro'
+								variant='outlined'
+								type='text'
+								name='address_district'
+								id='cadastro-address_district'
+								value={form.address_district}
+								onChange={e =>
+									setForm({ ...form, address_district: e.target.value })
 								}
 								required
 							/>

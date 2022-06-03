@@ -93,7 +93,8 @@ function Layout(props) {
 									theme='colored'
 								/>								
 							</div>
-							<TabsComponent />
+							{/* V2 professor será utilizado */}
+							{/* <TabsComponent /> */}
 						</div>
 					</>
 				)}

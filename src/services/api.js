@@ -60,11 +60,11 @@ async function refreshToken(error) {
         .then(async (res) => {
           localStorage.setItem("access", res.data.access);
           localStorage.setItem("refresh_token", res.data.refresh);
-          // Fazer algo caso seja feito o refresh token
           return resolve(res);
         })
         .catch((err) => {
-          // Fazer algo caso não seja feito o refresh token
+          localStorage.clear();
+          window.location.reload();
           return reject(error);
         });
     } catch (err) {
@@ -72,9 +72,5 @@ async function refreshToken(error) {
     }
   });
 };
-
-function logout(){
-  localStorage.clear();
-}
 
 export default api;

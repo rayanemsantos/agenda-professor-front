@@ -63,7 +63,6 @@ function EventNewDialog({
 
 
 	useEffect(() => {
-		console.log(event)
 		if(event){
 			service.fetchEvent(event).then((res) => {
 				setForm(res.data)
