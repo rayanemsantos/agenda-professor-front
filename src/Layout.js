@@ -6,10 +6,13 @@ import { makeStyles } from '@mui/styles';
 import { renderRoutes } from 'react-router-config';
 import { withRouter } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { ToastContainer, Zoom } from 'react-toastify';
 
 import AppContext from './AppContext';
 import TabsComponent from './components/TabsComponent';
 import NavbarWrapper from './components/NavbarWrapper';
+
+import 'react-toastify/dist/ReactToastify.min.css';
 
 const useStyles = makeStyles(theme => ({
 	root: {
@@ -79,6 +82,16 @@ function Layout(props) {
 							<div className={clsx(classes.content)}>
 								{renderRoutes(routes)}
 								{children}
+								<ToastContainer
+									closeOnClick
+									draggable
+									newestOnTop
+									hideProgressBar
+									autoClose={5000}
+									transition={Zoom}
+									position='bottom-right'
+									theme='colored'
+								/>								
 							</div>
 							<TabsComponent />
 						</div>

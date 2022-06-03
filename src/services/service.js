@@ -29,6 +29,9 @@ export function editStudent(id, data) {
 export function fetchTurmas() {
 	return api.get(`/school_class/`);
 }
+export function fetchTurma(id) {
+	return api.get(`/school_class/${id}/`);
+}
 export function newTurmas(data) {
 	return api.post(`/school_class/`, data);
 }
@@ -58,14 +61,6 @@ export function editProfessor(id, data) {
 	return api.put(`/teacher/${id}/`, data);
 }
 
-/* Eventos */
-export function fetchEvents(data) {
-	return api.get(`/calendario`, data);
-}
-export function newCalendarItem(data) {
-	return api.post(`/calendario`, data);
-}
-
 /* Atividades */
 export function fetchAtividades(user) {
 	return api.get(`/atividade/`);
@@ -77,4 +72,12 @@ export function newAtividade(data) {
 /* Dashboard */
 export function fetchDashboard() {
 	return api.get(`/general/dashboard_infos`);
+}
+
+/* Calendário */
+export function newCalendarEvent(data) {
+	return api.post(`/calendar_event/`, data);
+}
+export function fetchEvents() {
+	return api.get(`/calendar_event/`);
 }

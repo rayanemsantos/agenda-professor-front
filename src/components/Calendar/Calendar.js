@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import { Typography, Paper, Fab } from '@mui/material';
 
@@ -12,24 +12,39 @@ import {
 	ArrowBackIosRounded,
 	ArrowForwardIosRounded,
 } from '@mui/icons-material';
+import * as services from '../../services/service';
+import moment from 'moment';
+
 import './calendar.css';
 
 export default function Calendar() {
 	const [startDateTime, setStartDateTime] = useState();
 	const [endDateTime, setEndDateTime] = useState();
 	const [open, setOpen] = useState(false);
-
+	const [data, setData] = useState([]);
+	
 	const handleOpen = e => {
 		setStartDateTime(e.start);
 		setEndDateTime(e.end);
-
-		return setOpen(true);
+		setOpen(true);
 	};
 	const handleClose = () => {
 		setOpen(false);
 	};
 	
+	useEffect(() => {
+		handleEvents();
+	}, []);
 
+	const handleEvents = () => {
+		handleClose();
+		services.fetchEvents().then((res) => {
+			const list = res.data.map((_r) => {return  {..._r, start: moment.utc(_r.date_schedule).format("YYYY-MM-DD")}})
+			setData(list)
+		}).catch((err) => {
+			console.log(err)
+		})
+	}
 
 	return (
 		<>
@@ -38,6 +53,7 @@ export default function Calendar() {
 				close={handleClose}
 				startDateTime={startDateTime}
 				endDateTime={endDateTime}
+				onCreateEvent={handleEvents}
 			/>
 			<Paper
 				sx={{
@@ -52,16 +68,17 @@ export default function Calendar() {
 					Fique de olho em todos os eventos programados da escola
 				</Typography>
 				<FullCalendar
-					plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+					plugins={[dayGridPlugin, interactionPlugin]}
+					// , timeGridPlugin, interactionPlugin
 					select={handleOpen}
-					initialView='timeGridWeek'
+					// initialView='timeGridWeek'
 					selectable
 					selectMirror
 					nowIndicator
-					slotMinTime='07:30:00'
-					slotMaxTime='23:00:00'
-					slotDuration='00:10:00'
-					slotLabelInterval='00:50:00'
+					// slotMinTime='07:30:00'
+					// slotMaxTime='23:00:00'
+					// slotDuration='00:10:00'
+					// slotLabelInterval='00:50:00'
 					eventTimeFormat={false}
 					weekends={false}
 					locales='allLocales'
@@ -75,8 +92,9 @@ export default function Calendar() {
 						next: <ArrowForwardIosRounded fontSize='small' />,
 					}}
 					eventColor='#4a148c'
+					events={data}
 				/>
-				<Fab
+				{/* <Fab
 					sx={{
 						position: 'fixed',
 						bottom: theme => theme.spacing(5),
@@ -88,7 +106,7 @@ export default function Calendar() {
 					onClick={handleOpen}
 				>
 					<AddCircleRounded />
-				</Fab>
+				</Fab> */}
 			</Paper>
 		</>
 	);

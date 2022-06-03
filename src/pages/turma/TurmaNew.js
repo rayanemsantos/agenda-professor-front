@@ -31,27 +31,11 @@ export default function TurmaNew(props) {
 	let [currentPage, setCurrentPage] = useState(0);
 
 	const pages = [
-		'Criar Turma',
+		'Turma',
 		'Adicionar Alunos',
 		'Adicionar Matérias',
 		'Adicionar Professores',
 	];
-
-	useEffect(() => {
-		async function updateState() {
-			const params = props.match.params;
-			const { id } = params;
-
-			if (id === 'new') {
-			} else {
-				service.fetchTurmas(id).then(res => {
-					setForm(res.data);
-				});
-			}
-		}
-
-		updateState();
-	}, [props.match.params]);
 
 	useEffect(() => {
 		console.log('currentPage', currentPage);
@@ -65,6 +49,22 @@ export default function TurmaNew(props) {
 		setCurrentPage(prev => prev - 1);
 	};
 
+	useEffect(() => {
+		async function updateState() {
+			const params = props.match.params;
+			const { id } = params;
+
+			if (id === 'new') {
+			} else {
+				service.fetchTurma(id).then(res => {
+					setForm({...res.data});
+				});
+			}
+		}
+
+		updateState();
+	}, [props.match.params]);
+
 	return (
 		<Container>
 			<Paper sx={{ padding: 4 }}>
@@ -72,7 +72,7 @@ export default function TurmaNew(props) {
 					{pages[currentPage]}
 				</Typography>
 				<Typography variant='body2' color={grey[600]}>
-					Crie uma turma e adicione estudantes, matérias e professores
+					Edite a turma, adicione estudantes, matérias e professores
 				</Typography>
 				<LocalizationProvider dateAdapter={AdapterDateFns}>
 					<Stack
@@ -88,7 +88,7 @@ export default function TurmaNew(props) {
 								</Step>
 							))}
 						</Stepper>
-						{currentPage === 0 && <FirstPage />}
+						{currentPage === 0 && <FirstPage data={form}/>}
 						{currentPage === 1 && <SecondPage />}
 						{currentPage === 2 && <ThirdPage />}
 						{currentPage === 3 && <FourthPage />}

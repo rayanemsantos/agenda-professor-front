@@ -19,6 +19,9 @@ import {
 import { LocalizationProvider, TimePicker, DatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { DragHandleRounded, CloseRounded } from '@mui/icons-material';
+import moment from 'moment';
+import * as service from '../../services/service';
+import feedbackService from '../../services/feedbackService';
 
 function EventNewDialog({
 	onCreateEvent,
@@ -30,7 +33,10 @@ function EventNewDialog({
 }) {
 	const [startTime, setStartTime] = useState(null);
 	const [endTime, setEndTime] = useState(null);
-	const [value, setValue] = useState(0);
+	const [form, setForm] = useState({
+		title: '',
+		description: ''
+	});
 	// const [repetition, setRepetition] = useState(arr[1]);
 	// const [color, setColor] = useState('default');
 
@@ -41,9 +47,26 @@ function EventNewDialog({
 	// 	setRepetition(e.target.value);
 	// };
 
-	const handleChange = (event, newValue) => {
-		setValue(newValue);
+	const handleChange = (label, value) => {
+		setForm({...form, [label]: value});
 	};
+
+	const handleSave = () => {
+		service.newCalendarEvent({
+			title:form.title,
+			description:form.description,
+			date_schedule: moment(startDateTime).format("YYYY-MM-DDT00:00")
+		}).then((res) => {
+			feedbackService.showMessage('Evento cadastrado com sucesso!', 'success')
+			setForm({
+				title: '',
+				description: ''
+			})
+			onCreateEvent();
+		}).catch((err) => {
+			feedbackService.showMessage('Ops! Houve um erro ao cadastrar evento.', 'error')
+		})
+	}
 
 	const weekDays = [
 		'Domingo',
@@ -86,17 +109,19 @@ function EventNewDialog({
 						>
 							<TextField
 								placeholder='Adicionar título'
-								fullWidth
 								variant='standard'
 								margin='normal'
+								onChange={(ev) => handleChange('title', ev.target.value)}
+								value={form.title}
+								fullWidth
 							/>
 							{/* {usuario === 'secretaria' ? ( */}
-							<Tabs value={value} onChange={handleChange} sx={{ mb: 2 }}>
+							{/* <Tabs value={value} onChange={handleChange} sx={{ mb: 2 }}>
 								<Tab label='Evento' index={0} variant='text' />
 								<Tab label='Entrega de Atividade' index={1} variant='text' />
 								<Tab label='Feriado' index={2} variant='text' />
 								<Tab label='Outros' index={3} />
-							</Tabs>
+							</Tabs> */}
 							{/* ) : (
 								<Tabs value={value} onChange={handleChange} sx={{ mb: 2 }}>
 									<Tab label='Prova' index={0} />
@@ -143,7 +168,7 @@ function EventNewDialog({
 				) : (
 					''
 				)} */}
-							<Stack>
+							{/* <Stack>
 								<LocalizationProvider dateAdapter={AdapterDateFns}>
 									<Box sx={{ display: 'flex', gap: 2 }}>
 										<Stack sx={{ display: 'flex', gap: 2 }}>
@@ -202,13 +227,14 @@ function EventNewDialog({
 										</Stack>
 									</Box>
 								</LocalizationProvider>
-							</Stack>
+							</Stack> */}
 						</DialogContent>
 						<DialogActions mt={3}>
 							<Button variant='text' onClick={close}>
 								Cancelar
 							</Button>
-							<Button onClick={close}>Salvar</Button>
+							<Button onClick={handleSave}
+									disabled={form.title === ''}>Salvar</Button>
 						</DialogActions>
 					</Dialog>
 				</Grid>

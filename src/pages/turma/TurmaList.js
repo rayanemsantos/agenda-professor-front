@@ -19,12 +19,14 @@ import {
 import { Edit } from '@mui/icons-material';
 
 import * as service from '../../services/service';
+import SchoolClassNewDialog from './SchoolClassNewDialog';
 
 export default function TurmaList(props) {
 	const { history } = props;
 	const [data, setData] = useState([]);
 	const [items, setItems] = useState([]);
 	const [searchText, setSearchText] = useState('');
+	const [open, setOpen] = useState(false);
 
 	useEffect(() => {
 		service.fetchTurmas().then(res => {
@@ -44,10 +46,20 @@ export default function TurmaList(props) {
 	}, [items, searchText]);
 
 	function handleNew() {
-		history.push('/turma/new');
+		setOpen(true);
+		// history.push('/turma/new');
+
 	}
 	function handleEdit(id) {
 		history.push('/turma/' + id);
+	}
+	
+	const handleClose = () => {
+		setOpen(false);
+	}
+	
+	const handleNewSchoolClass = (data) => {
+		history.push('/turma/' + data.id);
 	}
 
 	const item = _item => {
@@ -142,17 +154,10 @@ export default function TurmaList(props) {
 					</CardContent>
 				</Card>
 			</Container>
-			{/* <Fab 
-        sx={{
-            position: "fixed",
-            bottom: (theme) => theme.spacing(5),
-            right: (theme) => theme.spacing(5)
-          }}
-        color="primary"
-        aria-label="add" 
-        >
-        <AddIcon />
-    </Fab>   */}
+			<SchoolClassNewDialog open={open}
+								  close={handleClose}
+								  onCreate={handleNewSchoolClass}/>
+								  
 		</>
 	);
 }

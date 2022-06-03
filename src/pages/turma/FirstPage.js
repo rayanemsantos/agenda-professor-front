@@ -19,6 +19,25 @@ import * as service from '../../services/service';
 export default function FirstPage(props) {
 	const { history } = props;
 
+	const [form, setForm] = useState({
+		id: '',
+		serie: '',
+		identification: '',
+		shift: '',
+	});
+
+	const series = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+	const salas = ['A', 'B', 'C', 'D'];
+	const turnos = ['Manhã', 'Tarde', 'Noite'];
+	
+	useEffect(() => {
+		async function updateState() {
+			setForm(props.data);
+		}
+
+		updateState();
+	}, [props]);
+
 	const add = () => {
 		service
 			.newTurmas(form)
@@ -40,32 +59,6 @@ export default function FirstPage(props) {
 				console.log(err);
 			});
 	};
-
-	const [form, setForm] = useState({
-		id: '',
-		serie: '',
-		identification: '',
-		shift: '',
-	});
-
-	// useEffect(() => {
-	// 	async function updateState() {
-	// 		const params = props.match.params;
-	// 		const { id } = params;
-
-	// 		if (id === 'new') {
-	// 		} else {
-	// 			service.fetchTurmas(id).then(res => {
-	// 				setForm(res.data);
-	// 			});
-	// 		}
-	// 	}
-	// 	updateState();
-	// }, [props.match.params]);
-
-	const series = [1, 2, 3, 4, 5, 6, 7, 8, 9];
-	const salas = ['A', 'B', 'C', 'D'];
-	const turnos = ['Manhã', 'Tarde', 'Noite'];
 
 	return (
 		<Stack className='turma' spacing={2}>
