@@ -121,7 +121,11 @@ export default function TurmaNew(props) {
 					>
 						<Button
 							className={'secondary-button'}
-							onClick={() => setCurrentPage(currentPage--)}
+							onClick={() =>
+								currentPage > 0
+									? setCurrentPage(currentPage--)
+									: history.push('/turmas')
+							}
 							color='secondary'
 							variant='outlined'
 							size='large'
@@ -131,7 +135,11 @@ export default function TurmaNew(props) {
 						</Button>
 						<Button
 							className={'primary-button'}
-							onClick={() => setCurrentPage(currentPage++)}
+							onClick={() =>
+								currentPage !== 3
+									? setCurrentPage(currentPage++)
+									: console.log(`deu bom, página ${currentPage + 1}`)
+							}
 							color='primary'
 							size='large'
 							sx={{ width: 'fit-content', my: 2 }}

@@ -1,8 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import {
 	Box,
 	Button,
-	Card,
 	CardHeader,
 	Checkbox,
 	Divider,
@@ -13,6 +12,8 @@ import {
 	ListItemIcon,
 } from '@mui/material';
 import { ChevronLeftRounded, ChevronRightRounded } from '@mui/icons-material';
+
+import * as service from '../../services/service';
 
 function not(a, b) {
 	return a.filter(value => b.indexOf(value) === -1);
@@ -27,30 +28,38 @@ function union(a, b) {
 }
 
 export default function ThirdPage() {
+	const [data, setData] = useState([]);
 	const [checked, setChecked] = useState([]);
 	const [left, setLeft] = useState([
-		'Artes',
-		'Biologia',
-		'Ciências',
-		'Educação física',
-		'Espanhol',
-		'Filosofia',
-		'Física',
-		'Geografia',
-		'Gramática',
-		'História',
-		'Inglês',
-		'Literatura',
-		'Matemática',
-		'Português',
-		'Química',
-		'Redação',
+		// 'Artes',
+		// 'Biologia',
+		// 'Ciências',
+		// 'Educação física',
+		// 'Espanhol',
+		// 'Filosofia',
+		// 'Física',
+		// 'Geografia',
+		// 'Gramática',
+		// 'História',
+		// 'Inglês',
+		// 'Literatura',
+		// 'Matemática',
+		// 'Português',
+		// 'Química',
+		// 'Redação',
 	]);
 
 	const [right, setRight] = useState([]);
 
 	const leftChecked = intersection(checked, left);
 	const rightChecked = intersection(checked, right);
+
+	useEffect(() => {
+		service.fetchMaterias().then(res => {
+			setData(res.data);
+			setLeft(res.data);
+		});
+	}, []);
 
 	const handleToggle = value => () => {
 		const currentIndex = checked.indexOf(value);
@@ -115,8 +124,7 @@ export default function ThirdPage() {
 			<Divider />
 			<List
 				sx={{
-					height: 300,
-					bgcolor: 'background.paper',
+					height: 360,
 					overflow: 'auto',
 				}}
 				dense

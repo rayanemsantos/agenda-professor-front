@@ -37,6 +37,14 @@ export function editTurmas(id, data) {
 	return axios.put(`${config.URL_BASE}/school_class/${id}/`, data);
 }
 
+/* Matérias */
+export function fetchMaterias() {
+	return axios.get(`${config.URL_BASE}/school_class_subject/`);
+}
+export function newMaterias(data) {
+	return axios.post(`${config.URL_BASE}/school_class_subject/`, data);
+}
+
 /* Professores */
 export function fetchProfessores() {
 	return axios.get(`${config.URL_BASE}/teacher/`);

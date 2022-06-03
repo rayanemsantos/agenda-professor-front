@@ -108,8 +108,7 @@ export default function SecondPage() {
 			<Divider />
 			<List
 				sx={{
-					height: 300,
-					bgcolor: 'background.paper',
+					height: 360,
 					overflow: 'auto',
 				}}
 				dense
