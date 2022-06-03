@@ -40,13 +40,13 @@ export default function ProfessorNew(props) {
 	};
 
 	const [form, setForm] = useState({
-        "cpf": "67694184019",
-        "formacao": "Licenciatura Letras Português",
-        "address_street": "Rua A",
-        "address_number": "2021",
-        "address_district": "Barcher",
-        "email":"rayane7",
-        "name":"Eli Maria"
+        // cpf: '',
+        formacao: '',
+        address_street: '',
+        address_number: '',
+        address_district: '',
+        // email: '',
+        full_name: ''
     });
 
 	useEffect(() => {
@@ -57,7 +57,7 @@ export default function ProfessorNew(props) {
 			if (id === 'new') {
 			} else {
 				service.fetchProfessor(id).then(res => {
-					setForm(res.data);
+					setForm({...res.data});
 				});
 			}
 		}
@@ -96,15 +96,26 @@ export default function ProfessorNew(props) {
 								required
 							/>
 							<TextField
+								label='Nome Completo'
+								variant='outlined'
+								type='text'
+								name='name'
+								id='cadastro-name'
+								value={form.full_name}
+								onChange={e => setForm({ ...form, full_name: e.target.value })}
+								required
+							/> 							
+							<TextField
 								label='Formação'
 								variant='outlined'
 								type='text'
 								name='formacao'
 								id='cadastro-formacao'
 								value={form.formacao}
+								onChange={e => setForm({ ...form, formacao: e.target.value })}
 								required
 							/>                            
-							<TextField
+							{/* <TextField
                                 label='Email'
                                 variant='outlined'
                                 type='email'
@@ -113,8 +124,8 @@ export default function ProfessorNew(props) {
                                 value={form.email}
                                 onChange={e => setForm({ ...form, email: e.target.value })}
                                 required
-                            />
-							<TextField
+                            /> */}
+							{/* <TextField
                                 label='CPF'
                                 variant='outlined'
                                 type='cpf'
@@ -123,17 +134,7 @@ export default function ProfessorNew(props) {
                                 value={form.cpf}
                                 onChange={e => setForm({ ...form, cpf: e.target.value })}
                                 required
-                            />    
-							<TextField
-								label='Nome Completo'
-								variant='outlined'
-								type='text'
-								name='name'
-								id='cadastro-name'
-								value={form.name}
-								onChange={e => setForm({ ...form, name: e.target.value })}
-								required
-							/>                                                 
+                            />                                                     */}
 							{/* TODO: Adicionar listas de Estado e Cidades */}
 							<TextField
 								label='Bairro'

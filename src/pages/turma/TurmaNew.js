@@ -80,6 +80,18 @@ export default function TurmaNew(props) {
 		updateState();
 	}, [props.match.params]);
 
+	useEffect(() => {
+		console.log('currentPage', currentPage)
+	}, [currentPage]);
+	
+	const handleNext = () =>{
+		setCurrentPage((prev) => prev + 1);
+	}
+	
+	const handlePrev = () =>{
+		setCurrentPage((prev) => prev - 1);
+	}
+
 	return (
 		<Container>
 			<Paper sx={{ padding: 4 }}>
@@ -117,19 +129,19 @@ export default function TurmaNew(props) {
 							justifyContent: 'flex-end',
 						}}
 					>
-						<Button
+						{currentPage === 0 ? (null) : <Button
 							className={'secondary-button'}
-							onClick={() => setCurrentPage(currentPage--)}
+							onClick={handlePrev}
 							color='secondary'
 							variant='outlined'
 							size='large'
 							sx={{ width: 'fit-content', my: 2 }}
 						>
 							Voltar
-						</Button>
+						</Button>}
 						<Button
 							className={'primary-button'}
-							onClick={() => setCurrentPage(currentPage++)}
+							onClick={handleNext}
 							color='primary'
 							size='large'
 							sx={{ width: 'fit-content', my: 2 }}

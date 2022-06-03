@@ -1,68 +1,72 @@
-import axios from 'axios';
-import * as config from './config';
+import api from './api';
 
 /* Login e Cadastro */
 export function login(email, password) {
-	return axios.post(`${config.URL_BASE}/auth/`, {
+	return api.post(`/auth/`, {
 		email: email,
 		password: password,
 	});
 }
 export function signup(data) {
-	return axios.post(`${config.URL_BASE}/professor/`, data);
+	return api.post(`/professor/`, data);
 }
 
 /* Alunos */
 export function fetchStudents() {
-	return axios.get(`${config.URL_BASE}/student/`);
+	return api.get(`/student/`);
 }
 export function fetchStudent(id) {
-	return axios.get(`${config.URL_BASE}/student/${id}`);
+	return api.get(`/student/${id}`);
 }
 export function newStudent(data) {
-	return axios.post(`${config.URL_BASE}/student/`, data);
+	return api.post(`/student/`, data);
 }
 export function editStudent(id, data) {
-	return axios.put(`${config.URL_BASE}/student/${id}/`, data);
+	return api.put(`/student/${id}/`, data);
 }
 
 /* Turmas */
 export function fetchTurmas() {
-	return axios.get(`${config.URL_BASE}/school_class/`);
+	return api.get(`/school_class/`);
 }
 export function newTurmas(data) {
-	return axios.post(`${config.URL_BASE}/school_class/`, data);
+	return api.post(`/school_class/`, data);
 }
 export function editTurmas(id, data) {
-	return axios.put(`${config.URL_BASE}/school_class/${id}/`, data);
+	return api.put(`/school_class/${id}/`, data);
 }
 
 /* Professores */
 export function fetchProfessores() {
-	return axios.get(`${config.URL_BASE}/teacher/`);
+	return api.get(`/teacher/`);
 }
 export function fetchProfessor(id) {
-	return axios.get(`${config.URL_BASE}/teacher/${id}`);
+	return api.get(`/teacher/${id}`);
 }
 export function newProfessor(data) {
-	return axios.post(`${config.URL_BASE}/user/teacher/registration/`, data);
+	return api.post(`/user/teacher/registration/`, data);
 }
 export function editProfessor(id, data) {
-	return axios.put(`${config.URL_BASE}/teacher/${id}/`, data);
+	return api.put(`/teacher/${id}/`, data);
 }
 
 /* Eventos */
 export function fetchEvents(data) {
-	return axios.get(`${config.URL_BASE}/calendario`, data);
+	return api.get(`/calendario`, data);
 }
 export function newCalendarItem(data) {
-	return axios.post(`${config.URL_BASE}/calendario`, data);
+	return api.post(`/calendario`, data);
 }
 
 /* Atividades */
 export function fetchAtividades(user) {
-	return axios.get(`${config.URL_BASE}/atividade/`);
+	return api.get(`/atividade/`);
 }
 export function newAtividade(data) {
-	return axios.post(`${config.URL_BASE}/atividade`, data);
+	return api.post(`/atividade`, data);
+}
+
+/* Dashboard */
+export function fetchDashboard() {
+	return api.get(`/general/dashboard_infos`);
 }
