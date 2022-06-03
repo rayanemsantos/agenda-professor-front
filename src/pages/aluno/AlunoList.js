@@ -56,7 +56,6 @@ export default function AlunoList(props) {
 		history.push('/aluno/' + id);
 	}
 	function paginate(event, page) {
-		console.log(page);
 		setPage(page - 1);
 	}
 
@@ -142,7 +141,7 @@ export default function AlunoList(props) {
 						<Pagination
 							onChange={paginate}
 							page={page + 1}
-							count={parseInt(items.length / 10)}
+							count={Math.ceil(items.length / 10)}
 							color='primary'
 						/>
 					</CardContent>

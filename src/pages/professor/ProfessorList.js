@@ -24,6 +24,8 @@ export default function ProfessorList(props) {
 	const [data, setData] = useState([]);
 	const [items, setItems] = useState([]);
 	const [searchText, setSearchText] = useState('');
+	const [page, setPage] = useState(0);
+	const rowsPerPage = 10;
 
 	useEffect(() => {
 		service.fetchProfessores().then(res => {
@@ -48,6 +50,9 @@ export default function ProfessorList(props) {
 	function handleEdit(id) {
 		history.push('/professores/' + id);
 	}
+	function paginate(event, page) {
+		setPage(page - 1);
+	}
 	const item = _item => {
 		return (
 			<ListItem>
@@ -61,7 +66,7 @@ export default function ProfessorList(props) {
 								<div className='pl-5'>
 									<h3>{_item.full_name}</h3>
 									<h5>{_item.registration_id}</h5>
-									<span>{_item.school_class}</span>
+									<span>{_item.formacao}</span>
 								</div>
 							</div>
 							<Button
@@ -106,7 +111,9 @@ export default function ProfessorList(props) {
 							</Grid>
 						</Toolbar>
 						<List>
-							{items.map(_item => {
+							{items
+							.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+							.map(_item => {
 								return <>{item(_item)}</>;
 							})}
 							{!items.length ? (
@@ -121,21 +128,15 @@ export default function ProfessorList(props) {
 								</ListItem>
 							) : null}
 						</List>
-						<Pagination count={1} color='primary' />
+						<Pagination
+							onChange={paginate}
+							page={page + 1}
+							count={Math.ceil(items.length / 10)}
+							color='primary'
+						/>
 					</CardContent>
 				</Card>
 			</Container>
-			{/* <Fab 
-        sx={{
-            position: "fixed",
-            bottom: (theme) => theme.spacing(5),
-            right: (theme) => theme.spacing(5)
-          }}
-        color="primary"
-        aria-label="add" 
-        >
-        <AddIcon />
-    </Fab>   */}
 		</>
 	);
 }

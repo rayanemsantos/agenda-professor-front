@@ -68,7 +68,7 @@ function EventNewDialog({
 				setForm(res.data)
 			})
 		}
-	}, [event]);
+	}, []);
 
 	const handleChange = (label, value) => {
 		setForm({...form, [label]: value});

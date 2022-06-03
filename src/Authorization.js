@@ -17,7 +17,7 @@ function Authorization(props) {
 			});
 		} else {
 			history.push({
-				pathname: redirectUrl,
+				pathname: redirectUrl == '/login' ? '/' : redirectUrl,
 			});
 		}
 	}, [user]);

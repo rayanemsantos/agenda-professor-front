@@ -23,15 +23,15 @@ api.interceptors.response.use((response) => {
     return response
   }, async function (error) {
   
-    const originalRequest = error.config;
+  const originalRequest = error.config;
 
-    if (error.response.status === 401) {
-        const refresher = await refreshToken(error);
+  if (error.response.status === 401) {
+      const refresher = await refreshToken(error);
 
-        if (refresher){
-          return api(originalRequest);
-        }
-    }
+      if (refresher){
+        return api(originalRequest);
+      }
+  }
   return Promise.reject(error);
 });
 
