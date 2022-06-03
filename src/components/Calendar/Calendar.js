@@ -21,12 +21,19 @@ export default function Calendar() {
 	const [startDateTime, setStartDateTime] = useState();
 	const [endDateTime, setEndDateTime] = useState();
 	const [open, setOpen] = useState(false);
+	const [event, setEvent] = useState(null);
 	const [data, setData] = useState([]);
 	
-	const handleOpen = e => {
+	const handleOpen = (e) => {
+		setOpen(true);
 		setStartDateTime(e.start);
 		setEndDateTime(e.end);
+	};
+	
+	const handleClickEvent = e => {
 		setOpen(true);
+		setEvent(e.event.id);
+
 	};
 	const handleClose = () => {
 		setOpen(false);
@@ -50,6 +57,7 @@ export default function Calendar() {
 		<>
 			<EventNewDialog
 				open={open}
+				event={event}
 				close={handleClose}
 				startDateTime={startDateTime}
 				endDateTime={endDateTime}
@@ -93,6 +101,7 @@ export default function Calendar() {
 					}}
 					eventColor='#4a148c'
 					events={data}
+					eventClick={handleClickEvent}
 				/>
 				{/* <Fab
 					sx={{

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
 	Box,
 	Button,
@@ -8,71 +8,46 @@ import {
 	Stack,
 	TextField,
 	Typography,
-	ToggleButtonGroup,
-	ToggleButton,
 } from '@mui/material';
 
-import Layout from '../../Layout';
 import * as authServices from '../../services/user.service';
 import { setUserData } from '../store/user.reducer';
+import feedbackService from '../../services/feedbackService';
 
 function Login({ history }) {
 	const dispatch = useDispatch();
+	
+	const user = useSelector(({ user }) => user);
 	const [form, setForm] = useState({
 		email: '',
 		password: '',
 		valid: true,
 		errorMessage: '',
 	});
-	const [errorMessage, setErrorMessage] = useState('');
-	const [alignment, setAlignment] = useState('1');
+
 	function login() {
 		authServices.loginStaff(form.email, form.password)
 			.then(res => {
 				dispatch(setUserData({type: '2', ...res.data}));
 				window.localStorage.setItem('access', res.data.access);
 				window.localStorage.setItem('refresh', res.data.refresh);
-				history.push('/');
 			})
 			.catch(err => {
-				setErrorMessage('Email ou senha inválido.');
+				feedbackService.showMessage('Email ou senha inválido.', 'error');
 			});
 	}
-	const message = message => {
-		return <Typography>{message}</Typography>;
-	};
-	const handleChange = (event, newAlignment) => {
-		setAlignment(newAlignment);
-	};
+
 	return (
 		<Grid item sx={{ width: 424, padding: 2, mx: 'auto' }}>
 			<Paper sx={{ backgroundColor: '#f5f5f5', padding: 3 }}>
 				<Box className='form'>
 					<Stack className='login' component='form'>
 						<Box className='text wrapper'>
-							<Typography variant='h2'>Login</Typography>
+							<Typography variant='h2'>Login</Typography>							
 							<Typography variant='body2'>
 								Faça login ou cadastre-se colocando seu email.
 							</Typography>
 						</Box>
-						{/* <Box
-							sx={{
-								display: 'flex',
-								justifyContent: 'center',
-								mt: 3,
-								mb: 3,
-							}}
-						>
-							<ToggleButtonGroup
-								color='primary'
-								exclusive
-								value={alignment}
-								onChange={handleChange}
-							>
-								<ToggleButton value={'1'}>Professor</ToggleButton>
-								<ToggleButton value={'2'}>Coordenação</ToggleButton>
-							</ToggleButtonGroup>
-						</Box> */}
 						<Stack className='input wrapper' spacing={2} sx={{ mt: 2 }}>
 							<TextField
 								label='username'
@@ -89,7 +64,6 @@ function Login({ history }) {
 								id='cadastro-password'
 								value={form.password}
 								onChange={e => setForm({ ...form, password: e.target.value })}
-								helperText={errorMessage !== '' && message(errorMessage)}
 								required
 							/>
 						</Stack>
@@ -108,7 +82,7 @@ function Login({ history }) {
 							login
 						</Button>
 					</Stack>
-					<Box alignItems='center' sx={{ width: 'fit-content' }} m='auto'>
+					{/* <Box alignItems='center' sx={{ width: 'fit-content' }} m='auto'>
 						<Typography
 							component='span'
 							variant='body2'
@@ -127,7 +101,7 @@ function Login({ history }) {
 						>
 							Cadastrar
 						</Button>
-					</Box>
+					</Box> */}
 				</Box>
 			</Paper>
 		</Grid>

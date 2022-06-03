@@ -75,9 +75,15 @@ export function fetchDashboard() {
 }
 
 /* Calendário */
-export function newCalendarEvent(data) {
+export function newEvent(data) {
 	return api.post(`/calendar_event/`, data);
+}
+export function editEvent(id, data) {
+	return api.put(`/calendar_event/${id}/`, data);
 }
 export function fetchEvents() {
 	return api.get(`/calendar_event/`);
+}
+export function fetchEvent(id) {
+	return api.get(`/calendar_event/${id}/`);
 }

@@ -73,4 +73,8 @@ async function refreshToken(error) {
   });
 };
 
+function logout(){
+  localStorage.clear();
+}
+
 export default api;

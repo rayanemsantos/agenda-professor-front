@@ -1,9 +1,8 @@
-import React, { Component, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 
 function Authorization(props) {
-	// console.log(props)
 	const { children, location, history } = props;
 	const user = useSelector(({ user }) => user);
 

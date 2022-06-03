@@ -21,7 +21,6 @@ import Home from './pages/Home/Home';
 
 import { store } from './store';
 
-
 const hist = history.createBrowserHistory();
 
 const routes = [

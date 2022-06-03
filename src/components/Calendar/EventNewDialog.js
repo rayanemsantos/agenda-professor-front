@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
 	Box,
 	Button,
@@ -16,6 +16,11 @@ import {
 	TextField,
 	Typography,
 } from '@mui/material';
+import Radio from '@mui/material/Radio';
+import RadioGroup from '@mui/material/RadioGroup';
+import FormControlLabel from '@mui/material/FormControlLabel';
+import FormControl from '@mui/material/FormControl';
+import FormLabel from '@mui/material/FormLabel';
 import { LocalizationProvider, TimePicker, DatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import { DragHandleRounded, CloseRounded } from '@mui/icons-material';
@@ -27,6 +32,7 @@ function EventNewDialog({
 	onCreateEvent,
 	open,
 	close,
+	event,
 	usuario,
 	startDateTime = new Date(),
 	endDateTime = new Date(),
@@ -37,6 +43,14 @@ function EventNewDialog({
 		title: '',
 		description: ''
 	});
+
+	const handleClose = () => {
+		close();
+		setForm({
+			title: '',
+			description: ''
+		})
+	}
 	// const [repetition, setRepetition] = useState(arr[1]);
 	// const [color, setColor] = useState('default');
 
@@ -47,25 +61,51 @@ function EventNewDialog({
 	// 	setRepetition(e.target.value);
 	// };
 
+
+	useEffect(() => {
+		console.log(event)
+		if(event){
+			service.fetchEvent(event).then((res) => {
+				setForm(res.data)
+			})
+		}
+	}, [event]);
+
 	const handleChange = (label, value) => {
 		setForm({...form, [label]: value});
 	};
 
 	const handleSave = () => {
-		service.newCalendarEvent({
-			title:form.title,
-			description:form.description,
-			date_schedule: moment(startDateTime).format("YYYY-MM-DDT00:00")
-		}).then((res) => {
-			feedbackService.showMessage('Evento cadastrado com sucesso!', 'success')
-			setForm({
-				title: '',
-				description: ''
+		if(form.id){
+			service.editEvent(form.id, {
+				title:form.title,
+				description:form.description
+			}).then((res) => {
+				feedbackService.showMessage('Evento editado com sucesso!', 'success')
+				setForm({
+					title: '',
+					description: ''
+				})
+				onCreateEvent();
+			}).catch((err) => {
+				feedbackService.showMessage('Ops! Houve um erro ao editar evento.', 'error')
 			})
-			onCreateEvent();
-		}).catch((err) => {
-			feedbackService.showMessage('Ops! Houve um erro ao cadastrar evento.', 'error')
-		})
+		} else {
+			service.newEvent({
+				title:form.title,
+				description:form.description,
+				date_schedule: moment(startDateTime).format("YYYY-MM-DDT00:00")
+			}).then((res) => {
+				feedbackService.showMessage('Evento cadastrado com sucesso!', 'success')
+				setForm({
+					title: '',
+					description: ''
+				})
+				onCreateEvent();
+			}).catch((err) => {
+				feedbackService.showMessage('Ops! Houve um erro ao cadastrar evento.', 'error')
+			})
+		}
 	}
 
 	const weekDays = [
@@ -77,11 +117,8 @@ function EventNewDialog({
 		'Sexta',
 		'Sábado',
 	];
-
-	// RAY: O chip qd clica ta marcando tudo. Help.
-	// RAY: No momento o botão de salvar só ta fechando o modal
-	// TODO: Responsividade (fullscreen on mobile)
 	const nodeRef = React.useRef(null);
+
 	return (
 		open && (
 			<Grid container>
@@ -89,24 +126,18 @@ function EventNewDialog({
 					<Dialog
 						ref={nodeRef}
 						open={open}
-						onClose={close}
+						onClose={handleClose}
 						usuario={usuario}
 						maxWidth='sm'
 						fullWidth
 						aria-labelledby='draggable-dialog-title'
 					>
-						<DialogTitle
-							sx={{
-								display: 'flex',
-								justifyContent: 'space-between',
-							}}
-						>
-							<DragHandleRounded color='white' />
-							<CloseRounded onClick={close} sx={{ cursor: 'pointer' }} />
+						<DialogTitle sx={{ mb: 3, mt: 0, p: 2 }} color="primary">
+							Novo evento
 						</DialogTitle>
 						<DialogContent
 							sx={{ display: 'flex', flexDirection: 'column', gap: 1 }}
-						>
+						>						
 							<TextField
 								placeholder='Adicionar título'
 								variant='standard'
@@ -115,6 +146,18 @@ function EventNewDialog({
 								value={form.title}
 								fullWidth
 							/>
+							<TextField
+								placeholder='Descrição (opcional)'
+								variant='standard'
+								margin='normal'
+								onChange={(ev) => handleChange('description', ev.target.value)}
+								value={form.description}
+								minRows={3}
+								multiline
+								rows={2}
+								fullWidth
+							/>							
+							
 							{/* {usuario === 'secretaria' ? ( */}
 							{/* <Tabs value={value} onChange={handleChange} sx={{ mb: 2 }}>
 								<Tab label='Evento' index={0} variant='text' />
@@ -230,7 +273,7 @@ function EventNewDialog({
 							</Stack> */}
 						</DialogContent>
 						<DialogActions mt={3}>
-							<Button variant='text' onClick={close}>
+							<Button variant='text' onClick={handleClose}>
 								Cancelar
 							</Button>
 							<Button onClick={handleSave}
