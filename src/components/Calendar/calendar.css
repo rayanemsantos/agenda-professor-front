@@ -20,13 +20,17 @@
 	color: #000000de;
 	background-color: #4aedc4;
 	height: 2.5rem;
-border-color: #1de9b6;
+	border-color: #1de9b6;
 	display: flex;
 	align-items: center;
 }
 .fc-button.fc-button-primary:hover {
-	background-color: #33cbb7;
-	border-color: #1de9b6;
+	background-color: #00bfa5;
+	border-color: #008573;
+}
+.fc-button.fc-button-primary:active {
+	background-color: #26a69a !important;
+	border-color: #33ab9f !important;
 }
 .fc-button.fc-button-primary:disabled {
 	opacity: 0.4;

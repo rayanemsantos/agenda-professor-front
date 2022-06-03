@@ -91,7 +91,7 @@ function Layout(props) {
 									transition={Zoom}
 									position='bottom-right'
 									theme='colored'
-								/>								
+								/>
 							</div>
 							{/* V2 professor será utilizado */}
 							{/* <TabsComponent /> */}

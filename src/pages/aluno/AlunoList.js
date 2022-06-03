@@ -2,22 +2,21 @@ import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { v4 as uuid } from 'uuid';
 
-import Container from '@mui/material/Container';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import Avatar from '@mui/material/Avatar';
-import PersonIcon from '@mui/icons-material/Person';
 import {
-	Pagination,
+	Avatar,
+	Button,
 	Card,
 	CardContent,
-	Typography,
-	Toolbar,
-	TextField,
-	Button,
+	Container,
 	Grid,
+	List,
+	ListItem,
+	Pagination,
+	TextField,
+	Toolbar,
+	Typography,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { EditRounded, PersonRounded } from '@mui/icons-material';
 
 import * as service from '../../services/service';
 
@@ -67,7 +66,7 @@ export default function AlunoList(props) {
 						<div className='flex justify-between items-center'>
 							<div className='flex'>
 								<Avatar>
-									<PersonIcon />
+									<PersonRounded />
 								</Avatar>
 								<div className='pl-5'>
 									<h3>{_item.full_name}</h3>
@@ -77,7 +76,7 @@ export default function AlunoList(props) {
 							</div>
 
 							<Button
-								endIcon={<EditIcon />}
+								endIcon={<EditRounded />}
 								variant='outlined'
 								color='primary'
 								onClick={() => handleEdit(_item.id)}

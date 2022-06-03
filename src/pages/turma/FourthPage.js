@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import _ from 'lodash';
 import {
 	Box,
 	Button,
@@ -12,7 +13,6 @@ import {
 	ListItemIcon,
 } from '@mui/material';
 import { ChevronLeftRounded, ChevronRightRounded } from '@mui/icons-material';
-import _ from 'lodash';
 
 import * as service from '../../services/service';
 
@@ -82,30 +82,6 @@ export default function FourthPage() {
 
 	const customList = (title, items) => (
 		<Box>
-			<CardHeader
-				sx={{ px: 2, py: 1 }}
-				avatar={
-					<Checkbox
-						onClick={handleToggleAll(items)}
-						checked={
-							numberOfChecked(items) === items.length && items.length !== 0
-						}
-						indeterminate={
-							numberOfChecked(items) !== items.length &&
-							numberOfChecked(items) !== 0
-						}
-						disabled={items.length === 0}
-						inputProps={{
-							'aria-label': 'todos os itens selecionados',
-						}}
-					/>
-				}
-				title={title}
-				subheader={`${numberOfChecked(items)}/${
-					items.length
-				} Professores selecionados`}
-			/>
-			<Divider />
 			<List
 				sx={{
 					height: 300,

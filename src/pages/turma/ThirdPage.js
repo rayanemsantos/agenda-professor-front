@@ -31,22 +31,22 @@ export default function ThirdPage() {
 	const [data, setData] = useState([]);
 	const [checked, setChecked] = useState([]);
 	const [left, setLeft] = useState([
-		// 'Artes',
-		// 'Biologia',
-		// 'Ciências',
-		// 'Educação física',
-		// 'Espanhol',
-		// 'Filosofia',
-		// 'Física',
-		// 'Geografia',
-		// 'Gramática',
-		// 'História',
-		// 'Inglês',
-		// 'Literatura',
-		// 'Matemática',
-		// 'Português',
-		// 'Química',
-		// 'Redação',
+		'Artes',
+		'Biologia',
+		'Ciências',
+		'Educação física',
+		'Espanhol',
+		'Filosofia',
+		'Física',
+		'Geografia',
+		'Gramática',
+		'História',
+		'Inglês',
+		'Literatura',
+		'Matemática',
+		'Português',
+		'Química',
+		'Redação',
 	]);
 
 	const [right, setRight] = useState([]);
@@ -54,12 +54,12 @@ export default function ThirdPage() {
 	const leftChecked = intersection(checked, left);
 	const rightChecked = intersection(checked, right);
 
-	useEffect(() => {
-		service.fetchMaterias().then(res => {
-			setData(res.data);
-			setLeft(res.data);
-		});
-	}, []);
+	// useEffect(() => {
+	// 	service.fetchMaterias().then(res => {
+	// 		setData(res.data);
+	// 		setLeft(res.data);
+	// 	});
+	// }, []);
 
 	const handleToggle = value => () => {
 		const currentIndex = checked.indexOf(value);

@@ -57,7 +57,7 @@ export default function TurmaNew(props) {
 			if (id === 'new') {
 			} else {
 				service.fetchTurma(id).then(res => {
-					setForm({...res.data});
+					setForm({ ...res.data });
 				});
 			}
 		}
@@ -88,7 +88,7 @@ export default function TurmaNew(props) {
 								</Step>
 							))}
 						</Stepper>
-						{currentPage === 0 && <FirstPage data={form}/>}
+						{currentPage === 0 && <FirstPage data={form} />}
 						{currentPage === 1 && <SecondPage />}
 						{currentPage === 2 && <ThirdPage />}
 						{currentPage === 3 && <FourthPage />}
@@ -114,15 +114,27 @@ export default function TurmaNew(props) {
 								Voltar
 							</Button>
 						)}
-						<Button
-							className={'primary-button'}
-							onClick={handleNext}
-							color='primary'
-							size='large'
-							sx={{ width: 'fit-content', my: 2 }}
-						>
-							Próximo
-						</Button>
+						{currentPage !== pages.length - 1 ? (
+							<Button
+								className={'primary-button'}
+								onClick={handleNext}
+								color='primary'
+								size='large'
+								sx={{ width: 'fit-content', my: 2 }}
+							>
+								Próximo
+							</Button>
+						) : (
+							<Button
+								className={'primary-button'}
+								onClick={handleNext}
+								color='primary'
+								size='large'
+								sx={{ width: 'fit-content', my: 2 }}
+							>
+								Salvar
+							</Button>
+						)}
 					</Container>
 				</LocalizationProvider>
 			</Paper>
