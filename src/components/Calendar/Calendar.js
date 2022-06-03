@@ -20,23 +20,29 @@ import './calendar.css';
 export default function Calendar() {
 	const [startDateTime, setStartDateTime] = useState();
 	const [endDateTime, setEndDateTime] = useState();
-	const [open, setOpen] = useState(false);
-	const [event, setEvent] = useState(null);
+	const [eventDialog, setEventDialog] = useState({
+		open: false,
+		id: null
+	});
 	const [data, setData] = useState([]);
 	
 	const handleOpen = (e) => {
-		setOpen(true);
+		setEventDialog({
+			open: true,
+			id:null
+		});
 		setStartDateTime(e.start);
 		setEndDateTime(e.end);
 	};
 	
 	const handleClickEvent = e => {
-		setOpen(true);
-		setEvent(e.event.id);
-
+		setEventDialog({
+			open: true,
+			id:e.event.id
+		});
 	};
 	const handleClose = () => {
-		setOpen(false);
+		setEventDialog({open: false, id: null});
 	};
 	
 	useEffect(() => {
@@ -56,8 +62,8 @@ export default function Calendar() {
 	return (
 		<>
 			<EventNewDialog
-				open={open}
-				event={event}
+				open={eventDialog.open}
+				event={eventDialog.id}
 				close={handleClose}
 				startDateTime={startDateTime}
 				endDateTime={endDateTime}

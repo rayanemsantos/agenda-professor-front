@@ -63,12 +63,12 @@ function EventNewDialog({
 
 
 	useEffect(() => {
-		if(event){
+		if(open && event){
 			service.fetchEvent(event).then((res) => {
 				setForm(res.data)
 			})
 		}
-	}, []);
+	}, [open]);
 
 	const handleChange = (label, value) => {
 		setForm({...form, [label]: value});
