@@ -18,23 +18,15 @@ api.interceptors.request.use(
       Promise.reject(error)
 });
 
-
+// response interceptor
 api.interceptors.response.use((response) => {
     return response
-  }, function (error) {
-    console.log('error', error.response.status)
+  }, async function (error) {
+  
     const originalRequest = error.config;
 
-    if (error.response.status === 401){
-        // router.push('/login');
-        return Promise.reject(error);
-    }
-
     if (error.response.status === 401) {
-        
-      originalRequest._retry = true;
-
-        const refresher = refreshToken(error);
+        const refresher = await refreshToken(error);
 
         if (refresher){
           return api(originalRequest);
@@ -46,39 +38,39 @@ api.interceptors.response.use((response) => {
 const getToken = () => localStorage.getItem('access');
 
 async function refreshToken(error) {
-    return new Promise((resolve, reject) => {
-      try {
-        const refresh_token = localStorage.getItem("refresh");
-        const header = {
-          "Content-Type": "application/json",
-        };
-        const parameters = {
-          method: "POST",
-          headers: header,
-        };
-        const body = {
-          refresh: refresh_token,
-        };
-        axios
-          .post(
-            config.URL_BASE + "/token/refresh/",
-            body,
-            parameters
-          )
-          .then(async (res) => {
-            localStorage.setItem("access", res.data.access);
-            localStorage.setItem("refresh_token", res.data.refresh);
-            // Fazer algo caso seja feito o refresh token
-            return resolve(res);
-          })
-          .catch((err) => {
-            // Fazer algo caso não seja feito o refresh token
-            return reject(error);
-          });
-      } catch (err) {
-        return reject(err);
-      }
-    });
-  };
+  return new Promise((resolve, reject) => {
+    try {
+      const refresh_token = localStorage.getItem("refresh");
+      const header = {
+        "Content-Type": "application/json",
+      };
+      const parameters = {
+        method: "POST",
+        headers: header,
+      };
+      const body = {
+        refresh: refresh_token,
+      };
+      axios
+        .post(
+          config.URL_BASE + "/token/refresh/",
+          body,
+          parameters
+        )
+        .then(async (res) => {
+          localStorage.setItem("access", res.data.access);
+          localStorage.setItem("refresh_token", res.data.refresh);
+          // Fazer algo caso seja feito o refresh token
+          return resolve(res);
+        })
+        .catch((err) => {
+          // Fazer algo caso não seja feito o refresh token
+          return reject(error);
+        });
+    } catch (err) {
+      return reject(err);
+    }
+  });
+};
 
 export default api;
