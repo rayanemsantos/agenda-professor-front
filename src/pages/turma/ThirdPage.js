@@ -1,7 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import {
 	Box,
 	Button,
+	Card,
 	CardHeader,
 	Checkbox,
 	Divider,
@@ -12,9 +13,6 @@ import {
 	ListItemIcon,
 } from '@mui/material';
 import { ChevronLeftRounded, ChevronRightRounded } from '@mui/icons-material';
-import _ from 'lodash';
-
-import * as service from '../../services/service';
 
 function not(a, b) {
 	return a.filter(value => b.indexOf(value) === -1);
@@ -28,19 +26,28 @@ function union(a, b) {
 	return [...a, ...not(b, a)];
 }
 
-export default function SecondPage() {
-	const [data, setData] = useState([]);
+export default function ThirdPage() {
 	const [checked, setChecked] = useState([]);
+	const [left, setLeft] = useState([
+		'Artes',
+		'Biologia',
+		'Ciências',
+		'Educação física',
+		'Espanhol',
+		'Filosofia',
+		'Física',
+		'Geografia',
+		'Gramática',
+		'História',
+		'Inglês',
+		'Literatura',
+		'Matemática',
+		'Português',
+		'Química',
+		'Redação',
+	]);
 
-	const [left, setLeft] = useState([]);
 	const [right, setRight] = useState([]);
-
-	useEffect(() => {
-		service.fetchStudents().then(res => {
-			setData(res.data);
-			setLeft(res.data);
-		});
-	}, []);
 
 	const leftChecked = intersection(checked, left);
 	const rightChecked = intersection(checked, right);
@@ -103,7 +110,7 @@ export default function SecondPage() {
 				title={title}
 				subheader={`${numberOfChecked(items)}/${
 					items.length
-				} alunos selecionados`}
+				} matérias selecionadas`}
 			/>
 			<Divider />
 			<List
@@ -117,11 +124,11 @@ export default function SecondPage() {
 				role='list'
 			>
 				{items.map(value => {
-					const labelId = `transfer-list-all-item-${value.registration_id}-label`;
+					const labelId = `transfer-list-all-item-${value}-label`;
 
 					return (
 						<ListItem
-							key={value.registration_id}
+							key={value}
 							role='listitem'
 							button
 							onClick={handleToggle(value)}
@@ -136,7 +143,7 @@ export default function SecondPage() {
 									}}
 								/>
 							</ListItemIcon>
-							<ListItemText id={labelId} primary={value.full_name} />
+							<ListItemText id={labelId} primary={value} />
 						</ListItem>
 					);
 				})}
@@ -148,7 +155,7 @@ export default function SecondPage() {
 	return (
 		<Grid container spacing={2} justifyContent='center' alignItems='center'>
 			<Grid item xs={4}>
-				{customList('Lista de Alunos', left)}
+				{customList('Lista de Matérias', left)}
 			</Grid>
 			<Grid item xs={2}>
 				<Grid container direction='column' alignItems='center'>
@@ -175,7 +182,7 @@ export default function SecondPage() {
 				</Grid>
 			</Grid>
 			<Grid item xs={4}>
-				{customList('Alunos Adicionados', right)}
+				{customList('Matérias Adicionadas', right)}
 			</Grid>
 		</Grid>
 	);

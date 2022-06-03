@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
+import { v4 as uuid } from 'uuid';
+
 import Container from '@mui/material/Container';
 import List from '@mui/material/List';
 import ListItem from '@mui/material/ListItem';
@@ -119,7 +121,11 @@ export default function AlunoList(props) {
 							{items
 								.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
 								.map(_item => {
-									return <>{studentList(_item)}</>;
+									return (
+										<React.Fragment key={uuid()}>
+											{studentList(_item)}
+										</React.Fragment>
+									);
 								})}
 							{!items.length ? (
 								<ListItem>

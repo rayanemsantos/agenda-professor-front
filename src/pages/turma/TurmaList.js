@@ -1,20 +1,22 @@
 import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
-import Container from '@mui/material/Container';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import { v4 as uuid } from 'uuid';
+
 import {
 	Box,
 	Button,
 	Card,
 	CardContent,
+	Container,
 	Grid,
+	List,
+	ListItem,
 	Pagination,
 	TextField,
 	Toolbar,
 	Typography,
 } from '@mui/material';
-import EditIcon from '@mui/icons-material/Edit';
+import { Edit } from '@mui/icons-material';
 
 import * as service from '../../services/service';
 
@@ -69,7 +71,7 @@ export default function TurmaList(props) {
 							</Box>
 
 							<Button
-								endIcon={<EditIcon />}
+								endIcon={<Edit />}
 								variant='outlined'
 								color='primary'
 								onClick={() => handleEdit(_item.id)}
@@ -116,7 +118,9 @@ export default function TurmaList(props) {
 						</Toolbar>
 						<List>
 							{items.map(_item => {
-								return <>{item(_item)}</>;
+								return (
+									<React.Fragment key={uuid()}>{item(_item)}</React.Fragment>
+								);
 							})}
 							{!items.length ? (
 								<ListItem>
