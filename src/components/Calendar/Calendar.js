@@ -76,6 +76,7 @@ export default function Calendar() {
 					Fique de olho em todos os eventos programados da escola
 				</Typography>
 				<FullCalendar
+				 	editable
 					plugins={[dayGridPlugin, interactionPlugin]}
 					// , timeGridPlugin, interactionPlugin
 					select={handleOpen}
