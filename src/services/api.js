@@ -5,25 +5,43 @@ const api = axios.create({
   baseURL: config.URL_BASE
 });
 
-// api.interceptors.request.use(
-//     (response) => {
-//         console.log('response', response)
-//         const token = getToken();
-//         if (token) {
-//           response.headers.Authorization = `Bearer ${token}`;
-//         }
-//         return response;
-//     },
-//     async function (error) {
-//         console.log('error', error)
-//         const access_token = localStorage.getItem("access");
-//         if (error.response.status === 401 && access_token) {
-//           const response = await refreshToken(error);
-//           return response;
-//         }
-//         return Promise.reject(error);
-//     }
-// );
+// request interceptor
+api.interceptors.request.use(
+  config => {
+      const token = getToken();
+      if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+      }
+      return config;
+  },
+  error => {
+      Promise.reject(error)
+});
+
+
+api.interceptors.response.use((response) => {
+    return response
+  }, function (error) {
+    console.log('error', error.response.status)
+    const originalRequest = error.config;
+
+    if (error.response.status === 401){
+        // router.push('/login');
+        return Promise.reject(error);
+    }
+
+    if (error.response.status === 401) {
+        
+      originalRequest._retry = true;
+
+        const refresher = refreshToken(error);
+
+        if (refresher){
+          return api(originalRequest);
+        }
+    }
+  return Promise.reject(error);
+});
 
 const getToken = () => localStorage.getItem('access');
 
